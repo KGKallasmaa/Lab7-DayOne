@@ -4,8 +4,8 @@
 
 ### Team members ###
 
-Fred Kasemaa
-Ott Adermann
+Fred Kasemaa,
+Ott Adermann,
 Karl-Gustav Kallasmaa
 
 ### Homeworks ###
