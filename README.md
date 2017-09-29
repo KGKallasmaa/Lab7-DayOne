@@ -6,7 +6,8 @@
 
 Fred Kasemaa,
 Ott Adermann,
-Karl-Gustav Kallasmaa
+Karl-Gustav Kallasmaa,
+Villem Laimre
 
 ### Homeworks ###
 
