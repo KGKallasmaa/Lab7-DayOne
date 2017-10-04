@@ -56,6 +56,10 @@ public class SalesSystemUI extends Application {
         historyTab.setClosable(false);
         //historyTab.setContent(loadControls("HistoryTab.fxml", new HistoryController()));
 
+        Tab teamTab = new Tab();
+        teamTab.setText("Team");
+        teamTab.setClosable(false);
+
         Group root = new Group();
         Scene scene = new Scene(root, 600, 500, Color.WHITE);
         //scene.getStylesheets().add(getClass().getResource("DefaultTheme.css").toExternalForm());
@@ -63,7 +67,7 @@ public class SalesSystemUI extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
-        borderPane.setCenter(new TabPane(purchaseTab, stockTab, historyTab));
+        borderPane.setCenter(new TabPane(purchaseTab, stockTab, historyTab, teamTab));
         root.getChildren().add(borderPane);
 
         primaryStage.setTitle("Sales system");

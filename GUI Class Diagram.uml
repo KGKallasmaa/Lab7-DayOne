@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="662.0" y="0.0">ee.ut.math.tvt.salessystem.ui.controllers.HistoryController</node>
+    <node x="0.0" y="132.0">ee.ut.math.tvt.salessystem.ui.controllers.StockController</node>
+    <node x="175.75" y="586.0">ee.ut.math.tvt.salessystem.ui.SalesSystemUI</node>
+    <node x="326.0" y="0.0">ee.ut.math.tvt.salessystem.ui.controllers.PurchaseController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ee.ut.math.tvt.salessystem.ui.SalesSystemUI" target="ee.ut.math.tvt.salessystem.ui.controllers.StockController">
+      <point x="-68.25" y="-70.0" />
+      <point x="244.0" y="561.0" />
+      <point x="153.0" y="561.0" />
+      <point x="0.0" y="136.0" />
+    </edge>
+    <edge source="ee.ut.math.tvt.salessystem.ui.SalesSystemUI" target="ee.ut.math.tvt.salessystem.ui.controllers.PurchaseController">
+      <point x="68.25" y="-70.0" />
+      <point x="380.5" y="561.0" />
+      <point x="471.5" y="561.0" />
+      <point x="0.0" y="268.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="481.0" y="326.5" />
+  <SelectedNodes>
+    <node>ee.ut.math.tvt.salessystem.ui.controllers.StockController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

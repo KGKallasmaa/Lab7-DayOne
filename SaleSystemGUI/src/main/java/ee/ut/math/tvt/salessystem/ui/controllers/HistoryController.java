@@ -10,9 +10,28 @@ import java.util.ResourceBundle;
  * labelled "History" in the menu).
  */
 public class HistoryController implements Initializable {
+    private javafx.scene.control.TextField startDateField;
+    private javafx.scene.control.TextField endDateField;
+    private javafx.scene.control.Button showBetweenDates;
+    private javafx.scene.control.Button showLast10;
+    private javafx.scene.control.Button showAll;
+    private javafx.scene.control.TableView historyTableView;
+    private javafx.scene.control.TableView purchaseTableVew;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO: implement
+    }
+
+    protected void showBetweenDatesButtonClicked() {
+    }
+
+    protected void showLast10ButtonClicked() {
+    }
+
+    protected void showAllButtonClicked() {
+    }
+
+    private void displayOrder() {
     }
 }

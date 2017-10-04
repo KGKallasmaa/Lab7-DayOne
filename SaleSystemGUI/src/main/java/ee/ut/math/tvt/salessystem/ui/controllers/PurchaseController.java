@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.apache.logging.log4j.LogManager;
@@ -42,7 +43,7 @@ public class PurchaseController implements Initializable {
     @FXML
     private TextField quantityField;
     @FXML
-    private TextField nameField;
+    private ComboBox nameSelect;
     @FXML
     private TextField priceField;
     @FXML
@@ -135,7 +136,7 @@ public class PurchaseController implements Initializable {
     private void fillInputsBySelectedStockItem() {
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
-            nameField.setText(stockItem.getName());
+            //nameSelect.setText(stockItem.getName());
             priceField.setText(String.valueOf(stockItem.getPrice()));
         } else {
             resetProductField();
@@ -179,7 +180,7 @@ public class PurchaseController implements Initializable {
         this.addItemButton.setDisable(disable);
         this.barCodeField.setDisable(disable);
         this.quantityField.setDisable(disable);
-        this.nameField.setDisable(disable);
+        this.nameSelect.setDisable(disable);
         this.priceField.setDisable(disable);
     }
 
@@ -189,7 +190,7 @@ public class PurchaseController implements Initializable {
     private void resetProductField() {
         barCodeField.setText("");
         quantityField.setText("1");
-        nameField.setText("");
+        //nameSelect.setText("");
         priceField.setText("");
     }
 }

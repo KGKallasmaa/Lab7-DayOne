@@ -119,4 +119,13 @@ public class ConsoleUI {
         }
     }
 
+    private void showHistory() {
+    }
+
+    private void addProductToStock() {
+    }
+
+    private void showTeam() {
+    }
+
 }

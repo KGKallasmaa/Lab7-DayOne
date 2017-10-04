@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="506.0">ee.ut.math.tvt.salessystem.SalesSystemException</node>
+    <node x="497.0" y="0.0">ee.ut.math.tvt.salessystem.dataobjects.StockItem</node>
+    <node x="0.0" y="233.0">ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO</node>
+    <node x="291.0" y="0.0">ee.ut.math.tvt.salessystem.dataobjects.SoldItem</node>
+    <node x="0.0" y="0.0">ee.ut.math.tvt.salessystem.dao.SalesSystemDAO</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO" target="ee.ut.math.tvt.salessystem.dao.SalesSystemDAO">
+      <point x="0.0" y="-114.0" />
+      <point x="0.0" y="91.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="420.0" y="460.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
