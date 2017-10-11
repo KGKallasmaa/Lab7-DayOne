@@ -3,11 +3,11 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="-173.0" y="-32.0">ee.ut.math.tvt.salessystem.ui.ConsoleUI</node>
+    <node x="-28.0" y="-59.0">ee.ut.math.tvt.salessystem.ui.ConsoleUI</node>
   </nodes>
   <notes />
   <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="61.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="135.0" y="61.0" />
   <SelectedNodes>
     <node>ee.ut.math.tvt.salessystem.ui.ConsoleUI</node>
   </SelectedNodes>
