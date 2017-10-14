@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/../../../out/test/SaleSystemGUI"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../../../SaleSystemGUI">
+		<excludeFolder url="file://$MODULE_DIR$/../../../SaleSystemGUI/.gradle"/>
+		<excludeFolder url="file://$MODULE_DIR$/../../../SaleSystemGUI/build"/>
+		<excludeFolder url="file://$MODULE_DIR$/../../../SaleSystemGUI/out"/>
+	</contentEntry>
+</component>

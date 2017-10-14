@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Gradle: org.apache.logging.log4j:log4j-api:2.6.2">
+    <archive path="C:/Users/karl96k/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.6.2/bd1b74a5d170686362091c7cf596bbc3adf5c09b/log4j-api-2.6.2.jar" />
+  </library>
+  <library name="Gradle: org.apache.logging.log4j:log4j-core:2.6.2">
+    <archive path="C:/Users/karl96k/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.6.2/a91369f655eb1639c6aece5c5eb5108db18306/log4j-core-2.6.2.jar" />
+  </library>
+</eclipse-userlibraries>
+

@@ -6,6 +6,7 @@ import ee.ut.math.tvt.salessystem.ui.controllers.HistoryController;
 import ee.ut.math.tvt.salessystem.ui.controllers.PurchaseController;
 import ee.ut.math.tvt.salessystem.ui.controllers.StockController;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
+import ee.ut.math.tvt.salessystem.ui.controllers.TeamController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -60,11 +61,11 @@ public class SalesSystemUI extends Application {
         Tab teamTab = new Tab();
         teamTab.setText("Team");
         teamTab.setClosable(false);
-        teamTab.setContent(loadControls("TeamTab.fxml", new TeamController()));
+        teamTab.setContent(loadControls("teamTab.fxml",  new TeamController()));
 
         Group root = new Group();
         Scene scene = new Scene(root, 600, 500, Color.WHITE);
-        //scene.getStylesheets().add(getClass().getResource("DefaultTheme.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("DefaultTheme.css").toExternalForm());
 
         BorderPane borderPane = new BorderPane();
         borderPane.prefHeightProperty().bind(scene.heightProperty());

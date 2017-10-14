@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_8" inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../../../SaleSystemGUI/src/main"/>
+	<levels>
+		<level name="Gradle: org.apache.logging.log4j:log4j-api:2.6.2" value="project"/>
+		<level name="Gradle: org.apache.logging.log4j:log4j-core:2.6.2" value="project"/>
+	</levels>
+</component>

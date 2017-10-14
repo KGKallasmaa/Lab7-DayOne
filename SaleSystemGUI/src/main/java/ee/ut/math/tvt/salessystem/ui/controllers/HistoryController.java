@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.controllers;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -23,13 +24,13 @@ public class HistoryController implements Initializable {
         // TODO: implement
     }
 
-    protected void showBetweenDatesButtonClicked() {
+    protected void showBetweenDatesButtonClicked(Date startDateField, Date endDateFiled) {
     }
 
     protected void showLast10ButtonClicked() {
     }
 
-    protected void showAllButtonClicked() {
+    protected void showAll() {
     }
 
     private void displayOrder() {

@@ -9,24 +9,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HistoryController">
+<fx:root prefHeight="400.0" prefWidth="640.0" type="VBox" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HistoryController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <AnchorPane layoutX="4.0" layoutY="7.0" prefHeight="150.0" prefWidth="634.0">
                <children>
-                  <Button layoutX="53.0" layoutY="21.0" mnemonicParsing="false" text="Show between dates" />
-                  <DatePicker layoutX="410.0" layoutY="9.0" />
+                  <Button fx:id="showBetweenDatesButtonClicked" layoutX="53.0" layoutY="21.0" mnemonicParsing="false" text="Show between dates" />
+                  <DatePicker fx:id="start_date" layoutX="410.0" layoutY="9.0" />
                   <Text layoutX="317.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start date" />
                   <Text layoutX="317.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End date" />
-                  <DatePicker layoutX="410.0" layoutY="48.0" />
-                  <Button layoutX="53.0" layoutY="70.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="139.0" text="Show last 10" />
-                  <Button layoutX="53.0" layoutY="111.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="139.0" text="Show all" />
+                  <DatePicker fx:id="end_date" layoutX="410.0" layoutY="48.0" />
+                  <Button fx:id="showLast10ButtonClicked" layoutX="53.0" layoutY="70.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="139.0" text="Show last 10" />
+                  <Button fx:id="showAll" layoutX="53.0" layoutY="111.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="139.0" text="Show all" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="1.0" layoutY="160.0" prefHeight="249.0" prefWidth="640.0">
                <children>
-                  <TitledPane animated="false" contentDisplay="CENTER" layoutX="3.0" prefHeight="126.0" prefWidth="634.0" text="Purchase history">
+                  <TitledPane fx:id="purchase_history" animated="false" contentDisplay="CENTER" layoutX="3.0" prefHeight="126.0" prefWidth="634.0" text="Purchase history">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -43,7 +43,7 @@
                   </TitledPane>
                   <AnchorPane layoutX="3.0" layoutY="125.0" prefHeight="200.0" prefWidth="634.0">
                      <children>
-                        <TableView prefHeight="200.0" prefWidth="634.0">
+                        <TableView fx:id="displayOrder" prefHeight="200.0" prefWidth="634.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Id" />
                             <TableColumn prefWidth="75.0" text="Name" />
@@ -60,4 +60,4 @@
     </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
   </children>
-</VBox>
+</fx:root>
