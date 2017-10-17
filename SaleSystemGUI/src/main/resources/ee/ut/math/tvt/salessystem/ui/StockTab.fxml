@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
-<TitledPane alignment="CENTER" animated="false" collapsible="false" text="Warehouse status" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root alignment="CENTER" animated="false" collapsible="false" text="Warehouse status" type="TitledPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ut.math.tvt.salessystem.ui.controllers.StockController">
   <BorderPane>
     <center>
       <TableView fx:id="warehouseTableView" styleClass="blue_style" BorderPane.alignment="CENTER">
@@ -41,4 +42,4 @@
       <Button onMouseClicked="#refreshButtonClicked" text="Refresh warehouse" BorderPane.alignment="TOP_LEFT" />
     </top>
   </BorderPane>
-</TitledPane>
+</fx:root>
