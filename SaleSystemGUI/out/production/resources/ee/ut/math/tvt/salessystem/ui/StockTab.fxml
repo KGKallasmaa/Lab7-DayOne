@@ -7,10 +7,10 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 
-<TitledPane alignment="CENTER" animated="false" collapsible="false" text="Warehouse status" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ut.math.tvt.salessystem.ui.controllers.StockController">
+<fx:root stylesheets="@DefaultTheme.css" alignment="CENTER" animated="false" collapsible="false" text="Warehouse status" type="TitledPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
   <BorderPane>
     <center>
-      <TableView fx:id="warehouseTableView" styleClass="blue_style" BorderPane.alignment="CENTER">
+      <TableView fx:id="warehouseTableView" styleClass="blue_style" stylesheets="@DefaultTheme.css" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn text="Id">
             <cellValueFactory>
@@ -42,4 +42,4 @@
       <Button onMouseClicked="#refreshButtonClicked" text="Refresh warehouse" BorderPane.alignment="TOP_LEFT" />
     </top>
   </BorderPane>
-</TitledPane>
+</fx:root>

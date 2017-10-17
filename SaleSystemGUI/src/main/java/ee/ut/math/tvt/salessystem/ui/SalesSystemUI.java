@@ -56,12 +56,12 @@ public class SalesSystemUI extends Application {
         Tab historyTab = new Tab();
         historyTab.setText("History");
         historyTab.setClosable(false);
-        historyTab.setContent(loadControls("HistoryTab.fxml", new HistoryController()));
+        historyTab.setContent(loadControls("HistoryTab.fxml", new HistoryController(dao)));
 
         Tab teamTab = new Tab();
         teamTab.setText("Team");
         teamTab.setClosable(false);
-        teamTab.setContent(loadControls("teamTab.fxml",  new TeamController()));
+        teamTab.setContent(loadControls("TeamTab.fxml",  new TeamController()));
 
         Group root = new Group();
         Scene scene = new Scene(root, 600, 500, Color.WHITE);
@@ -78,6 +78,16 @@ public class SalesSystemUI extends Application {
         primaryStage.show();
 
         log.info("Salesystem GUI started");
+
+        //Merge conflict tester
+
+
+        // This is
+       // an
+      //          example
+    //    file
+
+
     }
 
     private Node loadControls(String fxml, Initializable controller) throws IOException {
