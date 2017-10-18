@@ -32,24 +32,15 @@ public class PurchaseController implements Initializable {
     private final SalesSystemDAO dao;
     private final ShoppingCart shoppingCart;
 
-    @FXML
-    private Button newPurchase;
-    @FXML
-    private Button submitPurchase;
-    @FXML
-    private Button cancelPurchase;
-    @FXML
-    private TextField barCodeField;
-    @FXML
-    private TextField quantityField;
-    @FXML
-    private ComboBox nameSelect;
-    @FXML
-    private TextField priceField;
-    @FXML
-    private Button addItemButton;
-    @FXML
-    private TableView<SoldItem> purchaseTableView;
+    @FXML private Button newPurchase;
+    @FXML private Button submitPurchase;
+    @FXML private Button cancelPurchase;
+    @FXML private TextField barCodeField;
+    @FXML private TextField quantityField;
+    @FXML private ComboBox nameSelect;
+    @FXML private TextField priceField;
+    @FXML private Button addItemButton;
+    @FXML private TableView<SoldItem> purchaseTableView;
 
     public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart) {
         this.dao = dao;

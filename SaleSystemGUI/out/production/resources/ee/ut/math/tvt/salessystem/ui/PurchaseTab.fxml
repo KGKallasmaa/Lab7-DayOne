@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root stylesheets="@DefaultTheme.css" type="AnchorPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane stylesheets="@DefaultTheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
 
   <SplitPane dividerPositions="0.4" orientation="VERTICAL" prefHeight="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     <items>
-      <AnchorPane prefHeight="200.0" styleClass="background_style" SplitPane.resizableWithParent="false">
+      <AnchorPane prefHeight="200.0" styleClass="background_style" stylesheets="@DefaultTheme.css" SplitPane.resizableWithParent="false">
         <HBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="308.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
           <children>
             <Button fx:id="newPurchase" onAction="#newPurchaseButtonClicked" text="New Purchase" />
@@ -102,7 +102,7 @@
       <AnchorPane>
         <TitledPane alignment="CENTER" animated="false" collapsible="false" text="Shopping Cart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <content>
-            <TableView fx:id="purchaseTableView" styleClass="blue_style">
+            <TableView fx:id="purchaseTableView" styleClass="blue_style" stylesheets="@DefaultTheme.css">
               <columns>
                 <TableColumn text="Id">
                   <cellValueFactory>
@@ -124,11 +124,6 @@
                     <PropertyValueFactory property="quantity" />
                   </cellValueFactory>
                 </TableColumn>
-                        <TableColumn fx:id="sum" text="Sum">
-                           <cellValueFactory>
-                              <PropertyValueFactory property="quantity" />
-                           </cellValueFactory>
-                        </TableColumn>
               </columns>
               <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -139,4 +134,4 @@
       </AnchorPane>
     </items>
   </SplitPane>
-</fx:root>
+</AnchorPane>

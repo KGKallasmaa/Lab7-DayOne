@@ -1,11 +1,13 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
+import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -21,23 +23,28 @@ public class HistoryController implements Initializable {
     @FXML private javafx.scene.control.Button showAll;
     @FXML private javafx.scene.control.TableView historyTableView;
     @FXML private javafx.scene.control.TableView purchaseTableVew;
+    @FXML private javafx.scene.control.TableColumn dateColumn;
+    @FXML private javafx.scene.control.TableColumn timeColumn;
+    @FXML private javafx.scene.control.TableColumn sumColumn;
 
 
     public HistoryController(SalesSystemDAO dao) {
         this.dao = dao;
     }
-    @Override
+
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO: implement
+
     }
 
-    @FXML protected void showBetweenDatesButtonClicked(Date startDateField, Date endDateFiled) {
+    @FXML protected void showBetweenDatesButtonClicked() {
+
     }
 
     @FXML protected void showLast10ButtonClicked() {
     }
 
-    @FXML protected void showAll() {
+    @FXML protected void showAllButtonClicked(){
+        List<StockItem> universe = dao.findStockItems();
     }
 
     @FXML protected void displayOrder() {

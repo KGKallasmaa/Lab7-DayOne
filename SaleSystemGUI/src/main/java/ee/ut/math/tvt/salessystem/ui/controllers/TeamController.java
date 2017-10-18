@@ -17,10 +17,6 @@ public class TeamController implements Initializable  {
     @FXML private Text team_members = this.getTeam_members();
 
     public TeamController(){
-        this.team_name = new Text("Lab-7-dayOne");
-        this.team_leader = new Text("Larry Ellison");
-        this.team_leader_email = new Text("info@oracle.com");
-        this.team_members = new Text("Fred Kasemaa"+"\n"+"Villem Laimre"+"\n"+"Karl-Gustav Kallasmaa");
     }
 
     public Text getTeam_name(){
@@ -47,8 +43,12 @@ public class TeamController implements Initializable  {
     protected void setTeam_members(Text new_members){
         this.team_members = new_members;
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        team_name.setText("Lab-7-dayOne");
+        team_leader.setText("Larry Ellison");
+        team_leader_email.setText("info@oracle.com");
+       team_members.setText("Fred Kasemaa"+"\n"+"Villem Laimre"+"\n"+"Karl-Gustav Kallasmaa");
     }
 }
