@@ -11,10 +11,10 @@ import java.util.ResourceBundle;
 
 public class TeamController implements Initializable  {
 
-    @FXML private Text team_name = this.getTeam_name();
-    @FXML private Text team_leader = this.getTeam_leader();
-    @FXML private Text team_leader_email = this.getTeam_leader_email();
-    @FXML private Text team_members = this.getTeam_members();
+    @FXML private Text team_name;
+    @FXML private Text team_leader;
+    @FXML private Text team_leader_email;
+    @FXML private Text team_members;
 
     public TeamController(){
     }
@@ -46,9 +46,6 @@ public class TeamController implements Initializable  {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        team_name.setText("Lab-7-dayOne");
-        team_leader.setText("Larry Ellison");
-        team_leader_email.setText("info@oracle.com");
-       team_members.setText("Fred Kasemaa"+"\n"+"Villem Laimre"+"\n"+"Karl-Gustav Kallasmaa");
+
     }
 }

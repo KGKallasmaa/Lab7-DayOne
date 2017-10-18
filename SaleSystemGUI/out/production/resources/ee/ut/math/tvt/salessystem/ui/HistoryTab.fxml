@@ -2,62 +2,54 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" stylesheets="@DefaultTheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-            <AnchorPane layoutX="4.0" layoutY="7.0" prefHeight="150.0" prefWidth="634.0">
-               <children>
-                  <Button fx:id="showBetweenDates" layoutX="53.0" layoutY="21.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="201.0" text="Show between dates" />
-                  <DatePicker fx:id="start_date" layoutX="410.0" layoutY="9.0" />
-                  <Text layoutX="317.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start date" />
-                  <Text layoutX="317.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End date" />
-                  <DatePicker fx:id="end_date" layoutX="410.0" layoutY="48.0" />
-                  <Button fx:id="showLast10" layoutX="53.0" layoutY="70.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="201.0" text="Show last 10" />
-                  <Button fx:id="showAll" layoutX="53.0" layoutY="111.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="201.0" text="Show all" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="1.0" layoutY="160.0" prefHeight="249.0" prefWidth="640.0">
-               <children>
-                  <TitledPane fx:id="purchase_history" animated="false" contentDisplay="CENTER" layoutX="3.0" prefHeight="126.0" prefWidth="634.0" text="Purchase history">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView layoutX="1.0" prefHeight="84.0" prefWidth="634.0">
-                                <columns>
-                                  <TableColumn prefWidth="75.0" text="Date" />
-                                  <TableColumn prefWidth="75.0" text="Time" />
-                                    <TableColumn prefWidth="483.0" text="Total" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </TitledPane>
-                  <AnchorPane layoutX="3.0" layoutY="125.0" prefHeight="200.0" prefWidth="634.0">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@DefaultTheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="showBetweenDates" layoutX="70.0" layoutY="14.0" mnemonicParsing="false" onAction="#showBetweenDatesButtonClicked" text="Show between dates" />
+      <Button fx:id="showLast10" layoutX="70.0" layoutY="57.0" mnemonicParsing="false" onAction="#showLast10ButtonClicked" text="Show last 10" />
+      <Button fx:id="showAll" layoutX="70.0" layoutY="89.0" mnemonicParsing="false" onAction="#showAllButtonClicked" prefHeight="35.0" prefWidth="132.0" text="Show all" />
+      <Text layoutX="311.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start date" wrappingWidth="71.87760162353516" />
+      <Text layoutX="311.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End date" />
+      <DatePicker fx:id="startDateField" layoutX="392.0" layoutY="26.0" />
+      <DatePicker fx:id="endDateField" layoutX="392.0" layoutY="51.0" />
+      <TitledPane layoutX="-1.0" layoutY="126.0" prefHeight="274.0" prefWidth="608.0" text="Purchase history" textAlignment="CENTER">
+         <content>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <TableView fx:id="displayOrder" prefHeight="200.0" prefWidth="634.0">
+                        <TableView prefHeight="123.0" prefWidth="608.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Id" />
-                            <TableColumn prefWidth="75.0" text="Name" />
-                              <TableColumn prefWidth="75.0" text="Price" />
-                              <TableColumn prefWidth="75.0" text="Quantity" />
-                              <TableColumn prefWidth="75.0" text="Sum" />
+                            <TableColumn fx:id="dateColumn" prefWidth="180.0" text="Date" />
+                            <TableColumn fx:id="timeColumn" minWidth="0.0" prefWidth="207.0" text="Time" />
+                              <TableColumn fx:id="sumColumn" prefWidth="221.0" text="Total" />
                           </columns>
                         </TableView>
                      </children>
                   </AnchorPane>
-               </children>
-            </AnchorPane>
-      </children>
-    </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-  </children>
-</VBox>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <TableView layoutX="-5.0" layoutY="-2.0" prefHeight="163.0" prefWidth="623.0">
+                          <columns>
+                            <TableColumn fx:id="order_id_Column" prefWidth="75.0" text="Id" />
+                            <TableColumn fx:id="order_name_Column" prefWidth="108.0" text="Name" />
+                              <TableColumn fx:id="order_price_Column" prefWidth="116.0" text="Price" />
+                              <TableColumn fx:id="order_quant_Column" prefWidth="167.0" text="Quantity" />
+                              <TableColumn fx:id="order_sum_Column" prefWidth="157.0" text="Sum" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </content>
+      </TitledPane>
+   </children>
+</AnchorPane>

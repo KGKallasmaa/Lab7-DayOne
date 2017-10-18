@@ -8,6 +8,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,6 +41,11 @@ public class PurchaseController implements Initializable {
     @FXML private ComboBox nameSelect;
     @FXML private TextField priceField;
     @FXML private Button addItemButton;
+    @FXML private javafx.scene.control.TableColumn IdColumn;
+    @FXML private javafx.scene.control.TableColumn QuantityColumn;
+    @FXML private javafx.scene.control.TableColumn PriceColumn;
+    @FXML private javafx.scene.control.TableColumn NameColumn;
+    @FXML private javafx.scene.control.TableColumn SumColumn;
     @FXML private TableView<SoldItem> purchaseTableView;
 
     public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart) {
