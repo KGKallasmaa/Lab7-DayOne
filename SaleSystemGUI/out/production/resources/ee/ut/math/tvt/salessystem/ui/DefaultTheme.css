@@ -3,9 +3,17 @@
 	 b_color: #FF9C5F;
 	 sb_color: #558188;
 	 main_text_color: #000000;
-	 control_color: #5FA292;
+	 control_color: #558188;
 	 title_color: #253939;
 	 -fx-background-color: linear-gradient(from 100% 100% to 100% 100%, b_color, main_text_color);
+	 /*
+	 b_color: #FF9C5F;
+     	 sb_color: #558188;
+     	 main_text_color: #000000;
+     	 control_color: #5FA292;
+     	 title_color: #253939;
+     	 -fx-background-color: linear-gradient(from 100% 100% to 100% 100%, b_color, main_text_color);
+     	 */
 }
 
 
