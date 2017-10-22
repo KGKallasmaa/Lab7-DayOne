@@ -5,9 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 
 import javax.swing.text.html.ImageView;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -63,36 +61,14 @@ public class TeamController implements Initializable {
     }
 
 
-    public Properties load_prop (){
+    public Properties load_prop () {
         Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            String propFileName = "application.properties";
-            input = TeamController.class.getClassLoader().getResourceAsStream(propFileName);
-            if(input != null){
-                prop.load(input);
-            }
-        } catch (IOException ex) {
-            String msg;
-            msg = "Error accessing properties file";
-            System.out.println(msg);
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                    return  prop;
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                }
-            }
-        }
         return prop;
+
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Properties prop = load_prop();
-        System.out.println(prop);
         //BROKEN~!!!
         this.team_name.setText(prop.getProperty("team_name"));
         this.team_leader.setText(prop.getProperty("team_leader"));
