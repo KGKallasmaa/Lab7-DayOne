@@ -72,8 +72,6 @@ public class TeamController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Properties prop = load_prop();
-
-
         //BROKEN~!!!
         System.out.println(prop.getProperty("team_name"));
         this.team_name.setText(prop.getProperty("team_name"));
