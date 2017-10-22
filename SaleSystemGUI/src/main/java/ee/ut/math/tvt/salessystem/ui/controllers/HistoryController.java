@@ -37,7 +37,7 @@ public class HistoryController implements Initializable {
     }
 
     @FXML protected void showBetweenDatesButtonClicked() {
-
+        System.out.println("text");
     }
 
     @FXML protected void showLast10ButtonClicked() {

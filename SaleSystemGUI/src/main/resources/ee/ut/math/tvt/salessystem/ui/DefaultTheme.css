@@ -1,11 +1,19 @@
 
 .root{
-	 b_color: #FF9C5F;
+	 b_color: #5DBCD2;
 	 sb_color: #558188;
-	 main_text_color: #FFEBCD;
-	 control_color: #5FA292;
+	 main_text_color: #000000;
+	 control_color: #5DBCD2;
 	 title_color: #253939;
-	 -fx-background-color: linear-gradient(from 25% 100% to 100% 25%, b_color, main_text_color);
+	 -fx-background-color: linear-gradient(from 100% 100% to 100% 100%, b_color, main_text_color);
+	 /*
+	 b_color: #FF9C5F;
+     	 sb_color: #558188;
+     	 main_text_color: #000000;
+     	 control_color: #5FA292;
+     	 title_color: #253939;
+     	 -fx-background-color: linear-gradient(from 100% 100% to 100% 100%, b_color, main_text_color);
+     	 */
 }
 
 
@@ -34,7 +42,7 @@
 
 .background_style{
 	 /*-fx-background-color: b_color;*/
-	  -fx-background-color: linear-gradient(from 25% 100% to 100% 25%, b_color, main_text_color);
+	  -fx-background-color: linear-gradient(from 100% 100% to 100% 100%, b_color, main_text_color);
 }
 
 .background_fills{
@@ -268,12 +276,12 @@
  
 .button:default
 {
-    -fx-background-color: #008287;
+    -fx-background-color: #253939;
     -fx-text-fill: #ffffff;
 }
  
 .button:default:hover{
-    -fx-background-color: #219297;
+    -fx-background-color: #253939;
 }
  
 /*******************************************************************************
@@ -339,7 +347,7 @@
     -fx-background-color: #d1d1d1;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
-    -fx-border-color: #d1d1d1;
+    -fx-border-color: #5DBCD2;
     -fx-border-width: 2px;
     -fx-borders-style: solid;
     -fx-padding: 1;
@@ -479,7 +487,7 @@
  
 .radio-button:focused:armed .radio
 {
-   -fx-background-color: white;
+   -fx-background-color: #5DBCD2;
    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
    -fx-background-insets: 0;
     

@@ -9,6 +9,10 @@ import java.io.*;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 
 public class TeamController implements Initializable {
 
@@ -64,12 +68,14 @@ public class TeamController implements Initializable {
     public Properties load_prop () {
         Properties prop = new Properties();
         return prop;
-
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Properties prop = load_prop();
+
+
         //BROKEN~!!!
+        System.out.println(prop.getProperty("team_name"));
         this.team_name.setText(prop.getProperty("team_name"));
         this.team_leader.setText(prop.getProperty("team_leader"));
         this.team_leader_email.setText(prop.getProperty("team_leader_email"));
