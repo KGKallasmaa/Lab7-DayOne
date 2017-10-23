@@ -64,19 +64,23 @@ public class TeamController implements Initializable {
         this.team_members = new_text;
     }
 
-
-    public Properties load_prop () {
-        Properties prop = new Properties();
-        return prop;
-    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Properties prop = load_prop();
-        //BROKEN~!!!
-        System.out.println(prop.getProperty("team_name"));
-        this.team_name.setText(prop.getProperty("team_name"));
-        this.team_leader.setText(prop.getProperty("team_leader"));
-        this.team_leader_email.setText(prop.getProperty("team_leader_email"));
-        this.team_members.setText(prop.getProperty("team_members"));
+        //Lodading application properties
+        Properties properties = null;
+        try {
+            properties = new Properties();
+            InputStream resourceAsStream =  TeamController.class.getClassLoader().getResourceAsStream("application.properties");
+            if (resourceAsStream != null) {
+                properties.load(resourceAsStream);
+            }
+        } catch (IOException e) {
+            System.out.println("Properties file was not found");
+        }
+
+        this.team_name.setText(properties.getProperty("team_name"));
+        this.team_leader.setText(properties.getProperty("team_leader"));
+        this.team_leader_email.setText(properties.getProperty("team_leader_email"));
+        this.team_members.setText(properties.getProperty("team_members"));
     }
 }
