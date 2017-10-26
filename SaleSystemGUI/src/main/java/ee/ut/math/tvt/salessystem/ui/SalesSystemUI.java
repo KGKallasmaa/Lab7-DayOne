@@ -82,10 +82,10 @@ public class SalesSystemUI extends Application {
         //Merge conflict tester
 
 
-        // This is
-       // an
-      //          example
-    //    file
+        // This really is
+       // an easy merge
+      //     ocnflict     example
+    //    text
 
 
     }

@@ -10,11 +10,12 @@ import javafx.scene.control.Tab;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
 
 /**
  * A simple CLI (limited functionality).
@@ -40,16 +41,20 @@ public class ConsoleUI {
      * Run the sales system CLI.
      */
     public void run() throws IOException {
+
         System.out.println("===========================");
         System.out.println("=       Sales System      =");
         System.out.println("===========================");
         printUsage();
+        showTeam(); //testing purposes for whenthe bufferedreader doesn't work
+        ///*
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        while (true) {
+        while (true){
             System.out.print("> ");
             processCommand(in.readLine().trim().toLowerCase());
             System.out.println("Done. ");
         }
+        //*/
     }
 
     private void showStock() {
@@ -84,6 +89,7 @@ public class ConsoleUI {
         System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
         System.out.println("p\t\tPurchase the shopping cart");
         System.out.println("r\t\tReset the shopping cart");
+        System.out.println("t\t\tShow team information");
         System.out.println("-------------------------");
     }
 
@@ -98,6 +104,8 @@ public class ConsoleUI {
             showStock();
         else if (c[0].equals("c"))
             showCart();
+        else if (c[0].equals("t"))
+            showTeam();
         else if (c[0].equals("p"))
             cart.submitCurrentPurchase();
         else if (c[0].equals("r"))
@@ -127,6 +135,23 @@ public class ConsoleUI {
     }
 
     private void showTeam() {
+
+        Properties properties = null;
+
+        try {
+            properties = new Properties();
+            properties.load(ConsoleUI.class.getResourceAsStream("application.properties"));//
+        } catch (IOException e) {
+            System.out.println("Properties file was not found");
+        }
+        System.out.println("-------------------------");
+        System.out.println("Team information:");
+        System.out.println("Team name:\t\t\t" + properties.getProperty("team_name"));// team name
+        System.out.println("Team leader:\t\t" + properties.getProperty("team_leader"));// team leader
+        System.out.println("Team leader email:\t" + properties.getProperty("team_leader_email"));// team leader email
+        System.out.println("Team members:\t\t" + properties.getProperty("team_members"));// team members
+        System.out.println("-------------------------");
+
 
     }
 
