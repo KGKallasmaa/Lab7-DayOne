@@ -5,7 +5,6 @@
 ### Team members ###
 
 Fred Kasemaa,
-Ott Adermann,
 Karl-Gustav Kallasmaa,
 Villem Laimre
 
