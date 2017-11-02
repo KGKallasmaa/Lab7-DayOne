@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
+import java.util.Date;
+
 /**
  * Stock item.
  */

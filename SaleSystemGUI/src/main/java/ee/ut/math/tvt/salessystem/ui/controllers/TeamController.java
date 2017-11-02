@@ -66,7 +66,7 @@ public class TeamController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Lodading application properties
+        //Loading application properties
         Properties properties = null;
         try {
             properties = new Properties();

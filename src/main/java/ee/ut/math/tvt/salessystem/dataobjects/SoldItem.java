@@ -1,6 +1,10 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
  */
@@ -11,16 +15,27 @@ public class SoldItem {
     private String name;
     private Integer quantity;
     private double price;
+    private String date;
+    private String time;
+    private List<SoldItem> order_items;
 
     public SoldItem() {
     }
 
     public SoldItem(StockItem stockItem, int quantity) {
+        this.id = stockItem.getId();
         this.stockItem = stockItem;
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
     }
+    public SoldItem(String date, String time, List<SoldItem> order_items){
+        this.date = date;
+        this.time = time;
+        this.order_items = order_items;
+   //     System.out.println("date: " + this.date + " time: " + this.time + " sum: "+ this.sum);
+    }
+
 
     public Long getId() {
         return id;
@@ -29,6 +44,7 @@ public class SoldItem {
     public void setId(Long id) {
         this.id = id;
     }
+    public String getDate (){ return date;}
 
     public String getName() {
         return name;

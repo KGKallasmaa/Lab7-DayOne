@@ -46,12 +46,13 @@ public class ConsoleUI {
         System.out.println("=       Sales System      =");
         System.out.println("===========================");
         printUsage();
-        showTeam(); //testing purposes for whenthe bufferedreader doesn't work
+        //showTeam(); //testing purposes for whenthe bufferedreader doesn't work
         ///*
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         while (true){
             System.out.print("> ");
-            processCommand(in.readLine().trim().toLowerCase());
+            System.out.println(in.readLine());
+            //processCommand(in.readLine().trim().toLowerCase());
             System.out.println("Done. ");
         }
         //*/
@@ -140,16 +141,16 @@ public class ConsoleUI {
 
         try {
             properties = new Properties();
-            properties.load(ConsoleUI.class.getResourceAsStream("application.properties"));//
+            properties.load(ConsoleUI.class.getResourceAsStream("/application.properties"));
         } catch (IOException e) {
             System.out.println("Properties file was not found");
         }
         System.out.println("-------------------------");
         System.out.println("Team information:");
-        System.out.println("Team name:\t\t\t" + properties.getProperty("team_name"));// team name
-        System.out.println("Team leader:\t\t" + properties.getProperty("team_leader"));// team leader
+        System.out.println("Team name:\t\t\t" + properties.getProperty("team_name"));       // team name
+        System.out.println("Team leader:\t\t" + properties.getProperty("team_leader"));     // team leader
         System.out.println("Team leader email:\t" + properties.getProperty("team_leader_email"));// team leader email
-        System.out.println("Team members:\t\t" + properties.getProperty("team_members"));// team members
+        System.out.println("Team members:\t\t" + properties.getProperty("team_members"));   // team members
         System.out.println("-------------------------");
 
 

@@ -15,6 +15,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     private final List<StockItem> stockItemList;
     private final HashMap<Long,List<SoldItem>> soldItemMap;
+    private final List<SoldItem> order_list;
 
     public InMemorySalesSystemDAO() {
         List<StockItem> items = new ArrayList<StockItem>();
@@ -29,20 +30,17 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
 
         //Sample order
-        List<StockItem> order_items = new ArrayList<>();
-        order_items.add(new StockItem(1L, "Test 1", "I'm cool", 12.0, 6));
-        order_items.add(new StockItem(1L, "Test 2", "I'm cooler", 12.0, 6));
-        order_items.add(new StockItem(1L, "Test 3", "I'm way cooler", 13.0, 7));
-        order_items.add(new StockItem(1L, "Test 4", "I'm the best", 14.0, 8));
+        List<SoldItem> order_items = new ArrayList<>();
+        StockItem tere = new StockItem(6L, "Test 1", "I'm cool", 12.0, 6000);
+        order_items.add(new SoldItem(tere,10));
+        order_items.add(new SoldItem(tere,20));
+        order_items.add(new SoldItem(tere,30));
 
         Date date = new Date();
-        Long time = MAX_VALUE;
-        List<SoldItem> sold_list = new ArrayList<SoldItem>();
-        for(StockItem el : order_items){
-            SoldItem item = new SoldItem(el,el.getQuantity());
-            sold_list.add(item);
-        }
-        soldItemMap.put(time,sold_list);
+        List<SoldItem> tere2 = new ArrayList<>(),
+        SoldItem order_1 = new SoldItem(date.toString(), Long.toString(date.getTime()),order_items);
+        tere2.add(order_1);
+        this.order_list = tere2;
 
     }
 
