@@ -41,6 +41,8 @@ public class SalesSystemUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        SalesSystemUI test = new SalesSystemUI();
+
         log.info("javafx version: " + System.getProperty("javafx.runtime.version"));
 
         Tab purchaseTab = new Tab();
@@ -78,15 +80,6 @@ public class SalesSystemUI extends Application {
         primaryStage.show();
 
         log.info("Salesystem GUI started");
-
-        //Merge conflict tester
-
-
-        // This really is
-       // an easy merge
-      //     ocnflict     example
-    //    text
-
 
     }
 

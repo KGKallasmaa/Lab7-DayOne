@@ -2,8 +2,10 @@ package ee.ut.math.tvt.salessystem.logic;
 
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
+import javafx.scene.control.DatePicker;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ShoppingCart {
@@ -43,7 +45,8 @@ public class ShoppingCart {
         dao.beginTransaction();
         try {
             for (SoldItem item : items) {
-                dao.saveSoldItem(item);
+                Date date = new Date();
+                dao.saveSoldItem(date.getTime(),item);
             }
             dao.commitTransaction();
             items.clear();

@@ -2,7 +2,9 @@ package ee.ut.math.tvt.salessystem.dao;
 
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
+import javafx.scene.control.DatePicker;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,10 +33,11 @@ public interface SalesSystemDAO {
     List<StockItem> findStockItems();
 
     StockItem findStockItem(long id);
+    HashMap<Long, List<SoldItem>> getSoldItemMap();
 
     void saveStockItem(StockItem stockItem);
 
-    void saveSoldItem(SoldItem item);
+    void saveSoldItem(Long date, SoldItem item);
 
     void beginTransaction();
 
