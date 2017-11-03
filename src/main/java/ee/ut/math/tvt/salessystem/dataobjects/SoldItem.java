@@ -15,8 +15,8 @@ public class SoldItem {
     private String name;
     private Integer quantity;
     private double price;
-    private String date;
-    private String time;
+    private Date date;
+    private Long time;
     private List<SoldItem> order_items;
     private double sum;
 
@@ -30,7 +30,7 @@ public class SoldItem {
         this.price = stockItem.getPrice();
         this.quantity = quantity;
     }
-    public SoldItem(String date, String time, Double sum){
+    public SoldItem(Date date,Long time, Double sum){
         this.date = date;
         this.time = time;
         this.sum = sum;
@@ -45,7 +45,7 @@ public class SoldItem {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getDate (){ return date;}
+    public Date getDate (){ return date;}
 
     public String getName() {
         return name;

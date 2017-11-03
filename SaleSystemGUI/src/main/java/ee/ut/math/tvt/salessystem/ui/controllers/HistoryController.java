@@ -11,11 +11,13 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.security.PrivateKey;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.util.*;
 
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,9 +35,9 @@ public class HistoryController implements Initializable {
     @FXML private javafx.scene.control.Button showLast10;
     @FXML private javafx.scene.control.Button showAll;
     @FXML private javafx.scene.control.TableView<SoldItem> historyTableView;
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Date> dateColumn;
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Long> timeColumn;
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> sumColumn;
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Date> dateColumn= new TableColumn<>("Date");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Long> timeColumn= new TableColumn<>("Time");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> sumColumn= new TableColumn<>("Sum");
     private ObservableList<SoldItem> data;
 
     public HistoryController(SalesSystemDAO dao) {
@@ -43,7 +45,14 @@ public class HistoryController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateColumn.setMinWidth(200);
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        timeColumn.setMinWidth(200);
+        sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
+        sumColumn.setMinWidth(200);
+        historyTableView = new TableView<>();
+        historyTableView.getColumns().addAll(dateColumn,timeColumn,sumColumn);
     }
 
     @FXML protected void showBetweenDatesButtonClicked() {
@@ -51,40 +60,28 @@ public class HistoryController implements Initializable {
     }
 
     @FXML protected void showLast10ButtonClicked() {
-
+        log.info("Show last 10 button clicked");
     }
 
     @FXML protected void showAllButtonClicked(){
         log.info("Show all button clicked");
-        if(startDateField != null && endDateField != null){
-            //populating table
-            TableView table_view = new TableView<SoldItem>();
-
-            //all shoping bags
-            HashMap<Date,List<SoldItem>> bags = dao.getSoldItemMap();
-
-            //suitable shoping bags
-            List<SoldItem> orders = new ArrayList<>();
-            for(Date e : bags.keySet()){
-                Date date = e;
-                Long time = e.getTime();
-                double sum = 0;
-                for(SoldItem el : bags.get(e)){
-                    sum += el.getSum();
-                }
-                SoldItem neww = new SoldItem(date.toString(),time.toString(),sum);
-                orders.add(neww);
+        HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
+        List<SoldItem> orders = new ArrayList<>();
+        for (Long e : all_orders.keySet()){
+            Date date = new Date(e);
+            Long time = e;
+            double sum = 0;
+            for(SoldItem el : all_orders.get(e)){
+                sum = el.getSum();
             }
-
-
-            table_view.setItems(new ObservableListWrapper<>(orders));
-         //   System.out.println("Order list: "+dao.getOrder_list().toString());
-            historyTableView = table_view;
-            historyTableView.refresh();
-
-    }else{
-            log.info("Start or end date is not selected");
+            SoldItem element = new SoldItem(date,time,sum);
+            orders.add(element);
         }
+
+        ObservableList<SoldItem> new_orders = FXCollections.observableArrayList(orders);
+        historyTableView = new TableView<>();
+        historyTableView.setItems(new_orders);
+      //  historyTableView.getColumns().addAll(dateColumn,timeColumn,sumColumn);
     }
 
     @FXML protected void displayOrder() {

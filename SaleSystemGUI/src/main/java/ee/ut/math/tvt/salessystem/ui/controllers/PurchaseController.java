@@ -46,7 +46,7 @@ public class PurchaseController implements Initializable {
     @FXML private javafx.scene.control.TableColumn PriceColumn;
     @FXML private javafx.scene.control.TableColumn NameColumn;
     @FXML private javafx.scene.control.TableColumn SumColumn;
-    @FXML private TableView<SoldItem> purchaseTableView;
+    @FXML private TableView purchaseTableView;
 
     public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart) {
         this.dao = dao;
