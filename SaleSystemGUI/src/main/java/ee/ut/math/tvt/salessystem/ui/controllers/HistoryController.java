@@ -48,134 +48,40 @@ public class HistoryController implements Initializable {
 
     @FXML protected void showBetweenDatesButtonClicked() {
         log.info("Show between dates button clicked");
-        if(startDateField != null && endDateField != null){
-            HashMap<Long,List<SoldItem>> orders = dao.getSoldItemMap();
-            HashMap<Long,List<SoldItem>> suitable_orders = new HashMap<>();
-            //Removing elements that are not suitable
-            Date start_date = new Date(startDateField.getValue().toEpochDay());
-            Date end_date = new Date(endDateField.getValue().toEpochDay());
-
-            for(Long time : orders.keySet()){
-                if(time > start_date.getTime() && time < end_date.getTime()){
-                    suitable_orders.put(time,orders.get(time));
-                }
-            }
-            List<Date> dates = new ArrayList<>();
-            List<Long> times = new ArrayList<>();
-            List<Integer> sums = new ArrayList<>();
-            for(Long time : suitable_orders.keySet()){
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(time);
-                dates.add(calendar.getTime());
-                times.add(time);
-                int sum = 0;
-                List<SoldItem> elements = suitable_orders.get(time);
-                for(SoldItem el : elements){
-                    sum += el.getSum();
-                }
-                sums.add(sum);
-            }
-
-        }
     }
 
     @FXML protected void showLast10ButtonClicked() {
 
     }
-    private List<SoldItem> order_list(HashMap<Long,List<SoldItem>> suitable_orders) {
-       List<SoldItem> data = new ArrayList<>();
-        for(Long time : suitable_orders.keySet()){
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(time);
-            Date date = calendar.getTime();
-            double sum = 0;
-            List<SoldItem> elements = suitable_orders.get(time);
-            for(SoldItem element : elements) {
-                sum += element.getSum();
-            }
-
-            SoldItem el = new SoldItem(date.toString(),time.toString(),sum);
-            data.add(el);
-            System.out.println("info: "+el);
-        }
-        System.out.println(data);
-        return data;
-    }
 
     @FXML protected void showAllButtonClicked(){
         log.info("Show all button clicked");
-
-        System.out.println(startDateField);
         if(startDateField != null && endDateField != null){
-            HashMap<Long,List<SoldItem>> orders = dao.getSoldItemMap();
-            HashMap<Long,List<SoldItem>> suitable_orders = new HashMap<>();
-            //Removing elements that are not suitable
-            Date start_date = new Date(startDateField.getValue().toEpochDay());
-            Date end_date = new Date(endDateField.getValue().toEpochDay());
+            //populating table
+            TableView table_view = new TableView<SoldItem>();
 
-            for(Long time : orders.keySet()){
-                suitable_orders.put(time,orders.get(time));
-            }
-            //System.out.println(orders);
+            //all shoping bags
+            HashMap<Date,List<SoldItem>> bags = dao.getSoldItemMap();
 
-
-            List<Date> dates = new ArrayList<>();
-            List<Long> times = new ArrayList<>();
-            List<Integer> sums = new ArrayList<>();
-            for(Long time : suitable_orders.keySet()){
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(time);
-                dates.add(calendar.getTime());
-                times.add(time);
-                int sum = 0;
-                List<SoldItem> elements = suitable_orders.get(time);
-                for(SoldItem el : elements){
+            //suitable shoping bags
+            List<SoldItem> orders = new ArrayList<>();
+            for(Date e : bags.keySet()){
+                Date date = e;
+                Long time = e.getTime();
+                double sum = 0;
+                for(SoldItem el : bags.get(e)){
                     sum += el.getSum();
                 }
-                sums.add(sum);
+                SoldItem neww = new SoldItem(date.toString(),time.toString(),sum);
+                orders.add(neww);
             }
 
-            System.out.println(suitable_orders);
-            //System.out.println(dates);
-            //System.out.println(times);
-            //System.out.println(sums);
 
-            //populating table
-
-            data = FXCollections.observableArrayList();
-            ObservableList<Map> allData = FXCollections.observableArrayList();
-            int i = 0;
-            while (i<dates.size()){
-                Map<String,String> dataRow = new HashMap<>();
-                String date = dates.get(i).toString() ;
-                String time = times.get(i).toString();
-                String sum= sums.get(i).toString();
-                dataRow.put(dateColumn.getText(),date);
-                dataRow.put(timeColumn.getText(),time);
-                dataRow.put(sumColumn.getText(),sum);
-                allData.add(dataRow);
-                i++;
-            }
-
-            TableView table_view = new TableView<SoldItem>();
-            table_view.setItems(new ObservableListWrapper<>(order_list(suitable_orders)));
+            table_view.setItems(new ObservableListWrapper<>(orders));
+         //   System.out.println("Order list: "+dao.getOrder_list().toString());
             historyTableView = table_view;
-            System.out.println(table_view.getItems());
-            System.out.println(order_list(suitable_orders));
-//            table_view.setEditable(true);
-//            table_view.getSelectionModel().setCellSelectionEnabled(true);
-//            table_view.getColumns().setAll(dateColumn, timeColumn, sumColumn);
+            historyTableView.refresh();
 
-            /*
-            for(Long l : suitable_orders.keySet()){
-                List<SoldItem> el = suitable_orders.get(l);
-                data.add(el);
-            }
-            */
-
-
-            //Adding items to columns is broken!!!
     }else{
             log.info("Start or end date is not selected");
         }

@@ -46,7 +46,7 @@ public class ShoppingCart {
         try {
             for (SoldItem item : items) {
                 Date date = new Date();
-                dao.saveSoldItem(date.getTime(),item);
+                dao.saveSoldItem(date,item);
             }
             dao.commitTransaction();
             items.clear();

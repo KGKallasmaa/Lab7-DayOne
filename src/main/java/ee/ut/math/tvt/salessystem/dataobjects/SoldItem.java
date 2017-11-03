@@ -18,6 +18,7 @@ public class SoldItem {
     private String date;
     private String time;
     private List<SoldItem> order_items;
+    private double sum;
 
     public SoldItem() {
     }
@@ -29,10 +30,10 @@ public class SoldItem {
         this.price = stockItem.getPrice();
         this.quantity = quantity;
     }
-    public SoldItem(String date, String time, List<SoldItem> order_items){
+    public SoldItem(String date, String time, Double sum){
         this.date = date;
         this.time = time;
-        this.order_items = order_items;
+        this.sum = sum;
    //     System.out.println("date: " + this.date + " time: " + this.time + " sum: "+ this.sum);
     }
 
@@ -62,6 +63,8 @@ public class SoldItem {
         this.price = price;
     }
 
+
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -84,6 +87,17 @@ public class SoldItem {
 
     @Override
     public String toString() {
-        return String.format("SoldItem{id=%d, name='%s'}", id, name);
+        return "SoldItem{" +
+                "id=" + id +
+                ", stockItem=" + stockItem +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", order_items=" + order_items +
+                ", sum=" + sum +
+                '}';
     }
 }
+

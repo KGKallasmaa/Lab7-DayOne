@@ -14,8 +14,7 @@ import static java.lang.Long.MAX_VALUE;
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     private final List<StockItem> stockItemList;
-    private final HashMap<Long,List<SoldItem>> soldItemMap;
-    private final List<SoldItem> order_list;
+    private final HashMap<Date,List<SoldItem>> soldItemMap;
 
     public InMemorySalesSystemDAO() {
         List<StockItem> items = new ArrayList<StockItem>();
@@ -25,22 +24,25 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         items.add(new StockItem(4L, "Free Beer", "Student's delight", 0.0, 100));
         items.add(new StockItem(5L, "Free Beer", "Student's delight", 0.0, 300));
         this.stockItemList = items;
-        HashMap<Long,List<SoldItem>> test = new HashMap<>();
-        this.soldItemMap = test;
 
 
-        //Sample order
+        //Sample orders
         List<SoldItem> order_items = new ArrayList<>();
         StockItem tere = new StockItem(6L, "Test 1", "I'm cool", 12.0, 6000);
         order_items.add(new SoldItem(tere,10));
         order_items.add(new SoldItem(tere,20));
         order_items.add(new SoldItem(tere,30));
+        List<SoldItem> order_items2 = new ArrayList<>();
+        StockItem tere20 = new StockItem(6L, "Test 2", "I'm cool", 15.0, 6000);
+        order_items2.add(new SoldItem(tere20,14));
+        order_items2.add(new SoldItem(tere20,26));
+        order_items2.add(new SoldItem(tere20,37));
 
         Date date = new Date();
-        List<SoldItem> tere2 = new ArrayList<>(),
-        SoldItem order_1 = new SoldItem(date.toString(), Long.toString(date.getTime()),order_items);
-        tere2.add(order_1);
-        this.order_list = tere2;
+        Date date1 = new Date();
+        HashMap<Date,List<SoldItem>> test = new HashMap<>();
+        test.put(date,order_items);
+        this.soldItemMap = test;
 
     }
 
@@ -59,7 +61,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
 
     @Override
-    public void saveSoldItem(Long date, SoldItem item) {
+    public void saveSoldItem(Date date, SoldItem item) {
         List<SoldItem> orders = soldItemMap.get(date);
         orders.add(item);
         soldItemMap.put(date,orders);
@@ -82,7 +84,8 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     public void commitTransaction() {
     }
     @Override
-    public HashMap<Long, List<SoldItem>> getSoldItemMap() {
+    public HashMap<Date, List<SoldItem>> getSoldItemMap() {
         return soldItemMap;
     }
+
 }
