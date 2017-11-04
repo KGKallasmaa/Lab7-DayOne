@@ -2,17 +2,24 @@ package ee.ut.math.tvt.salessystem.dao;
 
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     private final List<StockItem> stockItemList;
     private final HashMap<Long,List<SoldItem>> soldItemMap;
-
+    private String user;
+    private javafx.scene.control.TabPane tabs;
+    private javafx.scene.control.Tab tab;
 
     public InMemorySalesSystemDAO() {
         this.stockItemList = findStockItems();
@@ -111,7 +118,6 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
             soldItemMap.put(time, orders);
         }
     }
-
     @Override
     public void saveStockItem(StockItem stockItem) {
         stockItemList.add(stockItem);
@@ -121,11 +127,9 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
             stockItemList.remove(stockItem);
         }
     }
-
     @Override
     public void beginTransaction() {
     }
-
     @Override
     public void rollbackTransaction() {
     }
@@ -133,7 +137,28 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public void commitTransaction() {
     }
+    @ Override public void setUser(String user){
+        this.user = user;
+    }
+    @Override public String getUser(){
+        return user;
+    }
 
-
-
+    @Override
+    public TabPane init_Tabs(Tab userTab, Tab purchaseTab,Tab stockTab, Tab historyTab, Tab teamtab) {
+        this.tabs = new TabPane(userTab,purchaseTab,stockTab,historyTab,teamtab);
+        return tabs;
+    }
+    @Override
+    public TabPane getTabs(){
+        return tabs;
+    }
+    @Override public void setTabs(ObservableList<Tab> pane){
+        TabPane current_tab = new TabPane();
+        current_tab.getTabs().removeAll();
+        for (Tab tab : pane){
+            current_tab.getTabs().addAll(tab);
+        }
+        this.tabs = current_tab;
+    }
 }
