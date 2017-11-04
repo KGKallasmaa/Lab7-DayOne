@@ -25,8 +25,8 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
 
     @Override
-    public ObservableList<StockItem> findStockItems() {
-        ObservableList<StockItem> stockitems = FXCollections.observableArrayList();
+    public List<StockItem> findStockItems() {
+        List<StockItem> stockitems = new ArrayList<>();
 
         //Random stockitems
         StockItem stockitem_1 = new StockItem(1L,"Test1","I'm cool",340,1200);

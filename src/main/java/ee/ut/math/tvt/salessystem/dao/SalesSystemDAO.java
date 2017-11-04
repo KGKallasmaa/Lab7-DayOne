@@ -32,7 +32,7 @@ import java.util.List;
  */
 public interface SalesSystemDAO {
 
-    ObservableList<StockItem> findStockItems();
+    List<StockItem> findStockItems();
 
     StockItem findStockItem(long id);
     HashMap<Long,List<SoldItem>> findAllOrders();

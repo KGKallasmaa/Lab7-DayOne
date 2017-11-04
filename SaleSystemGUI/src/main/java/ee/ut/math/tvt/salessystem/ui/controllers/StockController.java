@@ -55,18 +55,18 @@ public class StockController implements Initializable {
 
     private void refreshStockItems() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        idColumn.setMinWidth(200);
+        idColumn.setPrefWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.setMinWidth(200);
+        nameColumn.setPrefWidth(120);
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descriptionColumn.setMinWidth(200);
+        descriptionColumn.setPrefWidth(120);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceColumn.setMinWidth(200);
+        priceColumn.setPrefWidth(120);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        quantityColumn.setMinWidth(200);
-        warehouseTableView = new TableView<>();
-        warehouseTableView.setItems(dao.findStockItems());
+        quantityColumn.setPrefWidth(120);
+        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
         warehouseTableView.getColumns().addAll(idColumn,nameColumn,descriptionColumn,priceColumn,quantityColumn);
+        warehouseTableView.refresh();
 
     }
     @FXML

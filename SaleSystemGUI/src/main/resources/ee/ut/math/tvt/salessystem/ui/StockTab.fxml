@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -39,14 +38,6 @@
       </GridPane>
       <Button fx:id="addProductbutton" layoutX="331.0" layoutY="75.0" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="25.0" prefWidth="136.0" text="Add product" />
       <Button fx:id="refreshWarehousebutton" layoutX="331.0" layoutY="110.0" mnemonicParsing="false" onAction="#refreshButtonClicked" prefHeight="25.0" prefWidth="136.0" text="Refrech warehouse" />
-      <TableView fx:id="warehouseTableView" layoutX="-1.0" layoutY="167.0" prefHeight="235.0" prefWidth="601.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Id" />
-          <TableColumn prefWidth="122.0" text="Name" />
-            <TableColumn prefWidth="155.0" text="Description" />
-            <TableColumn minWidth="0.0" prefWidth="124.0" text="Price" />
-            <TableColumn prefWidth="124.0" text="Quantity" />
-        </columns>
-      </TableView>
+      <TableView fx:id="warehouseTableView" layoutX="-1.0" layoutY="167.0"/>
    </children>
 </AnchorPane>
