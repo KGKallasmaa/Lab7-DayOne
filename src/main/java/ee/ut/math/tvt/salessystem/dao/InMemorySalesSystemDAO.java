@@ -2,22 +2,17 @@ package ee.ut.math.tvt.salessystem.dao;
 
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.lang.Long.MAX_VALUE;
 
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     private final List<StockItem> stockItemList;
     private final HashMap<Long,List<SoldItem>> soldItemMap;
+
 
     public InMemorySalesSystemDAO() {
         this.stockItemList = findStockItems();
@@ -107,7 +102,6 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveSoldItem(Long time, SoldItem item) {
         if (soldItemMap.containsKey(time)) {
-
             List<SoldItem> orders = soldItemMap.get(time);
             orders.add(item);
             soldItemMap.put(time, orders);
@@ -121,6 +115,11 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveStockItem(StockItem stockItem) {
         stockItemList.add(stockItem);
+    }
+    @Override public void removeStockItem(StockItem stockItem) {
+        if(stockItemList.contains(stockItem)){
+            stockItemList.remove(stockItem);
+        }
     }
 
     @Override

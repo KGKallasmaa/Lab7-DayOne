@@ -64,8 +64,6 @@ public class SoldItem {
         this.price = price;
     }
 
-
-
     public Integer getQuantity() {
         return quantity;
     }
