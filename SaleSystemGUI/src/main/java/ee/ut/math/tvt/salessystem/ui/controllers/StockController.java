@@ -18,22 +18,20 @@ public class StockController implements Initializable {
 
     private final SalesSystemDAO dao;
     private static final Logger log = LogManager.getLogger(StockController.class);
-    @FXML
-    private Button addItem;
-    @FXML
-    private TableView<StockItem> warehouseTableView;
-    private javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
-    private javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
-    private javafx.scene.control.TableColumn<StockItem, String> descriptionColumn = new TableColumn<>("Description");
-    private javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
-    private javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
-    private java.awt.TextField barCodeField;
-    private javafx.scene.control.TextField amountField;
-    private javafx.scene.control.TextField descriptionField;
-    private javafx.scene.control.TextField nameField;
-    private javafx.scene.control.TextField priceField;
-    private Button refreshWarehousebutton;
-    private Button addProductbutton;
+    @FXML private Button addItem;
+    @FXML private TableView<StockItem> warehouseTableView;
+    @FXML private javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
+    @FXML private javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
+    @FXML private javafx.scene.control.TableColumn<StockItem, String> descriptionColumn = new TableColumn<>("Description");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
+    @FXML private java.awt.TextField barCodeField;
+    @FXML private javafx.scene.control.TextField amountField;
+    @FXML private javafx.scene.control.TextField descriptionField;
+    @FXML private javafx.scene.control.TextField nameField;
+    @FXML private javafx.scene.control.TextField priceField;
+    @FXML private Button refreshWarehousebutton;
+    @FXML private Button addProductbutton;
 
 
     public StockController(SalesSystemDAO dao) {
@@ -42,18 +40,7 @@ public class StockController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       //   refreshStockItems();
-        // TODO refresh view after adding new items
-    }
 
-    @FXML
-    public void refreshButtonClicked()
-    {
-        log.info("Refresh button clicked");
-        refreshStockItems();
-    }
-
-    private void refreshStockItems() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -64,22 +51,34 @@ public class StockController implements Initializable {
         priceColumn.setPrefWidth(120);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         quantityColumn.setPrefWidth(120);
-        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
         warehouseTableView.getColumns().addAll(idColumn,nameColumn,descriptionColumn,priceColumn,quantityColumn);
-     //   warehouseTableView.refresh();
-
+        refreshStockItems();
     }
+
+    @FXML
+    public void refreshButtonClicked()
+    {
+        log.info("Refresh button clicked");
+        refreshStockItems();
+    }
+
+    private void refreshStockItems() {
+        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
+        warehouseTableView.refresh();
+    }
+
     @FXML
     protected void addButtonClicked() {
         log.info("Add button clicked");
         //size
-        if(barCodeField != null && amountField != null && descriptionField != null && nameField != null && priceField != null ){
+        if(barCodeField != null && nameField != null && descriptionField != null && priceField != null && amountField != null ){
             StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                     Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
             int before_length = dao.findStockItems().size();
             dao.saveStockItem(new_stockitem);
             int after_length = dao.findStockItems().size();
             if(after_length > before_length){
+                warehouseTableView.refresh();
                 log.info("Item saved");
             }else{
                 log.info("Item was not saved");

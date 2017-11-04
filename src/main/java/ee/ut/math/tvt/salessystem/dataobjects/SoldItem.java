@@ -31,7 +31,9 @@ public class SoldItem {
         this.quantity = quantity;
         this.sum = stockItem.getPrice() * quantity;
     }
-    public SoldItem(Date date,Long time, Double sum){
+
+
+    public SoldItem(Date date, Long time, Double sum){
         this.date = date;
         this.time = time;
         this.sum = sum;
@@ -64,7 +66,9 @@ public class SoldItem {
         this.price = price;
     }
 
-
+    public Long getTime() {
+        return time;
+    }
 
     public Integer getQuantity() {
         return quantity;
