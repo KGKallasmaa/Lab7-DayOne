@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="14.0" layoutY="15.0">
         <columnConstraints>
@@ -28,33 +28,33 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bar Code:" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.rowIndex="2" />
-            <TextField fx:id="BarCodeField" focusTraversable="false" onAction="#addBarcode" promptText="Barcode" GridPane.columnIndex="1">
+            <TextField fx:id="BarCodeField" focusTraversable="false" promptText="Barcode" GridPane.columnIndex="1">
                <effect>
                   <Glow />
                </effect></TextField>
-            <TextField fx:id="amountField" onAction="#addAmount" promptText="Amount" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="amountField" promptText="Amount" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <effect>
                   <Glow />
                </effect></TextField>
-            <TextField fx:id="nameField" onAction="#addName" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="nameField" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <effect>
                   <Glow />
                </effect></TextField>
-            <TextField fx:id="priceField" onAction="#addPrice" promptText="Price" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="priceField" promptText="Price" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <effect>
                   <Glow />
                </effect></TextField>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" GridPane.rowIndex="4" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descrition:" GridPane.rowIndex="3" />
-            <TextField fx:id="descriptionField" onAction="#addDesc" promptText="Describtion" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="descriptionField" promptText="Describtion" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <effect>
                   <Glow />
                </effect></TextField>
          </children>
       </GridPane>
-      <Button fx:id="addItem" layoutX="331.0" layoutY="51.0" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="25.0" prefWidth="169.0" text="Add product" />
-      <Button fx:id="refreshWarehousebutton" layoutX="331.0" layoutY="110.0" mnemonicParsing="false" onAction="#refreshButtonClicked" prefHeight="25.0" prefWidth="169.0" text="Refrech warehouse" />
-      <TableView fx:id="warehouseTableView" layoutX="-1.0" layoutY="167.0" />
-      <Button fx:id="removeproduct" layoutX="331.0" layoutY="78.0" mnemonicParsing="false" onAction="#removeButtonClicked" prefHeight="25.0" prefWidth="169.0" text="Remove product" />
+      <Button fx:id="addItem" layoutX="331.0" layoutY="35.0" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="25.0" prefWidth="169.0" text="Add product" />
+      <Button fx:id="refreshWarehousebutton" layoutX="331.0" layoutY="109.0" mnemonicParsing="false" onAction="#refreshButtonClicked" prefHeight="25.0" prefWidth="169.0" text="Refrech warehouse" />
+      <TableView fx:id="warehouseTableView" layoutY="173.0" />
+      <Button fx:id="removeProductButton" layoutX="331.0" layoutY="71.0" mnemonicParsing="false" onAction="#removeButtonClicked" prefHeight="25.0" prefWidth="169.0" text="Remove product" />
    </children>
 </AnchorPane>

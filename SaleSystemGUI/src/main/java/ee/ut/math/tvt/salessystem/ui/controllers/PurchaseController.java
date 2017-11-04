@@ -65,15 +65,6 @@ public class PurchaseController implements Initializable {
         purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
         purchaseTableView.getColumns().addAll(IdColumn, NameColumn, PriceColumn, QuantityColumn, SumColumn);
         disableProductField(true);
-
-        this.barCodeField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
-                if (!newPropertyValue) {
-                    fillInputsBySelectedStockItem();
-                }
-            }
-        });
     }
 
     /** Event handler for the <code>new purchase</code> event. */
