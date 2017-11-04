@@ -16,7 +16,9 @@
      	 */
 }
 
-
+.text-field {
+    -fx-prompt-text-fill: black;
+}
  
 .background{
     -fx-background-color: b_color;

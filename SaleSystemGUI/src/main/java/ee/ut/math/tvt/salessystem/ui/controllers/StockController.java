@@ -42,7 +42,7 @@ public class StockController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-          refreshStockItems();
+       //   refreshStockItems();
         // TODO refresh view after adding new items
     }
 
@@ -66,7 +66,7 @@ public class StockController implements Initializable {
         quantityColumn.setPrefWidth(120);
         warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
         warehouseTableView.getColumns().addAll(idColumn,nameColumn,descriptionColumn,priceColumn,quantityColumn);
-        warehouseTableView.refresh();
+     //   warehouseTableView.refresh();
 
     }
     @FXML
