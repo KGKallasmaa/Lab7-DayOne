@@ -13,7 +13,7 @@ public class StockItem {
     private String description;
     private int quantity;
 
-    public StockItem() {
+    public StockItem () {
     }
 
     public StockItem(Long id, String name, String desc, double price, int quantity) {

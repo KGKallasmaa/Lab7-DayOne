@@ -4,6 +4,8 @@ import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -47,5 +49,10 @@ public interface SalesSystemDAO {
 
     void commitTransaction();
     void removeStockItem(StockItem stockItem);
+    void setUser(String user);
+    String getUser();
+    TabPane getTabs();
+    void setTabs(ObservableList<Tab> pane);
+    TabPane init_Tabs(Tab userTab, Tab purchaseTab, Tab stockTab, Tab historyTab, Tab teamtab);
 
 }
