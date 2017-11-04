@@ -19,6 +19,7 @@ public class StockController implements Initializable {
     private final SalesSystemDAO dao;
     private static final Logger log = LogManager.getLogger(StockController.class);
     @FXML private Button addItem;
+    @FXML private Button removeproduct;
     @FXML private TableView<StockItem> warehouseTableView;
     @FXML private javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
     @FXML private javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
@@ -33,14 +34,11 @@ public class StockController implements Initializable {
     @FXML private Button refreshWarehousebutton;
     @FXML private Button addProductbutton;
 
-
     public StockController(SalesSystemDAO dao) {
         this.dao = dao;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
+    @Override public void initialize(URL location, ResourceBundle resources) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -55,9 +53,7 @@ public class StockController implements Initializable {
         refreshStockItems();
     }
 
-    @FXML
-    public void refreshButtonClicked()
-    {
+    @FXML public void refreshButtonClicked() {
         log.info("Refresh button clicked");
         refreshStockItems();
     }
@@ -106,5 +102,11 @@ public class StockController implements Initializable {
         log.info("Price selected");
         this.priceField = priceField;
     }
-
+    private int getQuantity (){
+        return Integer.parseInt(amountField.getText());
+    }
+    private long getId () { return  Long.parseLong(barCodeField.getText());}
+    private String getName () { return nameField.getText();}
+    private double getPrice () { return Double.parseDouble(priceField.getText());}
+    private String getDescription () { return descriptionField.getText();}
 }
