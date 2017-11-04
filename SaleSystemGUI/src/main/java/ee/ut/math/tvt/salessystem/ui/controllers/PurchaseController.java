@@ -119,6 +119,7 @@ public class PurchaseController implements Initializable {
         cancelPurchase.setDisable(false);
         submitPurchase.setDisable(false);
         newPurchase.setDisable(true);
+        priceField.setDisable(true);
     }
 
     // switch UI to the state that allows to initiate new purchase
