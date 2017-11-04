@@ -22,7 +22,6 @@ public class ShoppingCart {
      * Add new SoldItem to table.
      */
     public void addItem(SoldItem newItem) {
-        // TODO In case such stockItem already exists increase the quantity of the existing stock
         // TODO verify that warehouse items' quantity remains at least zero or throw an exception
         boolean isInList = false;
         for (SoldItem item : items){
@@ -31,6 +30,7 @@ public class ShoppingCart {
                     items.remove(item);
                 }
                 item.setQuantity(item.getQuantity() + newItem.getQuantity());
+                item.setSum(item.getQuantity() * item.getPrice());
                 isInList = true;
                 break;
             }

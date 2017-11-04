@@ -8,13 +8,10 @@ import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,12 +38,13 @@ public class PurchaseController implements Initializable {
     @FXML private ComboBox nameSelect;
     @FXML private TextField priceField;
     @FXML private Button addItemButton;
-    @FXML private javafx.scene.control.TableColumn IdColumn;
-    @FXML private javafx.scene.control.TableColumn QuantityColumn;
-    @FXML private javafx.scene.control.TableColumn PriceColumn;
-    @FXML private javafx.scene.control.TableColumn NameColumn;
-    @FXML private javafx.scene.control.TableColumn SumColumn;
-    @FXML private TableView purchaseTableView;
+    @FXML private TableView<SoldItem> purchaseTableView;
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Long> IdColumn = new TableColumn<>("Id");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Integer> QuantityColumn = new TableColumn<>("Quantity");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> PriceColumn = new TableColumn<>("Price");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, String> NameColumn = new TableColumn<>("Name");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> SumColumn = new TableColumn<>("Sum");
+
 
     public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart) {
         this.dao = dao;
@@ -57,7 +55,15 @@ public class PurchaseController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
+
+        IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        QuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        SumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
+
         purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
+        purchaseTableView.getColumns().addAll(IdColumn, NameColumn, PriceColumn, QuantityColumn, SumColumn);
         disableProductField(true);
 
         this.barCodeField.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -166,7 +172,9 @@ public class PurchaseController implements Initializable {
             } catch (NumberFormatException e) {
                 quantity = 1;
             }
+
             shoppingCart.addItem(new SoldItem(stockItem, quantity));
+            System.out.println(shoppingCart.getAll());
             purchaseTableView.refresh();
         }
     }
