@@ -26,16 +26,18 @@ public class StockController implements Initializable {
     @FXML private javafx.scene.control.TableColumn<StockItem, String> descriptionColumn = new TableColumn<>("Description");
     @FXML private javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
     @FXML private javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
-    @FXML private javafx.scene.control.TextField barCodeField;
+    @FXML private java.awt.TextField barCodeField;
     @FXML private javafx.scene.control.TextField amountField;
     @FXML private javafx.scene.control.TextField descriptionField;
     @FXML private javafx.scene.control.TextField nameField;
     @FXML private javafx.scene.control.TextField priceField;
     @FXML private Button refreshWarehousebutton;
     @FXML private Button addProductbutton;
+
     public StockController(SalesSystemDAO dao) {
         this.dao = dao;
     }
+
     @Override public void initialize(URL location, ResourceBundle resources) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(120);
@@ -47,62 +49,58 @@ public class StockController implements Initializable {
         priceColumn.setPrefWidth(120);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         quantityColumn.setPrefWidth(120);
-        warehouseTableView.getColumns().addAll(idColumn,quantityColumn,nameColumn,descriptionColumn,priceColumn);
-        // TODO refresh view after adding new items
+        warehouseTableView.getColumns().addAll(idColumn,nameColumn,descriptionColumn,priceColumn,quantityColumn);
+        refreshStockItems();
     }
+
     @FXML public void refreshButtonClicked() {
         log.info("Refresh button clicked");
         refreshStockItems();
     }
-    private void refreshStockItems() {
-        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
-        barCodeField.clear();
-        nameField.clear();
-        amountField.clear();
-        priceField.clear();
-        descriptionField.clear();
-        warehouseTableView.refresh();
-    }
     @FXML protected void addButtonClicked() {
         log.info("Add button clicked");
-        System.out.println(barCodeField);
-        if (barCodeField == null && nameField == null && descriptionField == null && priceField == null && amountField == null) {
-            StockItem item_tobe_added = new StockItem();
-            item_tobe_added.setId(getId());
-            item_tobe_added.setName(getName());
-            item_tobe_added.setDescription(getDescription());
-            item_tobe_added.setPrice(getPrice());
-            item_tobe_added.setQuantity(getQuantity());
-            dao.saveStockItem(item_tobe_added);
-
-        }else{
-            log.info("Some field is missing. Item can not be added.");
+        //size
+        if(barCodeField != null && nameField != null && descriptionField != null && priceField != null && amountField != null ){
+            StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
+                    Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
+            int before_length = dao.findStockItems().size();
+            dao.saveStockItem(new_stockitem);
+            int after_length = dao.findStockItems().size();
+            if(after_length > before_length){
+                warehouseTableView.refresh();
+                log.info("Item saved");
+            }else{
+                log.info("Item was not saved");
+            }
         }
     }
-    @FXML protected void removeButtonClicked(){
-        log.info("Remove button clicked");
-        if (barCodeField == null && nameField == null && descriptionField == null && priceField == null && amountField == null) {
-            StockItem item_tobe_removed = new StockItem(getId(), getName(), getDescription(), getPrice(),getQuantity());
-            dao.removeStockItem(item_tobe_removed);
-            log.info("Item was removed. Table is ready to be refreshed.");
-        }else{
-            log.info("Some field is missing. Item can not be removed");
-        }
+    @FXML public void removeButtonClicked(){
 
     }
+
+    private void refreshStockItems() {
+        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
+        warehouseTableView.refresh();
+    }
+
     @FXML protected void addAmount(){
+        log.info("Amount selected");
         this.amountField = amountField;
     }
     @FXML protected void addBarcode(){
+        log.info("Barcode selected");
         this.barCodeField = barCodeField;
     }
     @FXML protected void addName(){
+        log.info("Name selected");
         this.nameField = nameField;
     }
     @FXML protected void addDesc(){
+        log.info("Description selected");
         this.descriptionField = descriptionField;
     }
     @FXML protected void addPrice(){
+        log.info("Price selected");
         this.priceField = priceField;
     }
     private int getQuantity (){

@@ -77,19 +77,19 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         //Grouping orders
         Date date = new Date();
         Long ms_perday = 86400000L;
-        Long date1 = date.getTime();
+        Long date1 = Long.parseLong("1506609589600");
         List<SoldItem> order_1 = new ArrayList<>();
         order_1.add(new SoldItem(stockitem_1_0,stockitem_1_0.getQuantity()));
         order_1.add(new SoldItem(stockitem_1_1,stockitem_1_1.getQuantity()));
         order_1.add(new SoldItem(stockitem_1_2,stockitem_1_2.getQuantity()));
         orders.put(date1,order_1);
-        Long date2 = date1-7*ms_perday;
+        Long date2 = Long.parseLong("1506619689601");
         List<SoldItem> order_2 = new ArrayList<>();
         order_2.add(new SoldItem(stockitem_2_0,20));
         order_2.add(new SoldItem(stockitem_2_1,10));
         order_2.add(new SoldItem(stockitem_2_2,33));
         orders.put(date2,order_2);
-        Long date3 = date2-30*ms_perday;
+        Long date3 = Long.parseLong("1506629589602");
         List<SoldItem> order_3 = new ArrayList<>();
         order_3.add(new SoldItem(stockitem_3_0,90));
         order_3.add(new SoldItem(stockitem_3_1,14));
