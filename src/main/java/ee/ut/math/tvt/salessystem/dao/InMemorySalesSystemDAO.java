@@ -73,19 +73,20 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         StockItem stockitem_3_2 = new StockItem(1L,"Test 3","Order 3",390,120);
 
         //Grouping orders
-        Long date1 = 5L;
+        Date date = new Date();
+        Long date1 = 500L;
         List<SoldItem> order_1 = new ArrayList<>();
         order_1.add(new SoldItem(stockitem_1_0,19));
         order_1.add(new SoldItem(stockitem_1_1,17));
         order_1.add(new SoldItem(stockitem_1_2,43));
         orders.put(date1,order_1);
-        Long date2 = 9L;
+        Long date2 = 90000L;
         List<SoldItem> order_2 = new ArrayList<>();
         order_2.add(new SoldItem(stockitem_2_0,20));
         order_2.add(new SoldItem(stockitem_2_1,10));
         order_2.add(new SoldItem(stockitem_2_2,33));
         orders.put(date2,order_2);
-        Long date3 = 12L;
+        Long date3 = 12000L;
         List<SoldItem> order_3 = new ArrayList<>();
         order_3.add(new SoldItem(stockitem_3_0,90));
         order_3.add(new SoldItem(stockitem_3_1,14));
@@ -104,9 +105,16 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveSoldItem(Long time, SoldItem item) {
-        List<SoldItem> orders = soldItemMap.get(time);
-        orders.add(item);
-        soldItemMap.put(time,orders);
+        if (soldItemMap.containsKey(time)) {
+
+            List<SoldItem> orders = soldItemMap.get(time);
+            orders.add(item);
+            soldItemMap.put(time, orders);
+        } else {
+            List<SoldItem> orders = new ArrayList<>();
+            orders.add(item);
+            soldItemMap.put(time, orders);
+        }
     }
 
     @Override
