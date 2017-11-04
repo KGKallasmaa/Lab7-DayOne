@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
+
 import com.sun.javafx.collections.ObservableListWrapper;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
@@ -8,6 +9,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -16,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -126,6 +128,7 @@ public class PurchaseController implements Initializable {
         submitPurchase.setDisable(false);
         newPurchase.setDisable(true);
         priceField.setDisable(true);
+        barCodeField.setDisable(true);
     }
 
     // switch UI to the state that allows to initiate new purchase
@@ -134,18 +137,16 @@ public class PurchaseController implements Initializable {
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
         newPurchase.setDisable(false);
+
         disableProductField(true);
     }
 
     private void fillInputsBySelectedStockItem() {
-        StockItem stockItem = getStockItemByBarcode();
-        if (stockItem != null) {
-            //nameSelect.setText(stockItem.getName());
-            priceField.setText(String.valueOf(stockItem.getPrice()));
-        } else {
-            resetProductField();
+        log.info("Item selected from dropdown menu");
+
+        barCodeField.setText("1");
         }
-    }
+
 
     // Search the warehouse for a StockItem with the bar code entered
     // to the barCode textfield.
@@ -195,8 +196,10 @@ public class PurchaseController implements Initializable {
      */
     private void resetProductField() {
         barCodeField.setText("");
-        quantityField.setText("1");
-        //nameSelect.setText("");
+        quantityField.setText("");
+        List<StockItem> items = dao.findStockItems();
+        nameSelect.setItems(new ObservableListWrapper(items));
         priceField.setText("");
     }
+
 }
