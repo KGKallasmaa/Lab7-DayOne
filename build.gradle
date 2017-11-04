@@ -2,8 +2,3 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 version = '1.0'
-
-/*run{
-    jvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=1044']
-}
-*/
