@@ -57,14 +57,7 @@ public class StockController implements Initializable {
         log.info("Refresh button clicked");
         refreshStockItems();
     }
-
-    private void refreshStockItems() {
-        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
-        warehouseTableView.refresh();
-    }
-
-    @FXML
-    protected void addButtonClicked() {
+    @FXML protected void addButtonClicked() {
         log.info("Add button clicked");
         //size
         if(barCodeField != null && nameField != null && descriptionField != null && priceField != null && amountField != null ){
@@ -80,6 +73,14 @@ public class StockController implements Initializable {
                 log.info("Item was not saved");
             }
         }
+    }
+    @FXML public void removeButtonClicked(){
+
+    }
+
+    private void refreshStockItems() {
+        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
+        warehouseTableView.refresh();
     }
 
     @FXML protected void addAmount(){
