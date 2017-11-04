@@ -74,6 +74,9 @@ public class SoldItem {
     }
 
     public double getSum() {
+        if(price >= 0 || quantity > 0){
+            return sum;
+        }
         return price * ((double) quantity);
     }
 

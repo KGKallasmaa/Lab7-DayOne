@@ -38,6 +38,14 @@ public class HistoryController implements Initializable {
     @FXML private javafx.scene.control.TableColumn<SoldItem, Date> dateColumn= new TableColumn<>("Date");
     @FXML private javafx.scene.control.TableColumn<SoldItem, Long> timeColumn= new TableColumn<>("Time");
     @FXML private javafx.scene.control.TableColumn<SoldItem, Double> sumColumn= new TableColumn<>("Sum");
+    @FXML private javafx.scene.control.TableView<SoldItem> orderTableView;
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Long> idColumn= new TableColumn<>("Id");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, String> nameColumn= new TableColumn<>("Name");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> priceColumn= new TableColumn<>("Price");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Integer> quantityColumn= new TableColumn<>("Quantity");
+    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> order_sumColumn= new TableColumn<>("Sum");
+
+
     private ObservableList<SoldItem> data;
 
     public HistoryController(SalesSystemDAO dao) {
@@ -51,8 +59,8 @@ public class HistoryController implements Initializable {
         timeColumn.setMinWidth(200);
         sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
         sumColumn.setMinWidth(200);
-        historyTableView = new TableView<>();
         historyTableView.getColumns().addAll(dateColumn,timeColumn,sumColumn);
+        historyTableView.refresh();
     }
 
     @FXML protected void showBetweenDatesButtonClicked() {
@@ -72,19 +80,33 @@ public class HistoryController implements Initializable {
             Long time = e;
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
-                sum = el.getSum();
+                sum += el.getSum();
             }
             SoldItem element = new SoldItem(date,time,sum);
+            System.out.println(element.toString());
             orders.add(element);
         }
+        log.info("Number of orders: "+orders.size());
 
-        ObservableList<SoldItem> new_orders = FXCollections.observableArrayList(orders);
-        historyTableView = new TableView<>();
-        historyTableView.setItems(new_orders);
-      //  historyTableView.getColumns().addAll(dateColumn,timeColumn,sumColumn);
+        historyTableView.setItems(new ObservableListWrapper<>(orders));
+        historyTableView.refresh();
     }
 
     @FXML protected void displayOrder() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setMinWidth(120);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setMinWidth(120);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceColumn.setMinWidth(120);
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        quantityColumn.setMinWidth(120);
+        order_sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
+        order_sumColumn.setMinWidth(120);
+        orderTableView.getColumns().addAll(idColumn,nameColumn,priceColumn,quantityColumn,order_sumColumn);
+        orderTableView.refresh();
+
+
     }
     @FXML protected void startDateFieldClicked(){
         log.info("Start button clicked");
