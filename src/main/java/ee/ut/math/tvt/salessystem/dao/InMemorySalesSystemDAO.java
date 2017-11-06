@@ -13,22 +13,16 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 
+
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
-    private final List<StockItem> stockItemList;
-    private final HashMap<Long,List<SoldItem>> soldItemMap;
-    private String user;
-
+    private List<StockItem> stockItemList;
+    private HashMap<Long,List<SoldItem>> soldItemMap;
 
     public InMemorySalesSystemDAO() {
-        this.stockItemList = findStockItems();
         this.soldItemMap = findAllOrders();
-    }
 
-    @Override
-    public List<StockItem> findStockItems() {
         List<StockItem> stockitems = new ArrayList<>();
-
         //Random stockitems
         StockItem stockitem_1 = new StockItem(1L,"Test1","I'm cool",340,1200);
         StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
@@ -40,7 +34,6 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         StockItem stockitem_8 = new StockItem(8L,"Test8","I'm cool",240,1280);
         StockItem stockitem_9 = new StockItem(9L,"Test9","I'm cool",140,1290);
         StockItem stockitem_10 = new StockItem(10L,"Test10","I'm cool",40,1300);
-
         //Adding random stockitems to stocitems list
         stockitems.add(stockitem_1);
         stockitems.add(stockitem_2);
@@ -52,8 +45,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         stockitems.add(stockitem_8);
         stockitems.add(stockitem_9);
         stockitems.add(stockitem_10);
+        this.stockItemList = stockitems;
+    }
 
-        return stockitems;
+    @Override
+    public List<StockItem> findStockItems() {
+        return stockItemList;
 
     }
     @Override
@@ -120,6 +117,21 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveStockItem(StockItem stockItem) {
         System.out.println("Item "+stockItem.getName()+" is being processed.");
+        // check if exists and add quantity if nessecary
+
+        //could get slow with large databases
+        for(StockItem oldStockItem : stockItemList){
+            if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
+                int oldQuantity = oldStockItem.getQuantity();
+                oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
+                System.out.println("Quantity of " + oldStockItem.getName() + " was increased from " + oldQuantity + " to " + oldStockItem.getQuantity());
+                //new price
+                double oldSum = oldQuantity*oldStockItem.getPrice();
+                double newSum = stockItem.getQuantity()*stockItem.getPrice();
+                oldStockItem.setPrice(Math.round(((oldSum + newSum) / (oldQuantity + stockItem.getQuantity()))*100 / 100));
+                return;
+            }
+        }
         stockItemList.add(stockItem);
         System.out.println("Item "+stockItem.getName()+" was saved");
     }
@@ -130,13 +142,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void beginTransaction() {
-    }
+
+        }
     @Override
     public void rollbackTransaction() {
     }
     @Override
     public void commitTransaction() {
     }
-
-
 }
