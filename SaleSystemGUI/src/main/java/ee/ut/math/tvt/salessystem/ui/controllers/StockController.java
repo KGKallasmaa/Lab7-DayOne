@@ -76,14 +76,13 @@ public class StockController implements Initializable {
         log.info("Add button clicked");
         //System.out.println(barCodeField.getText());
         //textfields are always equal to null
-        if(barCodeField != null && nameField != null && descriptionField != null && priceField != null && amountField != null ){
+        if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
             StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                     Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
             int before_length = dao.findStockItems().size();
             dao.saveStockItem(new_stockitem);
             int after_length = dao.findStockItems().size();
             if(after_length > before_length){
-                warehouseTableView.refresh();
                 log.info("Item saved");
             }else{
                 log.info("Item was not saved");
@@ -94,10 +93,20 @@ public class StockController implements Initializable {
     }
     @FXML public void removeButtonClicked(){
         log.info("Remove button clicked");
-
-
-
-        warehouseTableView.refresh();
+        if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
+            StockItem old_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
+                    Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
+            int before_length = dao.findStockItems().size();
+            dao.removeStockItem(old_stockitem);
+            int after_length = dao.findStockItems().size();
+            if(after_length < before_length){
+                log.info("Item removed");
+            }else{
+                log.info("Item was not removed");
+            }
+        } else {
+            log.info("Found a field that was equal to null.");
+        }
     }
 
     private void refreshStockItems() {

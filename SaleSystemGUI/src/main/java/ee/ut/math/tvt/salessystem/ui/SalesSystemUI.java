@@ -16,12 +16,15 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Scanner;
 
 /**
  * Graphical user interface of the sales system.
@@ -33,21 +36,22 @@ public class SalesSystemUI extends Application {
     private final SalesSystemDAO dao;
     private final ShoppingCart shoppingCart;
     BorderPane borderPane = new BorderPane();
-    private ObservableList<Tab> inizal_tabs;
-    private ObservableList<Tab> cashier_tabs;
-    private ObservableList<Tab> warehouse_tabs;
+    private TabPane master_tabpane;
+    private TabPane admin_tabpane;
+    private TabPane cashier_tabpane;
+    private TabPane warehouse_tabpane;
 
     public SalesSystemUI() {
         dao = new InMemorySalesSystemDAO();
         shoppingCart = new ShoppingCart(dao);
     }
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         SalesSystemUI test = new SalesSystemUI();
-
         log.info("javafx version: " + System.getProperty("javafx.runtime.version"));
-
+        //Tabs
         Tab purchaseTab = new Tab();
         purchaseTab.setText("Point-of-sale");
         purchaseTab.setClosable(false);
@@ -71,30 +75,24 @@ public class SalesSystemUI extends Application {
         Tab userTab = new Tab();
         userTab.setText("User");
         userTab.setClosable(false);
-        userTab.setContent(loadControls("UserTab.fxml",new UserController(dao)));
+        userTab.setContent(loadControls("UserTab.fxml",new UserController(dao,userTab,stockTab,purchaseTab,historyTab,teamTab)));
 
+        this.admin_tabpane = new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab);
+        this.cashier_tabpane =  new TabPane(purchaseTab,teamTab);
+        this.warehouse_tabpane = new TabPane(stockTab,teamTab);
 
-        //assigining proper tabs
-        ObservableList<Tab> inizal_tabs = FXCollections.observableArrayList();
-        inizal_tabs.addAll(userTab,purchaseTab,stockTab,historyTab,teamTab);
-        this.inizal_tabs = inizal_tabs;
-        ObservableList<Tab> cashier_tabs = FXCollections.observableArrayList();
-        cashier_tabs.addAll(userTab,purchaseTab,teamTab);
-        this.cashier_tabs = cashier_tabs;
-        ObservableList<Tab> warehouse_tabs = FXCollections.observableArrayList();
-        warehouse_tabs.addAll(userTab,historyTab,teamTab);
-        this.warehouse_tabs = warehouse_tabs;
+        //User selection
 
+        //assigning proper tabs
+        borderPane.setCenter(new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab));
 
         Group root = new Group();
         Scene scene = new Scene(root, 600, 500, Color.WHITE);
         scene.getStylesheets().add(getClass().getResource("DefaultTheme.css").toExternalForm());
 
-
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
 
-        borderPane.setCenter(dao.init_Tabs(userTab,purchaseTab, stockTab, historyTab, teamTab));
         root.getChildren().add(borderPane);
         primaryStage.setTitle("Sales system");
         primaryStage.setScene(scene);
@@ -108,23 +106,11 @@ public class SalesSystemUI extends Application {
         URL resource = getClass().getResource(fxml);
         if (resource == null)
             throw new IllegalArgumentException(fxml + " not found");
-
         FXMLLoader fxmlLoader = new FXMLLoader(resource);
         fxmlLoader.setController(controller);
         return fxmlLoader.load();
     }
-    public void refrech (){
-        borderPane.setCenter(dao.getTabs());
-    }
-    public ObservableList<Tab> getInizal_tabs(){
-        return inizal_tabs;
-    }
-    public ObservableList<Tab> getCashier_tabs(){
-        return cashier_tabs;
-    }
-    public ObservableList<Tab> getWarehouse_tabs(){
-        return warehouse_tabs;
-    }
+
 }
 
 

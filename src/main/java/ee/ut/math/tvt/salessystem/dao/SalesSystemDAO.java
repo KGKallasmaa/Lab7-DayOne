@@ -49,10 +49,6 @@ public interface SalesSystemDAO {
 
     void commitTransaction();
     void removeStockItem(StockItem stockItem);
-    void setUser(String user);
-    String getUser();
-    TabPane getTabs();
-    void setTabs(ObservableList<Tab> pane);
-    TabPane init_Tabs(Tab userTab, Tab purchaseTab, Tab stockTab, Tab historyTab, Tab teamtab);
+
 
 }

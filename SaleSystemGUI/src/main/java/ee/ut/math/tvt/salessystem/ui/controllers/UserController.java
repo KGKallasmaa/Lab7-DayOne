@@ -12,74 +12,75 @@ import org.apache.logging.log4j.LogManager;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.scene.control.CheckBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UserController  implements Initializable {
 
     private final SalesSystemDAO dao;
-  //  private static final Logger log = (Logger) LogManager.getLogger(UserController.class);
+    private static final Logger log = LogManager.getLogger(UserController.class);
     @FXML private javafx.scene.control.CheckBox cashierbox;
     @FXML private javafx.scene.control.CheckBox warehousebox;
     @FXML private javafx.scene.control.CheckBox adminbox;
-    @FXML private javafx.scene.control.Button setuser;
-    public UserController(SalesSystemDAO dao) {
+    @FXML private javafx.scene.control.TabPane tabpane;
+    @FXML private javafx.scene.control.Tab stocktab;
+    @FXML private javafx.scene.control.Tab usertab;
+    @FXML private javafx.scene.control.Tab purchasetab;
+    @FXML private javafx.scene.control.Tab historytab;
+    @FXML private javafx.scene.control.Tab teamtab;
+
+    public UserController(SalesSystemDAO dao, Tab usertab,Tab stocktab,Tab purchasetab,Tab historytab,Tab teamtab) {
         this.dao = dao;
+        this.usertab = usertab;
+        this.stocktab = stocktab;
+        this.purchasetab = purchasetab;
+        this.historytab = historytab;
+        this.teamtab= teamtab;
     }
 
     @Override public void initialize(URL location, ResourceBundle resources) {
 
     }
     @FXML public void setCashierbox (){
+        log.info("Usertype = cashier");
         this.cashierbox.setSelected(true);
         this.warehousebox.setSelected(false);
         this.adminbox.setSelected(false);
+        selectUser();
     }
     @FXML public void setWarehousebox (){
+        log.info("Usertype = warehouse");
         this.warehousebox.setSelected(true);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(false);
+        selectUser();
     }
     @FXML public void setAdminbox (){
+        log.info("Usertype = admin");
         this.warehousebox.setSelected(false);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(true);
+        selectUser();
     }
     @FXML public void selectUser (){
         if (adminbox.isSelected()){
-            dao.setUser("Admin");
-            tab_handler();
+            log.info("Admin rights enabled");
+            historytab.setDisable(false);
+            purchasetab.setDisable(false);
+            stocktab.setDisable(false);
         }
         if (warehousebox.isSelected()){
-            dao.setUser("Warehouse");
-            tab_handler();
+            log.info("Warehouse rights enabled");
+            historytab.setDisable(true);
+            purchasetab.setDisable(true);
+            stocktab.setDisable(false);
         }
         if (cashierbox.isSelected()){
-            dao.setUser("Cashier");
-            tab_handler();
-        }
-    }
-    private void tab_handler (){
-        TabPane current_tab = dao.getTabs();
-        switch (dao.getUser()){
-            case ("Admin"):
-                current_tab.getTabs().removeAll();
-                SalesSystemUI ui = new SalesSystemUI();
-                current_tab.getTabs().addAll(ui.getInizal_tabs());
-                ui.refrech();
-                break;
-            case("Warehouse"):
-                current_tab.getTabs().removeAll();
-                SalesSystemUI ui_1 = new SalesSystemUI();
-                current_tab.getTabs().addAll(ui_1.getWarehouse_tabs());
-                ui_1.refrech();
-                break;
-            case ("Cashier"):
-                current_tab.getTabs().removeAll();
-                SalesSystemUI ui_2 = new SalesSystemUI();
-                current_tab.getTabs().addAll(ui_2.getCashier_tabs());
-                ui_2.refrech();
-                break;
+            log.info("Cashier rights enabled");
+            purchasetab.setDisable(false);
+            stocktab.setDisable(true);
+            historytab.setDisable(true);
         }
     }
 }
