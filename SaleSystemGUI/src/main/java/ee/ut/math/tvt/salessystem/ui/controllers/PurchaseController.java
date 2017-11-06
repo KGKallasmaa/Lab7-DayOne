@@ -116,7 +116,7 @@ public class PurchaseController implements Initializable {
         submitPurchase.setDisable(false);
         newPurchase.setDisable(true);
         priceField.setDisable(true);
-        barCodeField.setDisable(false);
+        barCodeField.setDisable(true);
     }
 
     // switch UI to the state that allows to initiate new purchase
@@ -131,14 +131,10 @@ public class PurchaseController implements Initializable {
     private StockItem fillInputsBySelectedStockItem() {
         log.info("Item selected from dropdown menu");
         List<StockItem> items = dao.findStockItems();
-        String itemname = "";
-        if (itemname == String.valueOf(nameSelect.getValue())) {
-            return dao.findStockItemName(itemname);
-        } else {
-            return null;
-        }
+        String itemname = String.valueOf(nameSelect.getValue());
+        System.out.println(dao.findStockItemName(itemname));
+        return dao.findStockItemName(itemname);
 
-        barCodeField.setText("1");
         }
 
 
@@ -159,7 +155,9 @@ public class PurchaseController implements Initializable {
     @FXML
     public void addItemEventHandler() {
         // add chosen item to the shopping cart.
-        StockItem stockItem = getStockItemByBarcode();
+        StockItem stockItem = fillInputsBySelectedStockItem();
+        barCodeField.setText(stockItem.getId().toString());
+        priceField.setText(Double.toString(stockItem.getPrice()));
         if (stockItem != null) {
             int quantity;
             try {
