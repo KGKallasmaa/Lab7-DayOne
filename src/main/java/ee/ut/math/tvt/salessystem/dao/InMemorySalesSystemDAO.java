@@ -13,34 +13,27 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 
+
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
-    private final List<StockItem> stockItemList;
-    private final HashMap<Long,List<SoldItem>> soldItemMap;
-    private String user;
-
+    private List<StockItem> stockItemList;
+    private HashMap<Long,List<SoldItem>> soldItemMap;
 
     public InMemorySalesSystemDAO() {
-        this.stockItemList = findStockItems();
         this.soldItemMap = findAllOrders();
-    }
 
-    @Override
-    public List<StockItem> findStockItems() {
         List<StockItem> stockitems = new ArrayList<>();
-
         //Random stockitems
-        StockItem stockitem_1 = new StockItem(1L,"Test1","I'm cool",10,78);
-        StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",20,45);
-        StockItem stockitem_3 = new StockItem(3L,"Test3","I'm cool",30,12);
-        StockItem stockitem_4 = new StockItem(4L,"Test4","I'm cool",40,15);
-        StockItem stockitem_5 = new StockItem(5L,"Test5","I'm cool",50,19);
-        StockItem stockitem_6 = new StockItem(6L,"Test6","I'm cool",60,30);
-        StockItem stockitem_7 = new StockItem(7L,"Test7","I'm cool",70,70);
-        StockItem stockitem_8 = new StockItem(8L,"Test8","I'm cool",80,83);
-        StockItem stockitem_9 = new StockItem(9L,"Test9","I'm cool",90,14);
-        StockItem stockitem_10 = new StockItem(10L,"Test10","I'm cool",67.2,35);
-
+        StockItem stockitem_1 = new StockItem(1L,"Test1","I'm cool",340,1200);
+        StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
+        StockItem stockitem_3 = new StockItem(3L,"Test3","I'm cool",540,1230);
+        StockItem stockitem_4 = new StockItem(4L,"Test4","I'm cool",640,1240);
+        StockItem stockitem_5 = new StockItem(5L,"Test5","I'm cool",740,1250);
+        StockItem stockitem_6 = new StockItem(6L,"Test6","I'm cool",840,1260);
+        StockItem stockitem_7 = new StockItem(7L,"Test7","I'm cool",940,1270);
+        StockItem stockitem_8 = new StockItem(8L,"Test8","I'm cool",240,1280);
+        StockItem stockitem_9 = new StockItem(9L,"Test9","I'm cool",140,1290);
+        StockItem stockitem_10 = new StockItem(10L,"Test10","I'm cool",40,1300);
         //Adding random stockitems to stocitems list
         stockitems.add(stockitem_1);
         stockitems.add(stockitem_2);
@@ -52,8 +45,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         stockitems.add(stockitem_8);
         stockitems.add(stockitem_9);
         stockitems.add(stockitem_10);
+        this.stockItemList = stockitems;
+    }
 
-        return stockitems;
+    @Override
+    public List<StockItem> findStockItems() {
+        return stockItemList;
 
     }
     @Override
@@ -119,6 +116,22 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveStockItem(StockItem stockItem) {
+        System.out.println("Item "+stockItem.getName()+" is being processed.");
+        // check if exists and add quantity if nessecary
+
+        //could get slow with large databases
+        for(StockItem oldStockItem : stockItemList){
+            if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
+                int oldQuantity = oldStockItem.getQuantity();
+                oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
+                System.out.println("Quantity of " + oldStockItem.getName() + " was increased from " + oldQuantity + " to " + oldStockItem.getQuantity());
+                //new price
+                double oldSum = oldQuantity*oldStockItem.getPrice();
+                double newSum = stockItem.getQuantity()*stockItem.getPrice();
+                oldStockItem.setPrice(Math.round(((oldSum + newSum) / (oldQuantity + stockItem.getQuantity()))*100 / 100));
+                return;
+            }
+        }
         stockItemList.add(stockItem);
     }
     @Override public void removeStockItem(StockItem stockItem) {
@@ -128,13 +141,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void beginTransaction() {
-    }
+
+        }
     @Override
     public void rollbackTransaction() {
     }
     @Override
     public void commitTransaction() {
     }
-
-
 }
