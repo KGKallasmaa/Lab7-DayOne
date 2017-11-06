@@ -13,22 +13,16 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 
+
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
-    private final List<StockItem> stockItemList;
-    private final HashMap<Long,List<SoldItem>> soldItemMap;
-    private String user;
-
+    private List<StockItem> stockItemList;
+    private HashMap<Long,List<SoldItem>> soldItemMap;
 
     public InMemorySalesSystemDAO() {
-        this.stockItemList = findStockItems();
         this.soldItemMap = findAllOrders();
-    }
 
-    @Override
-    public List<StockItem> findStockItems() {
         List<StockItem> stockitems = new ArrayList<>();
-
         //Random stockitems
         StockItem stockitem_1 = new StockItem(1L,"Test1","I'm cool",340,1200);
         StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
@@ -40,7 +34,6 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         StockItem stockitem_8 = new StockItem(8L,"Test8","I'm cool",240,1280);
         StockItem stockitem_9 = new StockItem(9L,"Test9","I'm cool",140,1290);
         StockItem stockitem_10 = new StockItem(10L,"Test10","I'm cool",40,1300);
-
         //Adding random stockitems to stocitems list
         stockitems.add(stockitem_1);
         stockitems.add(stockitem_2);
@@ -52,8 +45,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         stockitems.add(stockitem_8);
         stockitems.add(stockitem_9);
         stockitems.add(stockitem_10);
+        this.stockItemList = stockitems;
+    }
 
-        return stockitems;
+    @Override
+    public List<StockItem> findStockItems() {
+        return stockItemList;
 
     }
     @Override
@@ -61,17 +58,17 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         HashMap<Long,List<SoldItem>> orders = new HashMap<>();
         //Random Orders
         //Order 1
-        StockItem stockitem_1_0= new StockItem(1L,"Test 1","Order 1",340,120);
-        StockItem stockitem_1_1 = new StockItem(2L,"Test 1","Order 1",340,120);
-        StockItem stockitem_1_2 = new StockItem(3L,"Test 1","Order 1",340,120);
+        StockItem stockitem_1_0= new StockItem(1L,"Test 1","Order 1",34,120);
+        StockItem stockitem_1_1 = new StockItem(2L,"Test 2","Order 1",37,19);
+        StockItem stockitem_1_2 = new StockItem(3L,"Test 3","Order 1",30,12);
         //Order 2
-        StockItem stockitem_2_0 = new StockItem(4L,"Test 2","Order 2",350,150);
-        StockItem stockitem_2_1 = new StockItem(5L,"Test 2","Order 2",350,180);
-        StockItem stockitem_2_2 = new StockItem(6L,"Test 2","Order 2",350,190);
+        StockItem stockitem_2_0 = new StockItem(4L,"Test 5","Order 2",35,15);
+        StockItem stockitem_2_1 = new StockItem(5L,"Test 6","Order 2",39,18);
+        StockItem stockitem_2_2 = new StockItem(6L,"Test 7","Order 2",100,19);
         //Order 3
-        StockItem stockitem_3_0 = new StockItem(7L,"Test 3","Order 3",360,140);
-        StockItem stockitem_3_1 = new StockItem(8L,"Test 3","Order 3",380,130);
-        StockItem stockitem_3_2 = new StockItem(9L,"Test 3","Order 3",390,120);
+        StockItem stockitem_3_0 = new StockItem(7L,"Test 8","Order 3",16,14);
+        StockItem stockitem_3_1 = new StockItem(8L,"Test 9","Order 3",58,130);
+        StockItem stockitem_3_2 = new StockItem(9L,"Test 10","Order 3",3,120);
 
         //Grouping orders
         Date date = new Date();
@@ -82,13 +79,13 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         order_1.add(new SoldItem(stockitem_1_1,stockitem_1_1.getQuantity()));
         order_1.add(new SoldItem(stockitem_1_2,stockitem_1_2.getQuantity()));
         orders.put(date1,order_1);
-        Long date2 = Long.parseLong("1506619689601");
+        Long date2 = Long.parseLong("1507224489601");
         List<SoldItem> order_2 = new ArrayList<>();
         order_2.add(new SoldItem(stockitem_2_0,20));
         order_2.add(new SoldItem(stockitem_2_1,10));
         order_2.add(new SoldItem(stockitem_2_2,33));
         orders.put(date2,order_2);
-        Long date3 = Long.parseLong("1506629589602");
+        Long date3 = Long.parseLong("1503224489601");
         List<SoldItem> order_3 = new ArrayList<>();
         order_3.add(new SoldItem(stockitem_3_0,90));
         order_3.add(new SoldItem(stockitem_3_1,14));
@@ -129,8 +126,22 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveStockItem(StockItem stockItem) {
         System.out.println("Item "+stockItem.getName()+" is being processed.");
+        // check if exists and add quantity if nessecary
+
+        //could get slow with large databases
+        for(StockItem oldStockItem : stockItemList){
+            if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
+                int oldQuantity = oldStockItem.getQuantity();
+                oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
+                System.out.println("Quantity of " + oldStockItem.getName() + " was increased from " + oldQuantity + " to " + oldStockItem.getQuantity());
+                //new price
+                double oldSum = oldQuantity*oldStockItem.getPrice();
+                double newSum = stockItem.getQuantity()*stockItem.getPrice();
+                oldStockItem.setPrice(Math.round(((oldSum + newSum) / (oldQuantity + stockItem.getQuantity()))*100 / 100));
+                return;
+            }
+        }
         stockItemList.add(stockItem);
-        System.out.println("Item "+stockItem.getName()+" was saved");
     }
     @Override public void removeStockItem(StockItem stockItem) {
         if(stockItemList.contains(stockItem)){
@@ -139,13 +150,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void beginTransaction() {
-    }
+
+        }
     @Override
     public void rollbackTransaction() {
     }
     @Override
     public void commitTransaction() {
     }
-
-
 }

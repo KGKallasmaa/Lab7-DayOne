@@ -23,7 +23,6 @@ public class UserController  implements Initializable {
     @FXML private javafx.scene.control.CheckBox cashierbox;
     @FXML private javafx.scene.control.CheckBox warehousebox;
     @FXML private javafx.scene.control.CheckBox adminbox;
-    @FXML private javafx.scene.control.TabPane tabpane;
     @FXML private javafx.scene.control.Tab stocktab;
     @FXML private javafx.scene.control.Tab usertab;
     @FXML private javafx.scene.control.Tab purchasetab;
@@ -38,9 +37,11 @@ public class UserController  implements Initializable {
         this.historytab = historytab;
         this.teamtab= teamtab;
     }
-
     @Override public void initialize(URL location, ResourceBundle resources) {
-
+        historytab.setDisable(true);
+        purchasetab.setDisable(true);
+        stocktab.setDisable(true);
+        teamtab.setDisable(true);
     }
     @FXML public void setCashierbox (){
         log.info("Usertype = cashier");
@@ -69,18 +70,21 @@ public class UserController  implements Initializable {
             historytab.setDisable(false);
             purchasetab.setDisable(false);
             stocktab.setDisable(false);
+            teamtab.setDisable(false);
         }
         if (warehousebox.isSelected()){
             log.info("Warehouse rights enabled");
             historytab.setDisable(true);
             purchasetab.setDisable(true);
             stocktab.setDisable(false);
+            teamtab.setDisable(false);
         }
         if (cashierbox.isSelected()){
             log.info("Cashier rights enabled");
             purchasetab.setDisable(false);
             stocktab.setDisable(true);
             historytab.setDisable(true);
+            teamtab.setDisable(false);
         }
     }
 }

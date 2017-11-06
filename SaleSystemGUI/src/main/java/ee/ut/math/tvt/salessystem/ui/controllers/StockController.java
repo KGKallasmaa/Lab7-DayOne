@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
 import com.sun.javafx.collections.ObservableListWrapper;
+import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.beans.value.ChangeListener;
@@ -75,18 +76,11 @@ public class StockController implements Initializable {
     @FXML protected void addButtonClicked() {
         log.info("Add button clicked");
         //System.out.println(barCodeField.getText());
-        //textfields are always equal to null
         if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
             StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                     Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
-            int before_length = dao.findStockItems().size();
             dao.saveStockItem(new_stockitem);
-            int after_length = dao.findStockItems().size();
-            if(after_length > before_length){
-                log.info("Item saved");
-            }else{
-                log.info("Item was not saved");
-            }
+
         } else {
             log.info("Found a field that was equal to null.");
         }

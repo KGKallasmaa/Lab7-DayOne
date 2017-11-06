@@ -26,8 +26,8 @@ public class PurchaseController implements Initializable {
 
     private static final Logger log = LogManager.getLogger(PurchaseController.class);
 
-    private final SalesSystemDAO dao;
-    private final ShoppingCart shoppingCart;
+    private SalesSystemDAO dao;
+    private ShoppingCart shoppingCart;
 
     @FXML private Button newPurchase;
     @FXML private Button submitPurchase;
@@ -116,7 +116,7 @@ public class PurchaseController implements Initializable {
         submitPurchase.setDisable(false);
         newPurchase.setDisable(true);
         priceField.setDisable(true);
-        //barCodeField.setDisable(true);
+        barCodeField.setDisable(false);
     }
 
     // switch UI to the state that allows to initiate new purchase
@@ -138,6 +138,7 @@ public class PurchaseController implements Initializable {
             return null;
         }
 
+        barCodeField.setText("1");
         }
 
 
@@ -168,7 +169,6 @@ public class PurchaseController implements Initializable {
             }
 
             shoppingCart.addItem(new SoldItem(stockItem, quantity));
-            System.out.println(shoppingCart.getAll());
             purchaseTableView.refresh();
         }
     }
