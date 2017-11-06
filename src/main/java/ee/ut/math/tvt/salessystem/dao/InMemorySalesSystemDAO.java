@@ -106,6 +106,15 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         return null;
     }
     @Override
+    public StockItem findStockItemName(String name){
+        for (StockItem item : stockItemList) {
+            if (item.getName() == name){
+                return item;
+            }
+        }
+        return null;
+    }
+    @Override
     public void saveSoldItem(Long time, SoldItem item) {
         if (soldItemMap.containsKey(time)) {
             List<SoldItem> orders = soldItemMap.get(time);

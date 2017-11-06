@@ -35,6 +35,7 @@ import java.util.List;
 public interface SalesSystemDAO {
 
     List<StockItem> findStockItems();
+    StockItem findStockItemName(String name);
 
     StockItem findStockItem(long id);
     HashMap<Long,List<SoldItem>> findAllOrders();

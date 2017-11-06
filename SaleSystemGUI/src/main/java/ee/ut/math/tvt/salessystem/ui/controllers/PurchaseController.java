@@ -7,9 +7,6 @@ import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -119,7 +116,7 @@ public class PurchaseController implements Initializable {
         submitPurchase.setDisable(false);
         newPurchase.setDisable(true);
         priceField.setDisable(true);
-        barCodeField.setDisable(true);
+        //barCodeField.setDisable(true);
     }
 
     // switch UI to the state that allows to initiate new purchase
@@ -128,14 +125,19 @@ public class PurchaseController implements Initializable {
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
         newPurchase.setDisable(false);
-
         disableProductField(true);
     }
 
-    private void fillInputsBySelectedStockItem() {
+    private StockItem fillInputsBySelectedStockItem() {
         log.info("Item selected from dropdown menu");
+        List<StockItem> items = dao.findStockItems();
+        String itemname = "";
+        if (itemname == String.valueOf(nameSelect.getValue())) {
+            return dao.findStockItemName(itemname);
+        } else {
+            return null;
+        }
 
-        barCodeField.setText("1");
         }
 
 
@@ -188,9 +190,20 @@ public class PurchaseController implements Initializable {
     private void resetProductField() {
         barCodeField.setText("");
         quantityField.setText("");
-        List<StockItem> items = dao.findStockItems();
-        nameSelect.setItems(new ObservableListWrapper(items));
         priceField.setText("");
+        //List<StockItem> items = dao.findStockItems();
+        //nameSelect.setItems(new ObservableListWrapper(items));
+        dropdown();
+    }
+
+    private void dropdown() {
+        List<StockItem> items = dao.findStockItems();
+        List<String> items2 = new ArrayList<>();
+        for (StockItem thing : items) {
+            items2.add(thing.getName());
+        }
+        System.out.print(items2);
+        nameSelect.setItems(new ObservableListWrapper(items2));
     }
 
 }
