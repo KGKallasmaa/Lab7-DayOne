@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
 import com.sun.javafx.collections.ObservableListWrapper;
+import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.beans.value.ChangeListener;

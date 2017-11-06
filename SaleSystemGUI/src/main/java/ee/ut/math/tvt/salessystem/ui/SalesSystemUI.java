@@ -32,21 +32,13 @@ import java.util.Scanner;
 public class SalesSystemUI extends Application {
 
     private static final Logger log = LogManager.getLogger(SalesSystemUI.class);
-
     private final SalesSystemDAO dao;
     private final ShoppingCart shoppingCart;
     BorderPane borderPane = new BorderPane();
-    private TabPane master_tabpane;
-    private TabPane admin_tabpane;
-    private TabPane cashier_tabpane;
-    private TabPane warehouse_tabpane;
-
     public SalesSystemUI() {
         dao = new InMemorySalesSystemDAO();
         shoppingCart = new ShoppingCart(dao);
     }
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         SalesSystemUI test = new SalesSystemUI();
@@ -56,34 +48,23 @@ public class SalesSystemUI extends Application {
         purchaseTab.setText("Point-of-sale");
         purchaseTab.setClosable(false);
         purchaseTab.setContent(loadControls("PurchaseTab.fxml", new PurchaseController(dao, shoppingCart)));
-
         Tab stockTab = new Tab();
         stockTab.setText("Warehouse");
         stockTab.setClosable(false);
         stockTab.setContent(loadControls("StockTab.fxml", new StockController(dao)));
-
         Tab historyTab = new Tab();
         historyTab.setText("History");
         historyTab.setClosable(false);
         historyTab.setContent(loadControls("HistoryTab.fxml", new HistoryController(dao)));
-
         Tab teamTab = new Tab();
         teamTab.setText("Team");
         teamTab.setClosable(false);
         teamTab.setContent(loadControls("TeamTab.fxml",  new TeamController()));
-
         Tab userTab = new Tab();
         userTab.setText("User");
         userTab.setClosable(false);
         userTab.setContent(loadControls("UserTab.fxml",new UserController(dao,userTab,stockTab,purchaseTab,historyTab,teamTab)));
 
-        this.admin_tabpane = new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab);
-        this.cashier_tabpane =  new TabPane(purchaseTab,teamTab);
-        this.warehouse_tabpane = new TabPane(stockTab,teamTab);
-
-        //User selection
-
-        //assigning proper tabs
         borderPane.setCenter(new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab));
 
         Group root = new Group();
