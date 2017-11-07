@@ -38,6 +38,7 @@ public class UserController  implements Initializable {
         this.teamtab= teamtab;
     }
     @Override public void initialize(URL location, ResourceBundle resources) {
+        log.info("User tab initialized");
         historytab.setDisable(true);
         purchasetab.setDisable(true);
         stocktab.setDisable(true);

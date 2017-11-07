@@ -3,6 +3,8 @@ package ee.ut.math.tvt.salessystem.ui.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.text.html.ImageView;
 import java.io.*;
@@ -15,7 +17,7 @@ import java.io.InputStream;
 
 
 public class TeamController implements Initializable {
-
+    private static final Logger log = LogManager.getLogger(TeamController.class);
     @FXML
     private Text team_name;
     @FXML
@@ -66,6 +68,7 @@ public class TeamController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        log.info("Team tab initialized");
         //Loading application properties
         Properties properties = null;
         try {
@@ -75,12 +78,16 @@ public class TeamController implements Initializable {
                 properties.load(resourceAsStream);
             }
         } catch (IOException e) {
-            System.out.println("Properties file was not found");
+            log.error("Properties file was not found");
         }
 
         this.team_name.setText(properties.getProperty("team_name"));
         this.team_leader.setText(properties.getProperty("team_leader"));
         this.team_leader_email.setText(properties.getProperty("team_leader_email"));
         this.team_members.setText(properties.getProperty("team_members"));
+
+        if(team_name.getText() != null && team_leader.getText() != null&& team_leader_email.getText() != null&& team_members.getText() != null){
+            log.info("Team info properly set");
+        }
     }
 }

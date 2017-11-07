@@ -45,6 +45,7 @@ public class StockController implements Initializable {
     }
 
     @Override public void initialize(URL location, ResourceBundle resources) {
+        log.info("Stock tab initialized");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -75,14 +76,18 @@ public class StockController implements Initializable {
     }
     @FXML protected void addButtonClicked() {
         log.info("Add button clicked");
-        //System.out.println(barCodeField.getText());
-        if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
-            StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
-                    Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
-            dao.saveStockItem(new_stockitem);
+        //filtering unsuitable valus
+        try {
+            if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
+                StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
+                        Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
+                dao.saveStockItem(new_stockitem);
 
-        } else {
-            log.info("Found a field that was equal to null.");
+            } else {
+                log.info("Found a field that was equal to null.");
+            }
+        }catch (NumberFormatException e){
+            log.error("Invalid inputs in some fields");
         }
     }
     @FXML public void removeButtonClicked(){

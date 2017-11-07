@@ -96,7 +96,10 @@ public class HistoryController implements Initializable {
     @FXML protected void showBetweenDatesButtonClicked() {
         log.info("Show between dates button clicked");
         historyTableView.getItems().clear();
-        if(startDateField.getValue() != null && endDateField.getValue() != null){
+        try{
+            if(startDateField.getValue() == null || endDateField.getValue() == null){
+                throw new NullPointerException();
+            }
             HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
             List<SoldItem> orders = new ArrayList<>();
             LocalDate start =  startDateField.getValue();
@@ -105,39 +108,33 @@ public class HistoryController implements Initializable {
             Instant instant_2 = Instant.from(end.atStartOfDay(ZoneId.systemDefault()));
             Date date_start = Date.from(instant_1);
             Date date_end = Date.from(instant_2);
-            if(date_start.getTime() <= date_end.getTime()){
-                for (Long e : all_orders.keySet()){
+            if(date_start.getTime() <= date_end.getTime()) {
+                for (Long e : all_orders.keySet()) {
                     Date date = new Date(e);
                     Long time = e;
                     double sum = 0;
-                    for(SoldItem el : all_orders.get(e)){
+                    for (SoldItem el : all_orders.get(e)) {
                         sum += el.getSum();
                     }
-                    if(e >= date_start.getTime() && e <= date_end.getTime()){
-                        SoldItem element = new SoldItem(date,time,sum);
+                    if (e >= date_start.getTime() && e <= date_end.getTime()) {
+                        SoldItem element = new SoldItem(date, time, sum);
                         orders.add(element);
                     }
                 }
-                if(orders.size() < 1){
-                    log.warn("No orders etween selected dates");
-                }else{
-                    log.info("Number of orders between selected dates: "+orders.size());
+                if (orders.size() < 1) {
+                    log.warn("No orders between selected dates");
+                } else {
+                    log.info("Number of orders between selected dates: " + orders.size());
                     historyTableView.setItems(new ObservableListWrapper<>(orders));
                 }
-
+                historyTableView.refresh();
             }else{
-             log.warn("Start date is not before end date. Method can not be implemented");
+                throw new IllegalArgumentException();
             }
-            historyTableView.refresh();
-        }else{
-            if(startDateField.getValue() == null && endDateField.getValue() == null){
-                log.warn("Start and end dates were not selected");
-            } else if (startDateField.getValue() == null && endDateField.getValue() != null){
-                log.warn("Start date was not selected. End date was selected");
-            }
-            else if (startDateField.getValue() != null && endDateField.getValue() == null){
-                log.warn("End date was not selected. Start date was selected");
-            }
+        }catch (NullPointerException e){
+            log.error("Start and end dates were not selected");
+        }catch (IllegalArgumentException e){
+            log.error("Start date is not before end date");
         }
     }
     @FXML protected void showLast10ButtonClicked() {
@@ -165,7 +162,10 @@ public class HistoryController implements Initializable {
         }
         if(orders.size() < 1){
             log.warn("No orders between selected dates");
-        }else{
+        } else if(orders.size() < 10){
+            log.warn("Total orders is lower than 10. Number of orders is "+orders.size());
+        }
+        else{
             log.info("Number of orders between selected dates: "+orders.size());
             historyTableView.setItems(new ObservableListWrapper<>(orders));
         }

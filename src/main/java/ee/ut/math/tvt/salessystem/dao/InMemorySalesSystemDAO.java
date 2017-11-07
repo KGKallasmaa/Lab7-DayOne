@@ -145,9 +145,23 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override public void removeStockItem(StockItem stockItem) {
         if(stockItemList.contains(stockItem)){
-            stockItemList.remove(stockItem);
+           for(StockItem el : stockItemList){
+                   int quant_before = el.getQuantity();
+                   int new_quant = stockItem.getQuantity();
+                   if (quant_before-new_quant > 0){
+                       stockItemList.remove(el);
+                 //      public StockItem(Long id, String name, String desc, double price, int quantity) {
+                       StockItem item = new StockItem(stockItem.getId(),stockItem.getName(),stockItem.getDescription(),stockItem.getPrice(),quant_before-new_quant);
+                       stockItemList.add(item);
+                   } else if(quant_before-new_quant == 0){
+                       stockItemList.remove(el);
+                   }else{
+                       throw new IllegalArgumentException("Entered quantity exceedes max quantity");
+                   }
+               }
+           }
+
         }
-    }
     @Override
     public void beginTransaction() {
 

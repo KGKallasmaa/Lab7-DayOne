@@ -52,6 +52,7 @@ public class PurchaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        log.info("Purchase tab initialized");
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
 
@@ -97,12 +98,13 @@ public class PurchaseController implements Initializable {
      */
     @FXML
     protected void submitPurchaseButtonClicked() {
-        log.info("Sale complete");
+        log.info("Submission process started");
         try {
             log.debug("Contents of the current basket:\n" + shoppingCart.getAll());
             shoppingCart.submitCurrentPurchase();
             disableInputs();
             purchaseTableView.refresh();
+            log.info("Sale complete");
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
         }

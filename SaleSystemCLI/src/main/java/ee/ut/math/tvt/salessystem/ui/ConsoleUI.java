@@ -11,10 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 /**
@@ -128,11 +125,92 @@ public class ConsoleUI {
             System.out.println("unknown command");
         }
     }
-
+        //It shows orders in 3 diffrent ways
     private void showHistory() {
+        System.out.println("Please choose how you want to see it");
+        System.out.println("1) between dates [1]");
+        System.out.println("2) last 10 [2]");
+        System.out.println("3) all [3]");
+        Scanner sc = new Scanner(System.in);
+        String history_type = sc.next();
+        switch (history_type){
+            case("1"):
+                System.out.println("Please enter start date(LONG)");
+                Long start_date = sc.nextLong();
+                System.out.println("Please enter end date(LONG)");
+                Long end_date = sc.nextLong();
+                HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
+                for(Long key : all_orders.keySet()){
+                    List<SoldItem> order = all_orders.get(key);
+                    if(key >= start_date && key <= end_date){
+                        System.out.println(order);
+                    }
+                }
+                break;
+            case("2"):
+                int i = 0;
+                HashMap<Long,List<SoldItem>> last10_orders = dao.findAllOrders();
+                Set<Long> keys = last10_orders.keySet();
+                List<Long> keys_list = new ArrayList<>();
+                keys_list.addAll(keys);
+                Collections.sort(keys_list);
+                Collections.reverse(keys_list);
+                for(Long key : keys_list){
+                    List<SoldItem> order = last10_orders.get(key);
+                    if(i < 10){
+                        System.out.println(order);
+                        i++;
+                    }
+                }
+                break;
+            case("3"):
+                for(List<SoldItem> el : dao.findAllOrders().values()){
+                    System.out.println(el);
+                }
+                break;
+        }
     }
 
     private void addProductToStock() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter the id of the item");
+        Long id = sc.nextLong();
+        System.out.println("Please enter the name of the item");
+        String name = sc.next();
+        System.out.println("Please enter the description of the item");
+        String desc = sc.next();
+        System.out.println("Please enter the price of the item");
+        Double price = sc.nextDouble();
+        System.out.println("Please enter the quantity of the item");
+        Integer quantity = sc.nextInt();
+        StockItem item = new StockItem(id, name, desc, price, quantity);
+        dao.saveStockItem(item);
+        log.info("New item " + item.getName() + " saved.");
+    }
+    private void removeProductfromStock() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter the id of the item");
+        Long id = sc.nextLong();
+        System.out.println("Please enter the name of the item");
+        String name = sc.next();
+        System.out.println("Please enter the description of the item");
+        String desc = sc.next();
+        System.out.println("Please enter the price of the item");
+        Double price = sc.nextDouble();
+        System.out.println("Please enter the quantity of the item");
+        Integer quantity = sc.nextInt();
+        StockItem item = new StockItem(id, name, desc, price, quantity);
+        List<StockItem> all_items = dao.findStockItems();
+        for(StockItem the : all_items){
+            if(the.getName() == item.getName() && the.getId() == item.getId() && the.getDescription() == item.getDescription()&& the.getPrice() == item.getPrice()){
+                dao.removeStockItem(item);
+                log.info("New item " + item.getName() + " removed.");
+                break;
+            }else{
+                log.warn("Item was not found in te warehouse");
+            }
+        }
+
     }
 
     private void showTeam() {
