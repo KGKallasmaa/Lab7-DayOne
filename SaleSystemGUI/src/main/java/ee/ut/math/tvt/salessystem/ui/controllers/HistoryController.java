@@ -166,7 +166,7 @@ public class HistoryController implements Initializable {
             log.warn("Total orders is lower than 10. Number of orders is "+orders.size());
         }
         else{
-            log.info("Number of orders between selected dates: "+orders.size());
+            log.info("Last 10 orders shown");
             historyTableView.setItems(new ObservableListWrapper<>(orders));
         }
         historyTableView.refresh();
@@ -187,9 +187,9 @@ public class HistoryController implements Initializable {
             orders.add(element);
         }
         if(orders.size() < 1){
-            log.warn("No orders between selected dates");
+            log.warn("NO orders found from database");
         }else{
-            log.info("Number of orders between selected dates: "+orders.size());
+            log.info("Total number of orders: "+orders.size());
             historyTableView.setItems(new ObservableListWrapper<>(orders));
         }
 

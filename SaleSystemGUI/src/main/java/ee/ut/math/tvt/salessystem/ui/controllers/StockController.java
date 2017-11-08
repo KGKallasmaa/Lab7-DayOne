@@ -90,21 +90,25 @@ public class StockController implements Initializable {
             log.error("Invalid inputs in some fields");
         }
     }
-    @FXML public void removeButtonClicked(){
+    @FXML public void removeButtonClicked() {
         log.info("Remove button clicked");
-        if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
-            StockItem old_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
-                    Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
-            int before_length = dao.findStockItems().size();
-            dao.removeStockItem(old_stockitem);
-            int after_length = dao.findStockItems().size();
-            if(after_length < before_length){
-                log.info("Item removed");
-            }else{
-                log.info("Item was not removed");
+        try {
+            if (!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
+                StockItem old_stockitem = new StockItem(Long.parseLong(barCodeField.getText()), nameField.getText(), descriptionField.getText(),
+                        Double.parseDouble(priceField.getText()), Integer.parseInt(amountField.getText()));
+                int before_length = dao.findStockItems().size();
+                dao.removeStockItem(old_stockitem);
+                int after_length = dao.findStockItems().size();
+                if (after_length < before_length) {
+                    log.info("Item removed");
+                } else {
+                    throw new NullPointerException();
+                }
             }
-        } else {
-            log.info("Found a field that was equal to null.");
+        } catch (NullPointerException e) {
+            log.error("Some of the values entered were nulls");
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
         }
     }
 

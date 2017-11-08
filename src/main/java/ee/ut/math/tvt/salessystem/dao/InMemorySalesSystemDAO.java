@@ -129,19 +129,23 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         // check if exists and add quantity if nessecary
 
         //could get slow with large databases
-        for(StockItem oldStockItem : stockItemList){
-            if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
-                int oldQuantity = oldStockItem.getQuantity();
-                oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
-                System.out.println("Quantity of " + oldStockItem.getName() + " was increased from " + oldQuantity + " to " + oldStockItem.getQuantity());
-                //new price
-                double oldSum = oldQuantity*oldStockItem.getPrice();
-                double newSum = stockItem.getQuantity()*stockItem.getPrice();
-                oldStockItem.setPrice(Math.round(((oldSum + newSum) / (oldQuantity + stockItem.getQuantity()))*100 / 100));
-                return;
+        try {
+            for(StockItem oldStockItem : stockItemList){
+                if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
+                    int oldQuantity = oldStockItem.getQuantity();
+                    oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
+                    System.out.println("Quantity of " + oldStockItem.getName() + " was increased from " + oldQuantity + " to " + oldStockItem.getQuantity());
+                    //new price
+                    double oldSum = oldQuantity*oldStockItem.getPrice();
+                    double newSum = stockItem.getQuantity()*stockItem.getPrice();
+                    oldStockItem.setPrice(Math.round(((oldSum + newSum) / (oldQuantity + stockItem.getQuantity()))*100 / 100));
+                    return;
+                }else{
+                    throw new IllegalArgumentException("Item was not found ");
+                }
             }
+            stockItemList.add(stockItem);
         }
-        stockItemList.add(stockItem);
     }
     @Override public void removeStockItem(StockItem stockItem) {
         if(stockItemList.contains(stockItem)){
