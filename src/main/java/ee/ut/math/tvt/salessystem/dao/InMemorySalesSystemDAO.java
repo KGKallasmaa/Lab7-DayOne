@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -18,6 +21,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     private List<StockItem> stockItemList;
     private HashMap<Long,List<SoldItem>> soldItemMap;
+    //private static final Logger log = LogManager.getLogger(InMemorySalesSystemDAO.class);
 
     public InMemorySalesSystemDAO() {
         this.soldItemMap = findAllOrders();
@@ -145,6 +149,8 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
                 }
             }
             stockItemList.add(stockItem);
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
         }
     }
     @Override public void removeStockItem(StockItem stockItem) {
