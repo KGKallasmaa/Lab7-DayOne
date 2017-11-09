@@ -24,11 +24,9 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     //private static final Logger log = LogManager.getLogger(InMemorySalesSystemDAO.class);
 
     public InMemorySalesSystemDAO() {
-        this.soldItemMap = findAllOrders();
-
         List<StockItem> stockitems = new ArrayList<>();
-        //Random stockitems
-        StockItem stockitem_1 = new StockItem(1L,"Test1","I'm cool",340,1200);
+        //Random example stockitems
+        StockItem stockitem_1 = new StockItem(1L,"t","a",3,4);
         StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
         StockItem stockitem_3 = new StockItem(3L,"Test3","I'm cool",540,1230);
         StockItem stockitem_4 = new StockItem(4L,"Test4","I'm cool",640,1240);
@@ -50,15 +48,8 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         stockitems.add(stockitem_9);
         stockitems.add(stockitem_10);
         this.stockItemList = stockitems;
-    }
 
-    @Override
-    public List<StockItem> findStockItems() {
-        return stockItemList;
-
-    }
-    @Override
-    public HashMap<Long,List<SoldItem>> findAllOrders(){
+        // create a few example orders
         HashMap<Long,List<SoldItem>> orders = new HashMap<>();
         //Random Orders
         //Order 1
@@ -95,8 +86,16 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         order_3.add(new SoldItem(stockitem_3_1,14));
         order_3.add(new SoldItem(stockitem_3_2,23));
         orders.put(date3,order_2);
+        this.soldItemMap = orders;
+    }
 
-        return orders;
+    @Override
+    public List<StockItem> findStockItems() {
+        return stockItemList;
+    }
+    @Override
+    public HashMap<Long,List<SoldItem>> findAllOrders(){
+        return soldItemMap;
     }
     @Override
     public StockItem findStockItem(long id) {
@@ -129,53 +128,36 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveStockItem(StockItem stockItem) {
-        System.out.println("Item "+stockItem.getName()+" is being processed.");
         // check if exists and add quantity if nessecary
 
         //could get slow with large databases
-        try {
             for(StockItem oldStockItem : stockItemList){
                 if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
                     int oldQuantity = oldStockItem.getQuantity();
                     oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
-                    System.out.println("Quantity of " + oldStockItem.getName() + " was increased from " + oldQuantity + " to " + oldStockItem.getQuantity());
                     //new price
                     double oldSum = oldQuantity*oldStockItem.getPrice();
                     double newSum = stockItem.getQuantity()*stockItem.getPrice();
                     oldStockItem.setPrice(Math.round(((oldSum + newSum) / (oldQuantity + stockItem.getQuantity()))*100 / 100));
                     return;
-                }else{
-                    throw new IllegalArgumentException("Item was not found ");
                 }
             }
             stockItemList.add(stockItem);
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
+        }
+    @Override public void removeStockItem(StockItem stockItem) {
+
+        StockItem removable_obj = findStockItem(stockItem.getId());
+        if (removable_obj.getQuantity() < stockItem.getQuantity()) {
+            throw new IllegalArgumentException();
+        }
+        removable_obj.setQuantity(removable_obj.getQuantity() - stockItem.getQuantity());
+        if (removable_obj.getQuantity() == 0) {
+            stockItemList.remove(removable_obj);
         }
     }
-    @Override public void removeStockItem(StockItem stockItem) {
-        if(stockItemList.contains(stockItem)){
-           for(StockItem el : stockItemList){
-                   int quant_before = el.getQuantity();
-                   int new_quant = stockItem.getQuantity();
-                   if (quant_before-new_quant > 0){
-                       stockItemList.remove(el);
-                 //      public StockItem(Long id, String name, String desc, double price, int quantity) {
-                       StockItem item = new StockItem(stockItem.getId(),stockItem.getName(),stockItem.getDescription(),stockItem.getPrice(),quant_before-new_quant);
-                       stockItemList.add(item);
-                   } else if(quant_before-new_quant == 0){
-                       stockItemList.remove(el);
-                   }else{
-                       throw new IllegalArgumentException("Entered quantity exceedes max quantity");
-                   }
-               }
-           }
-
-        }
     @Override
     public void beginTransaction() {
-
-        }
+    }
     @Override
     public void rollbackTransaction() {
     }

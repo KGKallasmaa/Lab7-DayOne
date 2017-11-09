@@ -54,7 +54,7 @@ public class HistoryController implements Initializable {
         this.dao = dao;
     }
     public void initialize(URL location, ResourceBundle resources) {
-        log.info("History tab initialized");
+        log.debug("History tab initialized");
         //history tab
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.setMinWidth(200);
@@ -77,7 +77,6 @@ public class HistoryController implements Initializable {
             });
             return row ;
         });
-
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setMinWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -94,8 +93,9 @@ public class HistoryController implements Initializable {
     }
 
     @FXML protected void showBetweenDatesButtonClicked() {
-        log.info("Show between dates button clicked");
+        log.debug("Show between dates button clicked");
         historyTableView.getItems().clear();
+        orderTableView.getItems().clear();
         try{
             if(startDateField.getValue() == null || endDateField.getValue() == null){
                 throw new NullPointerException();
@@ -124,8 +124,9 @@ public class HistoryController implements Initializable {
                 if (orders.size() < 1) {
                     log.warn("No orders between selected dates");
                 } else {
-                    log.info("Number of orders between selected dates: " + orders.size());
+                    log.debug("Number of orders between selected dates: " + orders.size());
                     historyTableView.setItems(new ObservableListWrapper<>(orders));
+                    log.info("Orders between dates shown");
                 }
                 historyTableView.refresh();
             }else{
@@ -138,8 +139,9 @@ public class HistoryController implements Initializable {
         }
     }
     @FXML protected void showLast10ButtonClicked() {
-        log.info("Show last 10 button clicked");
+        log.debug("Show last 10 button clicked");
         historyTableView.getItems().clear();
+        orderTableView.getItems().clear();
         HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
         //sorting keys by value
         Set<Long> sortable = all_orders.keySet();
@@ -160,10 +162,11 @@ public class HistoryController implements Initializable {
                 orders.add(element);
             }
         }
-        if(orders.size() < 1){
-            log.warn("No orders between selected dates");
-        } else if(orders.size() < 10){
+        if(orders.size() < 10){
             log.warn("Total orders is lower than 10. Number of orders is "+orders.size());
+        }
+        if(orders.size() < 1){
+            log.warn("System has no orders to show");
         }
         else{
             log.info("Last 10 orders shown");
@@ -172,8 +175,9 @@ public class HistoryController implements Initializable {
         historyTableView.refresh();
     }
     @FXML protected void showAllButtonClicked(){
-        log.info("Show all button clicked");
+        log.debug("Show all button clicked");
         historyTableView.getItems().clear();
+        orderTableView.getItems().clear();
         HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
         List<SoldItem> orders = new ArrayList<>();
         for (Long e : all_orders.keySet()){
@@ -189,8 +193,9 @@ public class HistoryController implements Initializable {
         if(orders.size() < 1){
             log.warn("NO orders found from database");
         }else{
-            log.info("Total number of orders: "+orders.size());
+            log.debug("Total number of orders: "+orders.size());
             historyTableView.setItems(new ObservableListWrapper<>(orders));
+            log.info("All orders are being shown");
         }
 
         historyTableView.setItems(new ObservableListWrapper<>(orders));
@@ -205,9 +210,9 @@ public class HistoryController implements Initializable {
     }
 
     @FXML protected void startDateFieldClicked(){
-        log.info("Start date = "+startDateField.getValue());
+        log.debug("Start date = "+startDateField.getValue());
     }
     @FXML protected void endDateFieldClicked(){
-        log.info("End date = "+endDateField.getValue());
+        log.debug("End date = "+endDateField.getValue());
     }
 }

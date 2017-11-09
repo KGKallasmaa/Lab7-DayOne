@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class StockController implements Initializable {
@@ -45,7 +46,7 @@ public class StockController implements Initializable {
     }
 
     @Override public void initialize(URL location, ResourceBundle resources) {
-        log.info("Stock tab initialized");
+        log.debug("Stock tab initialized");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -71,48 +72,74 @@ public class StockController implements Initializable {
     }
 
     @FXML public void refreshButtonClicked() {
-        log.info("Refresh button clicked");
+        log.debug("Refresh button clicked");
         refreshStockItems();
     }
     @FXML protected void addButtonClicked() {
-        log.info("Add button clicked");
+        log.debug("Add button clicked");
         //filtering unsuitable valus
         try {
             if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
+                if (Integer.parseInt(priceField.getText()) <= 0){
+                    throw new IllegalArgumentException();
+                }
                 StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                         Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
                 dao.saveStockItem(new_stockitem);
+                log.info("Item was added to the warehouse");
 
             } else {
-                log.info("Found a field that was equal to null.");
+                log.debug("Found a field that was equal to null.");
             }
         }catch (NumberFormatException e){
             log.error("Invalid inputs in some fields");
+        }catch (IllegalArgumentException e){
+            log.error("Price can not be negative");
+        }
+        finally {
+            clearAll();
         }
     }
+    public void clearAll(){
+        barCodeField.clear();
+        nameField.clear();
+        descriptionField.clear();
+        priceField.clear();
+        amountField.clear();
+    }
     @FXML public void removeButtonClicked() {
-        log.info("Remove button clicked");
-        try {
-            if (!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
-                StockItem old_stockitem = new StockItem(Long.parseLong(barCodeField.getText()), nameField.getText(), descriptionField.getText(),
-                        Double.parseDouble(priceField.getText()), Integer.parseInt(amountField.getText()));
-                int before_length = dao.findStockItems().size();
-                dao.removeStockItem(old_stockitem);
-                int after_length = dao.findStockItems().size();
-                if (after_length < before_length) {
-                    log.info("Item removed");
-                } else {
-                    throw new NullPointerException();
-                }
+        log.debug("Remove button clicked");
+        try{
+            Long id = Long.parseLong(barCodeField.getText());
+            List<StockItem> all_items = dao.findStockItems();
+            List<Long> all_ids = new ArrayList<>();
+            for(StockItem el : all_items){
+                all_ids.add(el.getId());
             }
-        } catch (NullPointerException e) {
-            log.error("Some of the values entered were nulls");
-        } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
+            if(all_ids.contains(id)){
+                for(StockItem el : all_items){
+                    if (el.getId() == id){
+                        StockItem warehouse_item = dao.findStockItem(id);
+                        StockItem remove_item = new StockItem(warehouse_item.getId(),warehouse_item.getName(),warehouse_item.getDescription(),warehouse_item.getPrice(),Integer.parseInt(amountField.getText()));
+                        dao.removeStockItem(remove_item);
+                        log.info("Item was removed to the warehouse");
+            }
+                }
+            } else{
+                throw new NullPointerException();
+            }
+        }catch(NullPointerException e){
+            log.error("Barcode was not found");
+            clearAll();
+        }catch (IllegalArgumentException e){
+            log.error("Max entered quantity exceeded");
+        }finally {
+            clearAll();
         }
     }
 
     private void refreshStockItems() {
+        log.info("Warehouse refreshed");
         warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
         warehouseTableView.refresh();
     }

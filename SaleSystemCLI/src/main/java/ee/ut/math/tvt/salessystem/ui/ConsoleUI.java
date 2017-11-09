@@ -43,23 +43,20 @@ public class ConsoleUI {
         System.out.println("=       Sales System      =");
         System.out.println("===========================");
         printUsage();
-        //showTeam(); //testing purposes for whenthe bufferedreader doesn't work
-        ///*
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println();
         while (true){
             System.out.print("> ");
-            System.out.println(in.readLine());
-            //processCommand(in.readLine().trim().toLowerCase());
+            processCommand(in.readLine().trim().toLowerCase());
             System.out.println("Done. ");
         }
-        //*/
     }
 
     private void showStock() {
         List<StockItem> stockItems = dao.findStockItems();
         System.out.println("-------------------------");
         for (StockItem si : stockItems) {
-            System.out.println(si.getId() + " " + si.getName() + " " + si.getPrice() + "Euro (" + si.getQuantity() + " items)");
+            System.out.println(si.getId() + " " + si.getName() + " " + si.getDescription() + " " + si.getPrice() + " Euro (" + si.getQuantity() + " items)");
         }
         if (stockItems.size() == 0) {
             System.out.println("\tNothing");
@@ -82,11 +79,18 @@ public class ConsoleUI {
         System.out.println("-------------------------");
         System.out.println("Usage:");
         System.out.println("h\t\tShow this help");
-        System.out.println("w\t\tShow warehouse contents");
+        //POS
         System.out.println("c\t\tShow cart contents");
         System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
         System.out.println("p\t\tPurchase the shopping cart");
         System.out.println("r\t\tReset the shopping cart");
+        //Warehouse
+        System.out.println("w\t\tShow warehouse contents");
+        System.out.println("atw\t\tAdd product to warehouse");
+        System.out.println("rfw\t\tRemove product from warehouse");
+        //History
+        System.out.println("ph\t\tShow purchase history");
+        //Team
         System.out.println("t\t\tShow team information");
         System.out.println("-------------------------");
     }
@@ -100,6 +104,10 @@ public class ConsoleUI {
             System.exit(0);
         else if (c[0].equals("w"))
             showStock();
+        else if (c[0].equals("atw"))
+            addProductToStock();
+        else if (c[0].equals("rfw"))
+            removeProductfromStock();
         else if (c[0].equals("c"))
             showCart();
         else if (c[0].equals("t"))
@@ -108,6 +116,8 @@ public class ConsoleUI {
             cart.submitCurrentPurchase();
         else if (c[0].equals("r"))
             cart.cancelCurrentPurchase();
+        else if (c[0].equals("ph"))
+            showHistory();
         else if (c[0].equals("a") && c.length == 3) {
             try {
                 long idx = Long.parseLong(c[1]);
@@ -125,7 +135,7 @@ public class ConsoleUI {
             System.out.println("unknown command");
         }
     }
-        //It shows orders in 3 diffrent ways
+    //It shows orders in 3 diffrent ways
     private void showHistory() {
         System.out.println("Please choose how you want to see it");
         System.out.println("1) between dates [1]");
@@ -175,14 +185,33 @@ public class ConsoleUI {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter the id of the item");
         Long id = sc.nextLong();
+        if (dao.findStockItem(id) != null){// if exists then ask only for additional quantity
+            StockItem foundItem = dao.findStockItem(id);
+            System.out.println("Found " + foundItem.getName() + " with id " + foundItem.getId() + ". Please enter additional quantity.");
+            Integer quantity = sc.nextInt();
+            while(quantity < 0){ // can be equal with 0 because then allows accidental wrong id inputs without changing quantity
+                System.out.println("Please enter a positive quantity, if you don't want to change the quantity enter 0");
+                quantity = sc.nextInt();
+            }
+            foundItem.setQuantity(foundItem.getQuantity() + quantity);
+            return;
+        }
         System.out.println("Please enter the name of the item");
         String name = sc.next();
         System.out.println("Please enter the description of the item");
         String desc = sc.next();
         System.out.println("Please enter the price of the item");
         Double price = sc.nextDouble();
+        while(price<0){
+            System.out.println("Price can not be negative");
+            price = sc.nextDouble();
+        }
         System.out.println("Please enter the quantity of the item");
         Integer quantity = sc.nextInt();
+        while(quantity<0){
+            System.out.println("Quantity has to be larger than 0");
+            quantity = sc.nextInt();
+        }
         StockItem item = new StockItem(id, name, desc, price, quantity);
         dao.saveStockItem(item);
         log.info("New item " + item.getName() + " saved.");
@@ -191,25 +220,17 @@ public class ConsoleUI {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter the id of the item");
         Long id = sc.nextLong();
-        System.out.println("Please enter the name of the item");
-        String name = sc.next();
-        System.out.println("Please enter the description of the item");
-        String desc = sc.next();
-        System.out.println("Please enter the price of the item");
-        Double price = sc.nextDouble();
         System.out.println("Please enter the quantity of the item");
         Integer quantity = sc.nextInt();
-        StockItem item = new StockItem(id, name, desc, price, quantity);
-        List<StockItem> all_items = dao.findStockItems();
-        for(StockItem the : all_items){
-            if(the.getName() == item.getName() && the.getId() == item.getId() && the.getDescription() == item.getDescription()&& the.getPrice() == item.getPrice()){
-                dao.removeStockItem(item);
-                log.info("New item " + item.getName() + " removed.");
-                break;
-            }else{
-                log.warn("Item was not found in te warehouse");
-            }
+        StockItem item = dao.findStockItem(id);
+
+        if(quantity > item.getQuantity()){
+            quantity = item.getQuantity();
         }
+
+        StockItem newCopy = new StockItem(item.getId(), item.getName(), item.getDescription(),item.getPrice(), quantity);
+        dao.removeStockItem(newCopy);
+        log.info(newCopy.getName() + " with quantity " + newCopy.getQuantity() + " was removed from warehouse");
 
     }
 

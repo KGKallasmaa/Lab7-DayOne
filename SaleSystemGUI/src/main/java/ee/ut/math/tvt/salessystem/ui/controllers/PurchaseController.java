@@ -53,7 +53,7 @@ public class PurchaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        log.info("Purchase tab initialized");
+        log.debug("Purchase tab initialized");
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -70,7 +70,7 @@ public class PurchaseController implements Initializable {
     /** Event handler for the <code>new purchase</code> event. */
     @FXML
     protected void newPurchaseButtonClicked() {
-        log.info("New sale process started");
+        log.debug("New sale process started");
         try {
             enableInputs();
         } catch (SalesSystemException e) {
@@ -178,7 +178,6 @@ public class PurchaseController implements Initializable {
         this.quantityField.setDisable(disable);
         this.nameSelect.setDisable(disable);
         this.priceField.setDisable(disable);
-
     }
 
     /**

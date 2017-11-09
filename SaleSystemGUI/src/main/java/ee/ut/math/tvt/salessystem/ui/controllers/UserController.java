@@ -38,28 +38,28 @@ public class UserController  implements Initializable {
         this.teamtab= teamtab;
     }
     @Override public void initialize(URL location, ResourceBundle resources) {
-        log.info("User tab initialized");
+        log.debug("User tab initialized");
         historytab.setDisable(true);
         purchasetab.setDisable(true);
         stocktab.setDisable(true);
         teamtab.setDisable(true);
     }
     @FXML public void setCashierbox (){
-        log.info("Usertype = cashier");
+        log.debug("Usertype = Cashier");
         this.cashierbox.setSelected(true);
         this.warehousebox.setSelected(false);
         this.adminbox.setSelected(false);
         selectUser();
     }
     @FXML public void setWarehousebox (){
-        log.info("Usertype = warehouse");
+        log.debug("Usertype = Warehouse worker");
         this.warehousebox.setSelected(true);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(false);
         selectUser();
     }
     @FXML public void setAdminbox (){
-        log.info("Usertype = admin");
+        log.debug("Usertype = Admin");
         this.warehousebox.setSelected(false);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(true);
