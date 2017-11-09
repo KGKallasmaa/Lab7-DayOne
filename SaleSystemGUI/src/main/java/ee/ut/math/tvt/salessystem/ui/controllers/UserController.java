@@ -45,21 +45,21 @@ public class UserController  implements Initializable {
         teamtab.setDisable(true);
     }
     @FXML public void setCashierbox (){
-        log.info("Usertype = cashier");
+        log.info("Usertype = Cashier");
         this.cashierbox.setSelected(true);
         this.warehousebox.setSelected(false);
         this.adminbox.setSelected(false);
         selectUser();
     }
     @FXML public void setWarehousebox (){
-        log.info("Usertype = warehouse");
+        log.info("Usertype = Warehouse worker");
         this.warehousebox.setSelected(true);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(false);
         selectUser();
     }
     @FXML public void setAdminbox (){
-        log.info("Usertype = admin");
+        log.info("Usertype = Admin");
         this.warehousebox.setSelected(false);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(true);
