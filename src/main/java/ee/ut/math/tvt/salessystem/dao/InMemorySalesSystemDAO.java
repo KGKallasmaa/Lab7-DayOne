@@ -28,7 +28,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
         List<StockItem> stockitems = new ArrayList<>();
         //Random stockitems
-        StockItem stockitem_1 = new StockItem(1L,"Test1","I'm cool",340,1200);
+        StockItem stockitem_1 = new StockItem(1L,"t","a",3,4);
         StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
         StockItem stockitem_3 = new StockItem(3L,"Test3","I'm cool",540,1230);
         StockItem stockitem_4 = new StockItem(4L,"Test4","I'm cool",640,1240);
@@ -129,7 +129,6 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveStockItem(StockItem stockItem) {
-        System.out.println("Item "+stockItem.getName()+" is being processed.");
         // check if exists and add quantity if nessecary
 
         //could get slow with large databases
@@ -137,7 +136,6 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
                 if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
                     int oldQuantity = oldStockItem.getQuantity();
                     oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
-                    System.out.println("Quantity of " + oldStockItem.getName() + " was increased from " + oldQuantity + " to " + oldStockItem.getQuantity());
                     //new price
                     double oldSum = oldQuantity*oldStockItem.getPrice();
                     double newSum = stockItem.getQuantity()*stockItem.getPrice();
