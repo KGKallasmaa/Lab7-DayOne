@@ -24,10 +24,8 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     //private static final Logger log = LogManager.getLogger(InMemorySalesSystemDAO.class);
 
     public InMemorySalesSystemDAO() {
-        this.soldItemMap = findAllOrders();
-
         List<StockItem> stockitems = new ArrayList<>();
-        //Random stockitems
+        //Random example stockitems
         StockItem stockitem_1 = new StockItem(1L,"t","a",3,4);
         StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
         StockItem stockitem_3 = new StockItem(3L,"Test3","I'm cool",540,1230);
@@ -50,15 +48,8 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         stockitems.add(stockitem_9);
         stockitems.add(stockitem_10);
         this.stockItemList = stockitems;
-    }
 
-    @Override
-    public List<StockItem> findStockItems() {
-        return stockItemList;
-
-    }
-    @Override
-    public HashMap<Long,List<SoldItem>> findAllOrders(){
+        // create a few example orders
         HashMap<Long,List<SoldItem>> orders = new HashMap<>();
         //Random Orders
         //Order 1
@@ -95,8 +86,16 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         order_3.add(new SoldItem(stockitem_3_1,14));
         order_3.add(new SoldItem(stockitem_3_2,23));
         orders.put(date3,order_2);
+        this.soldItemMap = orders;
+    }
 
-        return orders;
+    @Override
+    public List<StockItem> findStockItems() {
+        return stockItemList;
+    }
+    @Override
+    public HashMap<Long,List<SoldItem>> findAllOrders(){
+        return soldItemMap;
     }
     @Override
     public StockItem findStockItem(long id) {
@@ -158,8 +157,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void beginTransaction() {
-
-        }
+    }
     @Override
     public void rollbackTransaction() {
     }

@@ -44,6 +44,7 @@ public class ConsoleUI {
         System.out.println("===========================");
         printUsage();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println();
         while (true){
             System.out.print("> ");
             processCommand(in.readLine().trim().toLowerCase());
@@ -78,14 +79,18 @@ public class ConsoleUI {
         System.out.println("-------------------------");
         System.out.println("Usage:");
         System.out.println("h\t\tShow this help");
-        System.out.println("w\t\tShow warehouse contents");
-        System.out.println("atw\t\tAdd product to warehouse");
-        System.out.println("rfw\t\tRemove product from warehouse");
+        //POS
         System.out.println("c\t\tShow cart contents");
         System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
         System.out.println("p\t\tPurchase the shopping cart");
         System.out.println("r\t\tReset the shopping cart");
+        //Warehouse
+        System.out.println("w\t\tShow warehouse contents");
+        System.out.println("atw\t\tAdd product to warehouse");
+        System.out.println("rfw\t\tRemove product from warehouse");
+        //History
         System.out.println("ph\t\tShow purchase history");
+        //Team
         System.out.println("t\t\tShow team information");
         System.out.println("-------------------------");
     }
@@ -111,7 +116,7 @@ public class ConsoleUI {
             cart.submitCurrentPurchase();
         else if (c[0].equals("r"))
             cart.cancelCurrentPurchase();
-        else if (c[0].equals("hi"))
+        else if (c[0].equals("ph"))
             showHistory();
         else if (c[0].equals("a") && c.length == 3) {
             try {
@@ -130,7 +135,7 @@ public class ConsoleUI {
             System.out.println("unknown command");
         }
     }
-        //It shows orders in 3 diffrent ways
+    //It shows orders in 3 diffrent ways
     private void showHistory() {
         System.out.println("Please choose how you want to see it");
         System.out.println("1) between dates [1]");
@@ -204,7 +209,7 @@ public class ConsoleUI {
         System.out.println("Please enter the quantity of the item");
         Integer quantity = sc.nextInt();
         while(quantity<0){
-            System.out.println("Quantity has to be larget than 0");
+            System.out.println("Quantity has to be larger than 0");
             quantity = sc.nextInt();
         }
         StockItem item = new StockItem(id, name, desc, price, quantity);
