@@ -7,6 +7,7 @@ import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -55,16 +56,15 @@ public class PurchaseController implements Initializable {
         log.info("Purchase tab initialized");
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
-
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         QuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         SumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
-
         purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
         purchaseTableView.getColumns().addAll(IdColumn, NameColumn, PriceColumn, QuantityColumn, SumColumn);
         disableProductField(true);
+
     }
 
     /** Event handler for the <code>new purchase</code> event. */
@@ -98,11 +98,11 @@ public class PurchaseController implements Initializable {
      */
     @FXML
     protected void submitPurchaseButtonClicked() {
-        log.info("Submission process started");
+        log.debug("Submission process started");
         try {
-            log.debug("Contents of the current basket:\n" + shoppingCart.getAll());
-            shoppingCart.submitCurrentPurchase();
+            log.info("Contents of the current basket:\n" + shoppingCart.getAll());
             disableInputs();
+            shoppingCart.submitCurrentPurchase();
             purchaseTableView.refresh();
             log.info("Sale complete");
         } catch (SalesSystemException e) {
@@ -113,6 +113,9 @@ public class PurchaseController implements Initializable {
     // switch UI to the state that allows to proceed with the purchase
     private void enableInputs() {
         resetProductField();
+        nameSelect.setOnAction(event -> {
+            fillInputsbyStockItem();
+        });
         disableProductField(false);
         cancelPurchase.setDisable(false);
         submitPurchase.setDisable(false);
@@ -123,6 +126,9 @@ public class PurchaseController implements Initializable {
 
     // switch UI to the state that allows to initiate new purchase
     private void disableInputs() {
+        nameSelect.setOnAction(event -> {
+
+        });
         resetProductField();
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
@@ -130,25 +136,17 @@ public class PurchaseController implements Initializable {
         disableProductField(true);
     }
 
-    private StockItem fillInputsBySelectedStockItem() {
-        log.info("Item selected from dropdown menu");
+    private StockItem findStockItembyComboBox() {
         List<StockItem> items = dao.findStockItems();
         String itemname = String.valueOf(nameSelect.getValue());
-        System.out.println(dao.findStockItemName(itemname));
+        purchaseTableView.refresh();
         return dao.findStockItemName(itemname);
-
         }
 
-
-    // Search the warehouse for a StockItem with the bar code entered
-    // to the barCode textfield.
-    private StockItem getStockItemByBarcode() {
-        try {
-            long code = Long.parseLong(barCodeField.getText());
-            return dao.findStockItem(code);
-        } catch (NumberFormatException e) {
-            return null;
-        }
+    private void fillInputsbyStockItem() {
+        StockItem stockItem = findStockItembyComboBox();
+        barCodeField.setText(stockItem.getId().toString());
+        priceField.setText(Double.toString(stockItem.getPrice()));
     }
 
     /**
@@ -156,10 +154,8 @@ public class PurchaseController implements Initializable {
      */
     @FXML
     public void addItemEventHandler() {
-        // add chosen item to the shopping cart.
-        StockItem stockItem = fillInputsBySelectedStockItem();
-        barCodeField.setText(stockItem.getId().toString());
-        priceField.setText(Double.toString(stockItem.getPrice()));
+        log.info("A product has been added to the cart.");
+        StockItem stockItem = findStockItembyComboBox();
         if (stockItem != null) {
             int quantity;
             try {
@@ -169,7 +165,7 @@ public class PurchaseController implements Initializable {
             }
 
             shoppingCart.addItem(new SoldItem(stockItem, quantity));
-            purchaseTableView.refresh();
+            //purchaseTableView.refresh();
         }
     }
 
@@ -182,6 +178,7 @@ public class PurchaseController implements Initializable {
         this.quantityField.setDisable(disable);
         this.nameSelect.setDisable(disable);
         this.priceField.setDisable(disable);
+
     }
 
     /**
@@ -191,8 +188,6 @@ public class PurchaseController implements Initializable {
         barCodeField.setText("");
         quantityField.setText("");
         priceField.setText("");
-        //List<StockItem> items = dao.findStockItems();
-        //nameSelect.setItems(new ObservableListWrapper(items));
         dropdown();
     }
 
@@ -202,7 +197,6 @@ public class PurchaseController implements Initializable {
         for (StockItem thing : items) {
             items2.add(thing.getName());
         }
-        System.out.print(items2);
         nameSelect.setItems(new ObservableListWrapper(items2));
     }
 
