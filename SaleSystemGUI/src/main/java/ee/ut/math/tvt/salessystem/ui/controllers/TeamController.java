@@ -68,7 +68,7 @@ public class TeamController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        log.info("Team tab initialized");
+        log.debug("Team tab initialized");
         //Loading application properties
         Properties properties = null;
         try {
@@ -87,7 +87,7 @@ public class TeamController implements Initializable {
         this.team_members.setText(properties.getProperty("team_members"));
 
         if(team_name.getText() != null && team_leader.getText() != null&& team_leader_email.getText() != null&& team_members.getText() != null){
-            log.info("Team info properly set");
+            log.debug("Team info properly set");
         }
     }
 }

@@ -46,7 +46,7 @@ public class StockController implements Initializable {
     }
 
     @Override public void initialize(URL location, ResourceBundle resources) {
-        log.info("Stock tab initialized");
+        log.debug("Stock tab initialized");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setPrefWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -72,24 +72,31 @@ public class StockController implements Initializable {
     }
 
     @FXML public void refreshButtonClicked() {
-        log.info("Refresh button clicked");
+        log.debug("Refresh button clicked");
         refreshStockItems();
     }
     @FXML protected void addButtonClicked() {
-        log.info("Add button clicked");
+        log.debug("Add button clicked");
         //filtering unsuitable valus
         try {
             if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
+                if (Integer.parseInt(priceField.getText()) <= 0){
+                    throw new IllegalArgumentException();
+                }
                 StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                         Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
                 dao.saveStockItem(new_stockitem);
+                log.info("Item was added to the warehouse");
 
             } else {
-                log.info("Found a field that was equal to null.");
+                log.debug("Found a field that was equal to null.");
             }
         }catch (NumberFormatException e){
             log.error("Invalid inputs in some fields");
-        }finally {
+        }catch (IllegalArgumentException e){
+            log.error("Price can not be negative");
+        }
+        finally {
             clearAll();
         }
     }
@@ -101,7 +108,7 @@ public class StockController implements Initializable {
         amountField.clear();
     }
     @FXML public void removeButtonClicked() {
-        log.info("Remove button clicked");
+        log.debug("Remove button clicked");
         try{
             Long id = Long.parseLong(barCodeField.getText());
             List<StockItem> all_items = dao.findStockItems();
@@ -111,10 +118,11 @@ public class StockController implements Initializable {
                     StockItem warehouse_item = dao.findStockItem(id);
                     StockItem remove_item = new StockItem(warehouse_item.getId(),warehouse_item.getName(),warehouse_item.getDescription(),warehouse_item.getPrice(),Integer.parseInt(amountField.getText()));
                     dao.removeStockItem(remove_item);
+                    log.info("Item was removed to the warehouse");
                     i++;
                 }
             }
-            if(i == 1){
+            if(i != 1){
                 throw new NullPointerException();
             }
         }catch(NullPointerException e){
@@ -128,6 +136,7 @@ public class StockController implements Initializable {
     }
 
     private void refreshStockItems() {
+        log.info("Warehouse refreshed");
         warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
         warehouseTableView.refresh();
     }
