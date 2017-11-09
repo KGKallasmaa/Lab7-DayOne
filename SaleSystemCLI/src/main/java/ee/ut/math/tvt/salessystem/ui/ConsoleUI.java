@@ -180,14 +180,33 @@ public class ConsoleUI {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter the id of the item");
         Long id = sc.nextLong();
+        if (dao.findStockItem(id) != null){// if exists then ask only for additional quantity
+            StockItem foundItem = dao.findStockItem(id);
+            System.out.println("Found " + foundItem.getName() + " with id " + foundItem.getId() + ". Please enter additional quantity.");
+            Integer quantity = sc.nextInt();
+            while(quantity < 0){ // can be equal with 0 because then allows accidental wrong id inputs without changing quantity
+                System.out.println("Please enter a positive quantity, if you don't want to change the quantity enter 0");
+                quantity = sc.nextInt();
+            }
+            foundItem.setQuantity(foundItem.getQuantity() + quantity);
+            return;
+        }
         System.out.println("Please enter the name of the item");
         String name = sc.next();
         System.out.println("Please enter the description of the item");
         String desc = sc.next();
         System.out.println("Please enter the price of the item");
         Double price = sc.nextDouble();
+        while(price<0){
+            System.out.println("Price can not be negative");
+            price = sc.nextDouble();
+        }
         System.out.println("Please enter the quantity of the item");
         Integer quantity = sc.nextInt();
+        while(quantity<0){
+            System.out.println("Quantity has to be larget than 0");
+            quantity = sc.nextInt();
+        }
         StockItem item = new StockItem(id, name, desc, price, quantity);
         dao.saveStockItem(item);
         log.info("New item " + item.getName() + " saved.");
@@ -199,6 +218,11 @@ public class ConsoleUI {
         System.out.println("Please enter the quantity of the item");
         Integer quantity = sc.nextInt();
         StockItem item = dao.findStockItem(id);
+
+        if(quantity > item.getQuantity()){
+            quantity = item.getQuantity();
+        }
+
         StockItem newCopy = new StockItem(item.getId(), item.getName(), item.getDescription(),item.getPrice(), quantity);
         dao.removeStockItem(newCopy);
         log.info(newCopy.getName() + " with quantity " + newCopy.getQuantity() + " was removed from warehouse");

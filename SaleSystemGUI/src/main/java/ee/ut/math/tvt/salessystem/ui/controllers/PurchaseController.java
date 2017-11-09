@@ -123,6 +123,7 @@ public class PurchaseController implements Initializable {
 
     // switch UI to the state that allows to initiate new purchase
     private void disableInputs() {
+
         resetProductField();
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
