@@ -52,14 +52,14 @@ public class UserController  implements Initializable {
         selectUser();
     }
     @FXML public void setWarehousebox (){
-        log.info("Usertype = Warehouse worker");
+        log.debug("Usertype = Warehouse worker");
         this.warehousebox.setSelected(true);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(false);
         selectUser();
     }
     @FXML public void setAdminbox (){
-        log.info("Usertype = Admin");
+        log.debug("Usertype = Admin");
         this.warehousebox.setSelected(false);
         this.cashierbox.setSelected(false);
         this.adminbox.setSelected(true);

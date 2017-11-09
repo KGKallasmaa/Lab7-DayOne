@@ -112,17 +112,20 @@ public class StockController implements Initializable {
         try{
             Long id = Long.parseLong(barCodeField.getText());
             List<StockItem> all_items = dao.findStockItems();
-            int i = 0;
+            List<Long> all_ids = new ArrayList<>();
             for(StockItem el : all_items){
-                if (el.getId() == id){
-                    StockItem warehouse_item = dao.findStockItem(id);
-                    StockItem remove_item = new StockItem(warehouse_item.getId(),warehouse_item.getName(),warehouse_item.getDescription(),warehouse_item.getPrice(),Integer.parseInt(amountField.getText()));
-                    dao.removeStockItem(remove_item);
-                    log.info("Item was removed to the warehouse");
-                    i++;
-                }
+                all_ids.add(el.getId());
             }
-            if(i != 1){
+            if(all_ids.contains(id)){
+                for(StockItem el : all_items){
+                    if (el.getId() == id){
+                        StockItem warehouse_item = dao.findStockItem(id);
+                        StockItem remove_item = new StockItem(warehouse_item.getId(),warehouse_item.getName(),warehouse_item.getDescription(),warehouse_item.getPrice(),Integer.parseInt(amountField.getText()));
+                        dao.removeStockItem(remove_item);
+                        log.info("Item was removed to the warehouse");
+            }
+                }
+            } else{
                 throw new NullPointerException();
             }
         }catch(NullPointerException e){

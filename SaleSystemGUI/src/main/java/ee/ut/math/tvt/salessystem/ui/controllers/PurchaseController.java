@@ -132,10 +132,10 @@ public class PurchaseController implements Initializable {
     }
 
     private StockItem fillInputsBySelectedStockItem() {
-        log.info("Item selected from dropdown menu");
+
         List<StockItem> items = dao.findStockItems();
         String itemname = String.valueOf(nameSelect.getValue());
-        System.out.println(dao.findStockItemName(itemname));
+        log.info("Item "+itemname+" selected from dropdown menu");
         return dao.findStockItemName(itemname);
 
         }
@@ -203,7 +203,7 @@ public class PurchaseController implements Initializable {
         for (StockItem thing : items) {
             items2.add(thing.getName());
         }
-        System.out.print(items2);
+     //   System.out.print(items2);
         nameSelect.setItems(new ObservableListWrapper(items2));
     }
 
