@@ -33,6 +33,7 @@ public class SalesSystemUI extends Application {
 
     private static final Logger log = LogManager.getLogger(SalesSystemUI.class);
     private final SalesSystemDAO dao;
+    //private final HybernateSalesSystemDAO
     private final ShoppingCart shoppingCart;
     BorderPane borderPane = new BorderPane();
     public SalesSystemUI() {

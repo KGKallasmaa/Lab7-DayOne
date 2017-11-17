@@ -1,0 +1,28 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="pos">
+        <!-- list all the classes that have @Entity annotation -->
+        <class>ee.ut.math.tvt.salessystem.dataobjects.SoldItem</class>
+        <class>ee.ut.math.tvt.salessystem.dataobjects.StockItem</class>
+
+        <properties>
+            <!-- configure hibernate to use the HSQL database running on the local machine -->
+            <!-- make sure the HSQL database is started before starting the application -->
+            <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/pos"/>
+
+            <!-- configure hibernate to print out all the SQL commands that it is executing -->
+            <property name="hibernate.show_sql" value="true"/>
+
+            <!-- drop-and-create tells hibernate to create database tables based on the @Entity classes -->
+            <!-- the tables are created at application startup. all existing tables and data are deleted -->
+            <!-- feel free to set it to 'none' to keep existing tables and data -->
+            <!-- https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+        </properties>
+    </persistence-unit>
+</persistence>

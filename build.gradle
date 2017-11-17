@@ -2,3 +2,19 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 version = '1.0'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile('org.hsqldb:hsqldb:2.3.4')
+    compile('org.hibernate:hibernate-entitymanager:5.2.1.Final')
+    compile('org.hibernate:hibernate-java8:5.2.1.Final')
+}
+
+task hsql(type:JavaExec){
+    main = "org.hsqldb.Server"
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["-database.0", "${projectDir}/data/pos", "-dbname.0", "pos"]
+}
