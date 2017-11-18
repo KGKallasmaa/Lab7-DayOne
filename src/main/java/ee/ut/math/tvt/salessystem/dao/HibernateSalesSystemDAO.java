@@ -47,7 +47,8 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveStockItem(StockItem stockItem){
-        //TODO
+        em.merge(stockItem);
+        em.persist(stockItem);
     }
     @Override
     public void saveSoldItem(Long time, SoldItem item){
@@ -77,7 +78,6 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     public List<StockItem> findStockItems(){
         //TODO
-
        return  em.createQuery("from StockItem",StockItem.class).getResultList();
      //  return null;
     }

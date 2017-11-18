@@ -149,9 +149,9 @@ public class ConsoleUI {
                 Long start_date = sc.nextLong();
                 System.out.println("Please enter end date(LONG)");
                 Long end_date = sc.nextLong();
-                HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
-                for(Long key : all_orders.keySet()){
-                    List<SoldItem> order = all_orders.get(key);
+                HashMap<Long,List<SoldItem>> all_orders1 = dao.findAllOrders();
+                for(Long key : all_orders1.keySet()){
+                    List<SoldItem> order = all_orders1.get(key);
                     if(key >= start_date && key <= end_date){
                         System.out.println(order);
                     }
@@ -174,6 +174,18 @@ public class ConsoleUI {
                 }
                 break;
             case("3"):
+                HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
+                List<SoldItem> orders = new ArrayList<>();
+                for (Long e : all_orders.keySet()){
+                    Date date = new Date(e);
+                    Long time = e.longValue();
+                    double sum = 0;
+                    for(SoldItem el : all_orders.get(e)){
+                        sum += el.getSum();
+                    }
+                    SoldItem element = new SoldItem(date,time,sum);
+                    orders.add(element);
+                }
                 for(List<SoldItem> el : dao.findAllOrders().values()){
                     System.out.println(el);
                 }

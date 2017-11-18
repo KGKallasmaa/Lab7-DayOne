@@ -21,20 +21,23 @@ public class SoldItem {
     @Column(name="date")
     private Date date;
 
-    @OneToOne
+    @OneToOne(targetEntity = StockItem.class)
     @JoinColumn(name="stockitem_id")
     private StockItem stockItem;
 
     @Column(name="quantity",nullable = false)
     private Integer quantity;
 
-
+    @Transient
     private String name;
+    @Transient
     private double price;
+    @Transient
     private Long time;
+    @Transient
     private double sum;
 
-
+    public SoldItem(){}
     public SoldItem(Date date,StockItem stockItem, int quantity) {
         this.id = stockItem.getId();
         this.stockItem = stockItem;
