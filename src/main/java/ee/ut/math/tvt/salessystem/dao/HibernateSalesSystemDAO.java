@@ -46,17 +46,19 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         em.getTransaction().commit();
     }
     @Override
-    public void saveStockItem(StockItem stockItem){
+    public void saveStockItem(StockItem stockItem) {
         em.merge(stockItem);
         em.persist(stockItem);
     }
     @Override
     public void saveSoldItem(Long time, SoldItem item){
+        em.merge(item);
+        em.persist(item);
         //TODO
     }
     @Override
     public void removeStockItem(StockItem stockItem){
-        //TODO
+        em.remove(stockItem);
     }
 
     @Override
@@ -66,18 +68,18 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
    @Override
     public StockItem findStockItem(long id){
-        //TODO
-        return null;
+       em.find(StockItem.class, id);
+       return null;
     }
     @Override
     public StockItem findStockItemName(String name){
         //TODO
-        return null;
+        int id = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name").setParameter(name, name).getFirstResult();
+        return this.findStockItem(id);
     }
     @Override
 
     public List<StockItem> findStockItems(){
-        //TODO
        return  em.createQuery("from StockItem",StockItem.class).getResultList();
      //  return null;
     }

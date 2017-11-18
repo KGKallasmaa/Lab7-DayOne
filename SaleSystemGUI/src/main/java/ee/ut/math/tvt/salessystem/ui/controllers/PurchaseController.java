@@ -137,7 +137,7 @@ public class PurchaseController implements Initializable {
     }
 
     private StockItem findStockItembyComboBox() {
-        List<StockItem> items = dao.findStockItems();
+        //List<StockItem> items = dao.findStockItems();
         String itemname = String.valueOf(nameSelect.getValue());
         purchaseTableView.refresh();
         return dao.findStockItemName(itemname);
