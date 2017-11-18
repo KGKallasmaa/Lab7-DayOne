@@ -54,11 +54,13 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     public void saveSoldItem(Long time, SoldItem item){
         em.merge(item);
         em.persist(item);
-        //TODO
     }
     @Override
+         //   em.remove(stockItem);
     public void removeStockItem(StockItem stockItem){
-        em.remove(stockItem);
+        if(findStockItems().contains(stockItem)){
+           em.remove(stockItem);
+        }
     }
 
     @Override
@@ -68,8 +70,10 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
    @Override
     public StockItem findStockItem(long id){
-       em.find(StockItem.class, id);
-       return null;
+       List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name")
+               .setParameter("stockitem_id", id)
+               .getResultList();
+       return stockItemsWithId.get(0);
     }
     @Override
     public StockItem findStockItemName(String name){
@@ -80,10 +84,8 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         return stockItemsWithName.get(0);
     }
     @Override
-
     public List<StockItem> findStockItems(){
        return  em.createQuery("from StockItem",StockItem.class).getResultList();
      //  return null;
     }
-
 }

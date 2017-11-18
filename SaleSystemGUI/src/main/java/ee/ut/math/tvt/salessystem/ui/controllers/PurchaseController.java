@@ -38,12 +38,12 @@ public class PurchaseController implements Initializable {
     @FXML private ComboBox nameSelect;
     @FXML private TextField priceField;
     @FXML private Button addItemButton;
-    @FXML private TableView<SoldItem> purchaseTableView;
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Long> IdColumn = new TableColumn<>("Id");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Integer> QuantityColumn = new TableColumn<>("Quantity");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> PriceColumn = new TableColumn<>("Price");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, String> NameColumn = new TableColumn<>("Name");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> SumColumn = new TableColumn<>("Sum");
+    @FXML private TableView<StockItem> purchaseTableView;
+    @FXML private javafx.scene.control.TableColumn<StockItem, Long> IdColumn = new TableColumn<>("Id");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Integer> QuantityColumn = new TableColumn<>("Quantity");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Double> PriceColumn = new TableColumn<>("Price");
+    @FXML private javafx.scene.control.TableColumn<StockItem, String> NameColumn = new TableColumn<>("Name");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Double> SumColumn = new TableColumn<>("Sum");
 
 
     public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart) {

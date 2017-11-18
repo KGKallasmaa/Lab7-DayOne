@@ -7,13 +7,14 @@ import javafx.scene.control.DatePicker;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.*;
 
 public class ShoppingCart {
 
     private final SalesSystemDAO dao;
-    private final List<SoldItem> items = new ArrayList<>();
+    private final HashMap<StockItem, Integer> items = new HashMap<>();
 
     public ShoppingCart(SalesSystemDAO dao) {
         this.dao = dao;
@@ -22,28 +23,23 @@ public class ShoppingCart {
     /**
      * Add new SoldItem to table.
      */
-    public void addItem(SoldItem newItem) {
-        // TODO verify that warehouse items' quantity remains at least zero or throw an exception
-        boolean isInList = false;
-        for (SoldItem item : items){
-            if(newItem.getId().equals(item.getId())){
-                if(newItem.getQuantity() + item.getQuantity() <= 0){
-                    items.remove(item);
-                }
-                item.setQuantity(item.getQuantity() + newItem.getQuantity());
-                item.setSum(item.getQuantity() * item.getPrice());
-                isInList = true;
-                break;
+    public void addItem(StockItem newItem, Integer quantity) {
+        if (items.containsKey(newItem)) {
+            int current_quantity = items.get(newItem);
+            if(quantity > 0){
+                int new_quantity = current_quantity + quantity;
+                items.put(newItem, new_quantity);
             }
+        } else {
+            items.put(newItem, quantity);
         }
-        if (!isInList && newItem.getQuantity()>0) {
-            items.add(newItem);
-        }
-        //log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
+
     }
 
-    public List<SoldItem> getAll() {
-        return items;
+    public List<StockItem> getAll() {
+        ArrayList new_list = new ArrayList();
+        new_list.addAll(items.keySet());
+        return new_list;
     }
 
     public void cancelCurrentPurchase() {
@@ -56,7 +52,7 @@ public class ShoppingCart {
         // note the use of transactions. InMemorySalesSystemDAO ignores transactions
         // but when you start using hibernate in lab5, then it will become relevant.
         // what is a transaction? https://stackoverflow.com/q/974596
-
+/*
         dao.beginTransaction();
         try {
             for (SoldItem item : items) {
@@ -68,6 +64,22 @@ public class ShoppingCart {
         } catch (Exception e) {
             dao.rollbackTransaction();
             throw e;
+        }
+    }
+    */
+        dao.beginTransaction();
+        final Long time = System.currentTimeMillis();
+        final Date date = new Date(time);
+        try {
+            for (StockItem item : items.keySet()) {
+                SoldItem new_solditem = new SoldItem(date, item, items.get(item));
+                // SoldItem(Date date,StockItem stockItem, int quantity)
+                dao.saveSoldItem(time, new_solditem);
+            }
+            dao.commitTransaction();
+            items.clear();
+        } catch (Exception e) {
+            dao.rollbackTransaction();
         }
     }
 }
