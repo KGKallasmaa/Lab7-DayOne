@@ -58,9 +58,9 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     @Override
          //   em.remove(stockItem);
     public void removeStockItem(StockItem stockItem){
-        if(findStockItems().contains(stockItem)){
-           em.remove(stockItem);
-        }
+        StockItem tempSI = this.findStockItem(stockItem.getId());
+        em.merge(tempSI);
+        tempSI.setQuantity(tempSI.getQuantity() - stockItem.getQuantity());
     }
 
     @Override

@@ -133,7 +133,7 @@ public class StockController implements Initializable {
             log.error("Barcode was not found");
             clearAll();
         }catch (IllegalArgumentException e){
-            log.error("Max entered quantity exceeded");
+            log.error("Entered id quantity exceeded");
         }finally {
             clearAll();
         }
