@@ -164,7 +164,7 @@ public class PurchaseController implements Initializable {
                 quantity = 1;
             }
 
-    //        shoppingCart.addItem(new SoldItem(date, stockItem, quantity));
+            //shoppingCart.addItem(new SoldItem(date, stockItem, quantity));
             //purchaseTableView.refresh();
         }
     }

@@ -58,7 +58,9 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void removeStockItem(StockItem stockItem){
-        em.remove(stockItem);
+        StockItem tempSI = this.findStockItem(stockItem.getId());
+        em.merge(tempSI);
+        tempSI.setQuantity(tempSI.getQuantity() - stockItem.getQuantity());
     }
 
     @Override
@@ -68,8 +70,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
    @Override
     public StockItem findStockItem(long id){
-       em.find(StockItem.class, id);
-       return null;
+       return em.find(StockItem.class, id);
     }
     @Override
     public StockItem findStockItemName(String name){
