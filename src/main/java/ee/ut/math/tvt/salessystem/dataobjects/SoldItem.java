@@ -10,20 +10,22 @@ import java.util.List;
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
  */
 @Entity
-@Table(name = "Solditem")
+@Table(name = "SoldItem")
 public class SoldItem {
 
-  //  @Id
-  //  @Column(name="solditem_id")
-  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name="solditem_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="date")
     private Date date;
-    @OneToMany
-    @JoinColumn(name = "stockitem_id")
+
+    @OneToOne
+    @JoinColumn(name="stockitem_id")
     private StockItem stockItem;
-    @Column(name="quantity")
+
+    @Column(name="quantity",nullable = false)
     private Integer quantity;
 
 
