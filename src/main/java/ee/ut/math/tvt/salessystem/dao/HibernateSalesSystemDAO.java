@@ -74,8 +74,10 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     @Override
     public StockItem findStockItemName(String name){
         //TODO
-        int id = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name").setParameter(name, name).getFirstResult();
-        return this.findStockItem(id);
+        List<StockItem> stockItemsWithName = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name")
+                .setParameter("name", name)
+                .getResultList();
+        return stockItemsWithName.get(0);
     }
     @Override
 
