@@ -41,6 +41,7 @@ public class SalesSystemUI extends Application {
     BorderPane borderPane = new BorderPane();
     public SalesSystemUI() {
         dao = new HibernateSalesSystemDAO();
+        System.out.println("Testing DAO"+dao.findStockItems());
      //   dao = new InMemorySalesSystemDAO();
         shoppingCart = new ShoppingCart(dao);
     }

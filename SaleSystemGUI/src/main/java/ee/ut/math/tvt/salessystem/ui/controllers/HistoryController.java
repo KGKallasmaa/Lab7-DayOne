@@ -93,7 +93,7 @@ public class HistoryController implements Initializable {
 
         orderTableView.refresh();
     }
-/*
+
     @FXML protected void showBetweenDatesButtonClicked() {
         log.debug("Show between dates button clicked");
         historyTableView.getItems().clear();
@@ -119,8 +119,8 @@ public class HistoryController implements Initializable {
                         sum += el.getSum();
                     }
                     if (e >= date_start.getTime() && e <= date_end.getTime()) {
-                        SoldItem element = new SoldItem(date, time, sum);
-                        orders.add(element);
+              //          SoldItem element = new SoldItem(date, time, sum);
+               //         orders.add(element);
                     }
                 }
                 if (orders.size() < 1) {
@@ -140,6 +140,7 @@ public class HistoryController implements Initializable {
             log.error("Start date is not before end date");
         }
     }
+
     @FXML protected void showLast10ButtonClicked() {
         log.debug("Show last 10 button clicked");
         historyTableView.getItems().clear();
@@ -160,8 +161,8 @@ public class HistoryController implements Initializable {
                 sum += el.getSum();
             }
             if (orders.size() <= 10){
-                SoldItem element = new SoldItem(date, time, sum);
-                orders.add(element);
+            //    SoldItem element = new SoldItem(date, time, sum);
+            //    orders.add(element);
             }
         }
         if(orders.size() < 10){
@@ -189,8 +190,8 @@ public class HistoryController implements Initializable {
             for(SoldItem el : all_orders.get(e)){
                 sum += el.getSum();
             }
-            SoldItem element = new SoldItem(date,time,sum);
-            orders.add(element);
+         //   SoldItem element = new SoldItem(date,time,sum);
+         //   orders.add(element);
         }
         if(orders.size() < 1){
             log.warn("NO orders found from database");
@@ -217,5 +218,5 @@ public class HistoryController implements Initializable {
     @FXML protected void endDateFieldClicked(){
         log.debug("End date = "+endDateField.getValue());
     }
-    */
+
 }

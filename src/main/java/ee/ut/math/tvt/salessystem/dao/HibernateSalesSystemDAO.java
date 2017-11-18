@@ -1,29 +1,26 @@
 package ee.ut.math.tvt.salessystem.dao;
 
-
-import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     private final EntityManagerFactory emf;
     private final EntityManager em;
+  //  private static final Logger log = LogManager.getLogger(HibernateSalesSystemDAO.class);
 
     public HibernateSalesSystemDAO() {
         // if you get ConnectException/JDBCConnectionException then you
         // probably forgot to start the database before starting the application
         emf = Persistence.createEntityManagerFactory("pos");
         em = emf.createEntityManager();
-        System.out.println("Tere "+em.getProperties());
     }
 
     // TODO implement missing methods
@@ -77,9 +74,11 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         return null;
     }
     @Override
+
     public List<StockItem> findStockItems(){
         //TODO
-       return  em.createQuery("from Stockitem",StockItem.class).getResultList();
+
+       return  em.createQuery("from StockItem",StockItem.class).getResultList();
      //  return null;
     }
 
