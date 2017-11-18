@@ -66,6 +66,7 @@ public class HistoryController implements Initializable {
         historyTableView.refresh();
         //order tab
         //sets order table when an order table row is clicked to that order
+        /*
         historyTableView.setRowFactory( tv -> {
             TableRow<SoldItem> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -77,6 +78,7 @@ public class HistoryController implements Initializable {
             });
             return row ;
         });
+        */
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setMinWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -91,7 +93,7 @@ public class HistoryController implements Initializable {
 
         orderTableView.refresh();
     }
-
+/*
     @FXML protected void showBetweenDatesButtonClicked() {
         log.debug("Show between dates button clicked");
         historyTableView.getItems().clear();
@@ -215,4 +217,5 @@ public class HistoryController implements Initializable {
     @FXML protected void endDateFieldClicked(){
         log.debug("End date = "+endDateField.getValue());
     }
+    */
 }

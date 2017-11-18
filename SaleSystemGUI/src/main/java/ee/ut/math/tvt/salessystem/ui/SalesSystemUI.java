@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui;
 
+import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.ui.controllers.*;
@@ -20,7 +21,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.SessionFactory;
 
+import javax.security.auth.login.Configuration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
@@ -32,12 +35,13 @@ import java.util.Scanner;
 public class SalesSystemUI extends Application {
 
     private static final Logger log = LogManager.getLogger(SalesSystemUI.class);
-    private final SalesSystemDAO dao;
-    //private final HybernateSalesSystemDAO
+ // private final SalesSystemDAO dao;
+    public HibernateSalesSystemDAO dao;
     private final ShoppingCart shoppingCart;
     BorderPane borderPane = new BorderPane();
     public SalesSystemUI() {
-        dao = new InMemorySalesSystemDAO();
+        HibernateSalesSystemDAO dao = new HibernateSalesSystemDAO();
+     //   dao = new InMemorySalesSystemDAO();
         shoppingCart = new ShoppingCart(dao);
     }
     @Override

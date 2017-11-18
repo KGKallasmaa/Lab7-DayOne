@@ -1,26 +1,37 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Stock item.
  */
+@Entity
+@Table(name = "Stockitem")
 public class StockItem {
 
+    @Id
+    @Column(name="stockitem_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "price")
     private double price;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "quantity")
     private int quantity;
 
-    public StockItem () {
-    }
-
-    public StockItem(Long id, String name, String desc, double price, int quantity) {
-        this.id = id;
+    public StockItem(Long id, String name, String description,Double price, int quantity) {
         this.name = name;
-        this.description = desc;
-        this.price = price;
+        this.id = id;
+        this.price =price;
+        this.description = description;
         this.quantity = quantity;
     }
 

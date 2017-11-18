@@ -26,6 +26,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     public InMemorySalesSystemDAO() {
         List<StockItem> stockitems = new ArrayList<>();
         //Random example stockitems
+        /*
         StockItem stockitem_1 = new StockItem(1L,"t","a",3,4);
         StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
         StockItem stockitem_3 = new StockItem(3L,"Test3","I'm cool",540,1230);
@@ -87,6 +88,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         order_3.add(new SoldItem(stockitem_3_2,23));
         orders.put(date3,order_2);
         this.soldItemMap = orders;
+        */
     }
 
     @Override

@@ -83,6 +83,7 @@ public class StockController implements Initializable {
                 if (Integer.parseInt(priceField.getText()) <= 0){
                     throw new IllegalArgumentException();
                 }
+
                 StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                         Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
                 dao.saveStockItem(new_stockitem);

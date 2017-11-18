@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -8,36 +9,41 @@ import java.util.List;
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
  */
+@Entity
+@Table(name = "Solditem")
 public class SoldItem {
 
+  //  @Id
+  //  @Column(name="solditem_id")
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private StockItem stockItem;
-    private String name;
-    private Integer quantity;
-    private double price;
+
+    @Column(name="date")
     private Date date;
+    @OneToMany
+    @JoinColumn(name = "stockitem_id")
+    private StockItem stockItem;
+    @Column(name="quantity")
+    private Integer quantity;
+
+
+    private String name;
+    private double price;
     private Long time;
-    private List<SoldItem> order_items;
     private double sum;
 
-    public SoldItem() {
-    }
 
-    public SoldItem(StockItem stockItem, int quantity) {
+    public SoldItem(Date date,StockItem stockItem, int quantity) {
         this.id = stockItem.getId();
         this.stockItem = stockItem;
+        this.date = date;
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
         this.sum = stockItem.getPrice() * quantity;
+        this.time =date.getTime();
     }
 
-    public SoldItem(Date date, Long time, Double sum){
-        this.date = date;
-        this.time = time;
-        this.sum = sum;
-   //     System.out.println("date: " + this.date + " time: " + this.time + " sum: "+ this.sum);
-    }
 
     public Long getId() {
         return id;
@@ -101,7 +107,6 @@ public class SoldItem {
                 ", price=" + price +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
-                ", order_items=" + order_items +
                 ", sum=" + sum +
                 '}';
     }

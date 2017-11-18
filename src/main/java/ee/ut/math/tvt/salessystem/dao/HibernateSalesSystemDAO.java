@@ -61,8 +61,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     @Override
     public HashMap<Long,List<SoldItem>> findAllOrders(){
         //TODO
-        HashMap<Long,List<SoldItem>> tere = new HashMap<>();
-        return tere;
+        return null;
     }
    @Override
     public StockItem findStockItem(long id){
@@ -77,7 +76,8 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     @Override
     public List<StockItem> findStockItems(){
         //TODO
-        return null;
+       return  em.createQuery("from Stockitem",StockItem.class).getResultList();
+     //  return null;
     }
 
 }
