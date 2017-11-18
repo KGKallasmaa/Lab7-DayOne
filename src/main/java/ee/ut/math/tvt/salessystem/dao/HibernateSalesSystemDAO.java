@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+
 public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     private final EntityManagerFactory emf;
@@ -22,9 +23,11 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         // probably forgot to start the database before starting the application
         emf = Persistence.createEntityManagerFactory("pos");
         em = emf.createEntityManager();
+        System.out.println("Tere "+em.getProperties());
     }
 
     // TODO implement missing methods
+
 
     public void close() {
         em.close();

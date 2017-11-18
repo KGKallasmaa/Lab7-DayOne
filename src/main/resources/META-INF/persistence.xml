@@ -4,6 +4,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
+
     <persistence-unit name="pos">
         <!-- list all the classes that have @Entity annotation -->
         <class>ee.ut.math.tvt.salessystem.dataobjects.SoldItem</class>

@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
+import javax.persistence.*;
 
 import javax.security.auth.login.Configuration;
 import java.io.IOException;
@@ -35,12 +36,11 @@ import java.util.Scanner;
 public class SalesSystemUI extends Application {
 
     private static final Logger log = LogManager.getLogger(SalesSystemUI.class);
- // private final SalesSystemDAO dao;
-    public HibernateSalesSystemDAO dao;
+    private final SalesSystemDAO dao;
     private final ShoppingCart shoppingCart;
     BorderPane borderPane = new BorderPane();
     public SalesSystemUI() {
-        HibernateSalesSystemDAO dao = new HibernateSalesSystemDAO();
+        dao = new HibernateSalesSystemDAO();
      //   dao = new InMemorySalesSystemDAO();
         shoppingCart = new ShoppingCart(dao);
     }

@@ -3,6 +3,7 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 version = '1.0'
 
+
 repositories {
     jcenter()
 }
@@ -18,3 +19,12 @@ task hsql(type:JavaExec){
     classpath = sourceSets.main.runtimeClasspath
     args = ["-database.0", "${projectDir}/data/pos", "-dbname.0", "pos"]
 }
+
+task dbmanager(dependsOn: 'classes', type: JavaExec) {
+    main = "org.hsqldb.util.DatabaseManagerSwing"
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["--user", "sa", "--url", "jdbc:hsqldb:hsql://localhost/POS"]
+}
+
+
+

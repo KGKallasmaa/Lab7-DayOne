@@ -1,11 +1,13 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Stock item.
  */
+
 @Entity
 @Table(name = "Stockitem")
 public class StockItem {
@@ -15,16 +17,17 @@ public class StockItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
+   // @Column(nullable = false)
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private double price;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity",nullable = false)
     private int quantity;
 
     public StockItem(Long id, String name, String description,Double price, int quantity) {
