@@ -45,6 +45,7 @@ public interface SalesSystemDAO {
     void saveSoldItem(SoldItem item);
 
     void beginTransaction();
+    Integer stockitem_maxquantity(Long item);
     List<SoldItem> findSoldItems();
 
     void rollbackTransaction();

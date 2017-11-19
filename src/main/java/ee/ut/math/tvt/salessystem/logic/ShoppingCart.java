@@ -23,7 +23,11 @@ public class ShoppingCart {
         if (items.containsKey(newItem)) {
             int current_quantity = items.get(newItem);
             if(quantity > 0){
+                int max_q = dao.stockitem_maxquantity(newItem.getId());
                 int new_quantity = current_quantity + quantity;
+                if(new_quantity > max_q){
+                    new_quantity = max_q;
+                }
                 newItem.setQuantity(new_quantity);
                 newItem.setSum((double)new_quantity*newItem.getPrice());
                 items.put(newItem, new_quantity);
@@ -63,6 +67,7 @@ public class ShoppingCart {
                 SoldItem new_solditem = new SoldItem(id,time, item.getId(), items.get(item));
                // public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
                 dao.saveSoldItem(new_solditem);
+                dao.removeStockItem(item);
             }
             dao.commitTransaction();
             items.clear();

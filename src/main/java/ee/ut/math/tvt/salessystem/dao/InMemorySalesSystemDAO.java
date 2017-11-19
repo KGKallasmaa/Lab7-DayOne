@@ -133,6 +133,10 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     public List<SoldItem> findSoldItems(){
         return null;
     }
+    @Override
+    public Integer stockitem_maxquantity(Long item){
+        return null;
+    }
 
     @Override
     public void saveStockItem(StockItem stockItem) {
