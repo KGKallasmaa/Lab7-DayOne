@@ -5,6 +5,8 @@ import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.LogManager;
@@ -47,20 +49,41 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveStockItem(StockItem stockItem) {
+        try{
+            StockItem existingItem = findStockItem(stockItem.getId());
+            beginTransaction();
+            existingItem.setQuantity(existingItem.getQuantity()+stockItem.getQuantity());
+            if (existingItem.getQuantity() <= 0){
+                em.remove(existingItem);
+            }
+            commitTransaction();
+            return;
+        }catch (Exception e){
+            rollbackTransaction();
+            e.printStackTrace();
+        }
+        beginTransaction();
         em.merge(stockItem);
-        em.persist(stockItem);
+        commitTransaction();
     }
     @Override
     public void saveSoldItem(Long time, SoldItem item){
-        em.merge(item);
-        em.persist(item);
+        beginTransaction();
+        //em.merge(saveSoldItem());
+        commitTransaction();
     }
     @Override
-         //   em.remove(stockItem);
     public void removeStockItem(StockItem stockItem){
+
         StockItem tempSI = this.findStockItem(stockItem.getId());
+        int newQuantity = tempSI.getQuantity() - stockItem.getQuantity();
         em.merge(tempSI);
-        tempSI.setQuantity(tempSI.getQuantity() - stockItem.getQuantity());
+        if (newQuantity>0){
+            tempSI.setQuantity(newQuantity);
+        } else{
+            //em.remove(tempSI);
+            em.detach(tempSI);
+        }
     }
 
     @Override
@@ -87,5 +110,10 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     public List<StockItem> findStockItems(){
        return  em.createQuery("from StockItem",StockItem.class).getResultList();
      //  return null;
+    }
+    public List<SoldItem> findOrderByDate(Date date){
+        return em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.date = :date")
+                .setParameter("date", date)
+                .getResultList();
     }
 }

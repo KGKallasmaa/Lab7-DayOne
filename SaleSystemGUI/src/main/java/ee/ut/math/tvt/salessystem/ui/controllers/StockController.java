@@ -95,7 +95,7 @@ public class StockController implements Initializable {
         }catch (NumberFormatException e){
             log.error("Invalid inputs in some fields");
         }catch (IllegalArgumentException e){
-            log.error("Price can not be negative");
+            e.printStackTrace();
         }
         finally {
             clearAll();

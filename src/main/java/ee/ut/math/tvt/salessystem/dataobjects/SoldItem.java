@@ -49,7 +49,6 @@ public class SoldItem {
         this.time =date.getTime();
     }
 
-
     public Long getId() {
         return id;
     }
