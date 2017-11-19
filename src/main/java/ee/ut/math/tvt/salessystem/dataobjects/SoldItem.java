@@ -86,6 +86,10 @@ public class SoldItem {
         this.quantity = quantity;
     }
 
+    public void setDate(Date date){
+        this.date = date;
+    }
+
     public double getSum() {
         return sum;
     }
