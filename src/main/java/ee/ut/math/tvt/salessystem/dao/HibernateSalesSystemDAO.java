@@ -24,9 +24,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         emf = Persistence.createEntityManagerFactory("pos");
         em = emf.createEntityManager();
     }
-
     // TODO implement missing methods
-
 
     public void close() {
         em.close();
@@ -67,9 +65,22 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         commitTransaction();
     }
     @Override
-    public void saveSoldItem(Long time, SoldItem item){
+    public void saveSoldItem(SoldItem item){
+        try{
+            StockItem existingItem = findStockItem(item.getId());
+            beginTransaction();
+            existingItem.setQuantity(existingItem.getQuantity()+item.getQuantity());
+            if (existingItem.getQuantity() <= 0){
+                em.remove(existingItem);
+            }
+            commitTransaction();
+            return;
+        }catch (Exception e){
+            rollbackTransaction();
+            e.printStackTrace();
+        }
         beginTransaction();
-        //em.merge(saveSoldItem());
+        em.merge(item);
         commitTransaction();
     }
     @Override
@@ -88,16 +99,35 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     @Override
     public HashMap<Long,List<SoldItem>> findAllOrders(){
-        //TODO
-        return null;
+      List<SoldItem> soldItems =  em.createQuery("from SoldItem",SoldItem.class).getResultList();
+      HashMap<Long,List<SoldItem>> orders = new HashMap<>();
+      for(SoldItem el : soldItems){
+          if(orders.containsKey(el.getTime())){
+              List<SoldItem> current_list = orders.get(el.getTime());
+              current_list.add(el);
+              orders.put(el.getTime(),current_list);
+          }else{
+              List<SoldItem> new_list = new ArrayList<>();
+              new_list.add(el);
+              orders.put(el.getTime(),new_list);
+          }
+      }
+      return orders;
     }
    @Override
     public StockItem findStockItem(long id){
-       List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name")
-               .setParameter("stockitem_id", id)
-               .getResultList();
-       return stockItemsWithId.get(0);
+        List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.id = :id")
+                .setParameter("stockitem_id", id)
+                .getResultList();
+        return stockItemsWithId.get(0);
     }
+    public SoldItem findSoldItem(long id){
+        List<SoldItem> soldItemsWithId = em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.id = :id")
+                .setParameter("solditem_id", id)
+                .getResultList();
+        return soldItemsWithId.get(0);
+    }
+
     @Override
     public StockItem findStockItemName(String name){
         //TODO

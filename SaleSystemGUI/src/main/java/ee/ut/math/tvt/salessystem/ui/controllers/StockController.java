@@ -83,7 +83,6 @@ public class StockController implements Initializable {
                 if (Integer.parseInt(priceField.getText()) <= 0){
                     throw new IllegalArgumentException();
                 }
-
                 StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                         Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
                 dao.saveStockItem(new_stockitem);
@@ -144,28 +143,28 @@ public class StockController implements Initializable {
         warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
         warehouseTableView.refresh();
     }
-/*
+
     @FXML protected void addAmount(){
-        log.info("Amount selected");
+        log.debug("Amount selected");
         this.amountField = amountField;
     }
     @FXML protected void addBarcode(){
-        log.info("Barcode selected");
+        log.debug("Barcode selected");
         this.barCodeField = barCodeField;
     }
     @FXML protected void addName(){
-        log.info("Name selected");
+        log.debug("Name selected");
         this.nameField = nameField;
     }
     @FXML protected void addDesc(){
-        log.info("Description selected");
+        log.debug("Description selected");
         this.descriptionField = descriptionField;
     }
     @FXML protected void addPrice(){
-        log.info("Price selected");
+        log.debug("Price selected");
         this.priceField = priceField;
     }
-*/
+
 /*
     private int getQuantity () { return Integer.parseInt(amountField.getText());}
     private long getId () { return  Long.parseLong(barCodeField.getText());}

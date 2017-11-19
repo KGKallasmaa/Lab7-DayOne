@@ -42,7 +42,7 @@ public interface SalesSystemDAO {
 
     void saveStockItem(StockItem stockItem);
 
-    void saveSoldItem(Long time, SoldItem item);
+    void saveSoldItem(SoldItem item);
 
     void beginTransaction();
 

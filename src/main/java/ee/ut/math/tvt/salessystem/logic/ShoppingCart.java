@@ -15,7 +15,6 @@ public class ShoppingCart {
 
     private final SalesSystemDAO dao;
     private final HashMap<StockItem, Integer> items = new HashMap<>();
-
     public ShoppingCart(SalesSystemDAO dao) {
         this.dao = dao;
     }
@@ -52,21 +51,6 @@ public class ShoppingCart {
         // note the use of transactions. InMemorySalesSystemDAO ignores transactions
         // but when you start using hibernate in lab5, then it will become relevant.
         // what is a transaction? https://stackoverflow.com/q/974596
-/*
-        dao.beginTransaction();
-        try {
-            for (SoldItem item : items) {
-                Date date = new Date();
-                dao.saveSoldItem(date.getTime(),item);
-            }
-            dao.commitTransaction();
-            items.clear();
-        } catch (Exception e) {
-            dao.rollbackTransaction();
-            throw e;
-        }
-    }
-    */
         dao.beginTransaction();
         final Long time = System.currentTimeMillis();
         final Date date = new Date(time);
@@ -74,7 +58,7 @@ public class ShoppingCart {
             for (StockItem item : items.keySet()) {
                 SoldItem new_solditem = new SoldItem(date, item, items.get(item));
                 // SoldItem(Date date,StockItem stockItem, int quantity)
-                dao.saveSoldItem(time, new_solditem);
+                dao.saveSoldItem(new_solditem);
             }
             dao.commitTransaction();
             items.clear();
