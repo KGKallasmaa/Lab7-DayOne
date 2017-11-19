@@ -68,7 +68,8 @@ public class StockController implements Initializable {
 
                     }
                 }
-        });*/
+        });
+        */
     }
 
     @FXML public void refreshButtonClicked() {

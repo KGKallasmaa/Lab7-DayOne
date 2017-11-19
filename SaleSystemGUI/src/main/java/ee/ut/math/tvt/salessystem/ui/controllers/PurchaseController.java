@@ -39,6 +39,7 @@ public class PurchaseController implements Initializable {
     @FXML private TextField priceField;
     @FXML private Button addItemButton;
     @FXML private TableView<StockItem> purchaseTableView;
+    //@FXML private List<SoldItem> purchaseCartItems;
     @FXML private javafx.scene.control.TableColumn<StockItem, Long> IdColumn = new TableColumn<>("Id");
     @FXML private javafx.scene.control.TableColumn<StockItem, Integer> QuantityColumn = new TableColumn<>("Quantity");
     @FXML private javafx.scene.control.TableColumn<StockItem, Double> PriceColumn = new TableColumn<>("Price");
@@ -163,8 +164,8 @@ public class PurchaseController implements Initializable {
             } catch (NumberFormatException e) {
                 quantity = 1;
             }
-
-            purchaseTableView.refresh();
+            shoppingCart.addItem(stockItem, quantity);
+            purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
         }
     }
 

@@ -24,15 +24,10 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         emf = Persistence.createEntityManagerFactory("pos");
         em = emf.createEntityManager();
     }
-
-    // TODO implement missing methods
-
-
     public void close() {
         em.close();
         emf.close();
     }
-
     @Override
     public void beginTransaction() {
         em.getTransaction().begin();
