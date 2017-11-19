@@ -131,8 +131,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveStockItem(StockItem stockItem) {
         // check if exists and add quantity if nessecary
-
-        //could get slow with large databases
+        // could get slow with large databases
             for(StockItem oldStockItem : stockItemList){
                 if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
                     int oldQuantity = oldStockItem.getQuantity();

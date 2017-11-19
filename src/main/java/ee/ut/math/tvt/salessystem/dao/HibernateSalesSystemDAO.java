@@ -24,7 +24,9 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         emf = Persistence.createEntityManagerFactory("pos");
         em = emf.createEntityManager();
     }
+
     // TODO implement missing methods
+
 
     public void close() {
         em.close();
@@ -35,12 +37,10 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     public void beginTransaction() {
         em.getTransaction().begin();
     }
-
     @Override
     public void rollbackTransaction() {
         em.getTransaction().rollback();
     }
-
     @Override
     public void commitTransaction() {
         em.getTransaction().commit();
@@ -92,8 +92,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         if (newQuantity>0){
             tempSI.setQuantity(newQuantity);
         } else{
-            //em.remove(tempSI);
-            em.detach(tempSI);
+            em.remove(tempSI);
         }
         commitTransaction();
     }
@@ -118,7 +117,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
    @Override
     public StockItem findStockItem(long id){
         List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.id = :id")
-                .setParameter("stockitem_id", id)
+                .setParameter("id", id)
                 .getResultList();
         return stockItemsWithId.get(0);
     }
