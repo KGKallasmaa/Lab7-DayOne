@@ -61,20 +61,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveSoldItem(SoldItem item){
-        try{
-            SoldItem existingItem = findSoldItem(item.getId());
-            beginTransaction();
-            existingItem.setQuantity(existingItem.getQuantity()+item.getQuantity());
-            if (existingItem.getQuantity() <= 0){
-                em.remove(existingItem);
-            }
-            commitTransaction();
-            return;
-        }catch (Exception e){
-            rollbackTransaction();
-            e.printStackTrace();
-        }
-        beginTransaction();
+//        beginTransaction();
         em.merge(item);
         commitTransaction();
     }

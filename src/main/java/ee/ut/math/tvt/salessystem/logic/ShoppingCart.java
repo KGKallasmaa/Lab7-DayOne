@@ -17,6 +17,9 @@ public class ShoppingCart {
         this.dao = dao;
         this.item_max = dao.stockitem_maxquantity();
     }
+    public void clear(){
+        items.clear();
+    }
 
     /**
      * Add new SoldItem to table.
@@ -61,7 +64,7 @@ public class ShoppingCart {
         dao.beginTransaction();
         final Long time = System.currentTimeMillis();
         final Date date = new Date(time);
-        List<SoldItem> current_solditems = dao.findSoldItems(); //TODO: fix this 
+        List<SoldItem> current_solditems = dao.findSoldItems(); //TODO: fix this
 
         try {
             int i = 0;
@@ -75,7 +78,9 @@ public class ShoppingCart {
             }
             dao.commitTransaction();
             items.clear();
+
         } catch (Exception e) {
+            e.printStackTrace();
             dao.rollbackTransaction();
         }
     }

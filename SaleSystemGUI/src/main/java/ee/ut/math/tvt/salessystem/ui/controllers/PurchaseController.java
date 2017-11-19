@@ -74,7 +74,7 @@ public class PurchaseController implements Initializable {
         log.debug("New sale process started");
         try {
             enableInputs();
-            purchaseTableView.refresh();
+            shoppingCart.clear();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
