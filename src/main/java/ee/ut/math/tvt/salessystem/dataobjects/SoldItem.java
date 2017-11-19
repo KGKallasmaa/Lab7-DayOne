@@ -1,10 +1,14 @@
 package ee.ut.math.tvt.salessystem.dataobjects;
 
 
+import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
+import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
@@ -12,41 +16,42 @@ import java.util.List;
 @Entity
 @Table(name = "SoldItem")
 public class SoldItem {
-
     @Id
     @Column(name="solditem_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="date")
+    @Transient
     private Date date;
 
     @OneToOne(targetEntity = StockItem.class)
     @JoinColumn(name="stockitem_id")
-    private StockItem stockItem;
+    private Long stockItem_id;
 
-    @Column(name="quantity",nullable = false)
+    @Column(name="quantity")
     private Integer quantity;
 
     @Transient
     private String name;
     @Transient
     private double price;
-    @Transient
+    @Column(name="time")
     private Long time;
     @Transient
     private double sum;
 
     public SoldItem(){}
-    public SoldItem(Date date,StockItem stockItem, int quantity) {
-        this.id = stockItem.getId();
-        this.stockItem = stockItem;
-        this.date = date;
+    public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
+        SalesSystemDAO dao = new HibernateSalesSystemDAO();
+        StockItem stockItem = dao.findStockItem(stockItem_id);
+        this.id = id;
+        this.stockItem_id = stockItem_id;
+        this.date = new Date(time);
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
         this.sum = stockItem.getPrice() * quantity;
-        this.time =date.getTime();
+        this.time =time;
     }
 
     public Long getId() {
@@ -86,26 +91,24 @@ public class SoldItem {
         this.quantity = quantity;
     }
 
-    public double getSum() {
-        return sum;
-    }
+    public double getSum() {return sum;}
     public void setSum(double sum){
         this.sum = sum;
     }
-
+/*
     public StockItem getStockItem() {
-        return stockItem;
+        return dao.findStockItem(stockItem_id);
     }
 
     public void setStockItem(StockItem stockItem) {
         this.stockItem = stockItem;
     }
+    */
 
     @Override
     public String toString() {
         return "SoldItem{" +
                 "id=" + id +
-                ", stockItem=" + stockItem +
                 ", name='" + name + '\'' +
                 ", quantity=" + quantity +
                 ", price=" + price +

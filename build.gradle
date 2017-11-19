@@ -19,9 +19,9 @@ task hsql(type:JavaExec){
     args = ["-database.0", "${projectDir}/data/pos", "-dbname.0", "pos"]
 }
 
- //task dbmanager(dependsOn: 'classes', type: JavaExec) {
-  //  main = "org.hsqldb.util.DatabaseManagerSwing"
-   // classpath = sourceSets.main.runtimeClasspath
-  //  args = ["--user", "sa", "--url", "jdbc:hsqldb:hsql://localhost/POS"]
+ task dbmanager(dependsOn: 'classes', type: JavaExec) {
+   main = "org.hsqldb.util.DatabaseManagerSwing"
+   classpath = sourceSets.main.runtimeClasspath
+  args = ["--user", "sa", "--url", "jdbc:hsqldb:hsql://localhost/POS"]
 
- //}
+ }

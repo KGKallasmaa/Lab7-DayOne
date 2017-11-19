@@ -5,10 +5,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.scene.control.DatePicker;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import javax.persistence.*;
 
 public class ShoppingCart {
@@ -54,10 +51,13 @@ public class ShoppingCart {
         dao.beginTransaction();
         final Long time = System.currentTimeMillis();
         final Date date = new Date(time);
+        List<SoldItem> current_solditems = dao.findSoldItems();
+
         try {
             for (StockItem item : items.keySet()) {
-                SoldItem new_solditem = new SoldItem(date, item, items.get(item));
-                // SoldItem(Date date,StockItem stockItem, int quantity)
+                Long id = Long.valueOf(current_solditems.size()+1);
+                SoldItem new_solditem = new SoldItem(id,time, item.getId(), items.get(item));
+               // public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
                 dao.saveSoldItem(new_solditem);
             }
             dao.commitTransaction();

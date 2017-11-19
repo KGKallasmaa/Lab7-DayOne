@@ -128,6 +128,12 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
             soldItemMap.put(item.getTime(), orders);
         }
     }
+
+    @Override
+    public List<SoldItem> findSoldItems(){
+        return null;
+    }
+
     @Override
     public void saveStockItem(StockItem stockItem) {
         // check if exists and add quantity if nessecary

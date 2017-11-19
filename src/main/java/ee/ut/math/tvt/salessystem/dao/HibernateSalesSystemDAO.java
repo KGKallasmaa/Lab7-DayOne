@@ -62,7 +62,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveSoldItem(SoldItem item){
         try{
-            StockItem existingItem = findStockItem(item.getId());
+            SoldItem existingItem = findSoldItem(item.getId());
             beginTransaction();
             existingItem.setQuantity(existingItem.getQuantity()+item.getQuantity());
             if (existingItem.getQuantity() <= 0){
@@ -94,7 +94,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     @Override
     public HashMap<Long,List<SoldItem>> findAllOrders(){
-      List<SoldItem> soldItems =  em.createQuery("from SoldItem",SoldItem.class).getResultList();
+      List<SoldItem> soldItems = em.createQuery("from SoldItem",SoldItem.class).getResultList();
       HashMap<Long,List<SoldItem>> orders = new HashMap<>();
       for(SoldItem el : soldItems){
           if(orders.containsKey(el.getTime())){
@@ -118,7 +118,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
     public SoldItem findSoldItem(long id){
         List<SoldItem> soldItemsWithId = em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.id = :id")
-                .setParameter("solditem_id", id)
+                .setParameter("id", id)
                 .getResultList();
         return soldItemsWithId.get(0);
     }
@@ -137,8 +137,13 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
      //  return null;
     }
     public List<SoldItem> findOrderByDate(Date date){
-        return em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.date = :date")
-                .setParameter("date", date)
+        return em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.time = :time")
+                .setParameter("time", date.getTime())
                 .getResultList();
+    }
+    @Override
+    public List<SoldItem> findSoldItems(){
+        return  em.createQuery("from SoldItem",SoldItem.class).getResultList();
+        //  return null;
     }
 }

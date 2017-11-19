@@ -188,7 +188,7 @@ public class HistoryController implements Initializable {
             Long time = e.longValue();
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
-                sum += el.getSum();
+                sum += el.getQuantity()*el.getPrice();
             }
          //   SoldItem element = new SoldItem(date,time,sum);
          //   orders.add(element);

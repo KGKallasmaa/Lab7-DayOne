@@ -45,6 +45,7 @@ public interface SalesSystemDAO {
     void saveSoldItem(SoldItem item);
 
     void beginTransaction();
+    List<SoldItem> findSoldItems();
 
     void rollbackTransaction();
 
