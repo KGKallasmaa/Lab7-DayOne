@@ -134,7 +134,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         return null;
     }
     @Override
-    public Integer stockitem_maxquantity(Long item){
+    public HashMap<StockItem, Integer> stockitem_maxquantity(){
         return null;
     }
 

@@ -147,11 +147,11 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         //  return null;
     }
     @Override
-    public Integer stockitem_maxquantity(Long item){
-        HashMap<Long,Integer> item_max = new HashMap<>();
+    public HashMap<StockItem,Integer> stockitem_maxquantity(){
+        HashMap<StockItem,Integer> item_max = new HashMap<>();
         for (StockItem el : findStockItems()){
-            item_max.put(el.getId(),el.getQuantity());
+            item_max.put(el,el.getQuantity());
         }
-        return item_max.get(item);
+        return item_max;
     }
 }
