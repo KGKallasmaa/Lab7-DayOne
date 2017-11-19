@@ -85,7 +85,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void removeStockItem(StockItem stockItem){
-
+        beginTransaction();
         StockItem tempSI = this.findStockItem(stockItem.getId());
         int newQuantity = tempSI.getQuantity() - stockItem.getQuantity();
         em.merge(tempSI);
@@ -95,6 +95,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             //em.remove(tempSI);
             em.detach(tempSI);
         }
+        commitTransaction();
     }
 
     @Override

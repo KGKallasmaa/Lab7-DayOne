@@ -117,15 +117,15 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         return null;
     }
     @Override
-    public void saveSoldItem(Long time, SoldItem item) {
-        if (soldItemMap.containsKey(time)) {
-            List<SoldItem> orders = soldItemMap.get(time);
+    public void saveSoldItem(SoldItem item) {
+        if (soldItemMap.containsKey(item.getTime())) {
+            List<SoldItem> orders = soldItemMap.get(item.getTime());
             orders.add(item);
-            soldItemMap.put(time, orders);
+            soldItemMap.put(item.getTime(), orders);
         } else {
             List<SoldItem> orders = new ArrayList<>();
             orders.add(item);
-            soldItemMap.put(time, orders);
+            soldItemMap.put(item.getTime(), orders);
         }
     }
     @Override
