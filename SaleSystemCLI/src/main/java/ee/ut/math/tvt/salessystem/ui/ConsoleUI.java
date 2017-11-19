@@ -66,7 +66,7 @@ public class ConsoleUI {
 
     private void showCart() {
         System.out.println("-------------------------");
-        for (SoldItem si : cart.getAll()) {
+        for (StockItem si : cart.getAll()) {
             System.out.println(si.getName() + " " + si.getPrice() + "Euro (" + si.getQuantity() + " items)");
         }
         if (cart.getAll().size() == 0) {

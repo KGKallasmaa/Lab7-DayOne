@@ -24,9 +24,13 @@ public class ShoppingCart {
             int current_quantity = items.get(newItem);
             if(quantity > 0){
                 int new_quantity = current_quantity + quantity;
+                newItem.setQuantity(new_quantity);
+                newItem.setSum((double)new_quantity*newItem.getPrice());
                 items.put(newItem, new_quantity);
             }
         } else {
+            newItem.setQuantity(quantity);
+            newItem.setSum((double)newItem.getQuantity()*newItem.getPrice());
             items.put(newItem, quantity);
         }
 

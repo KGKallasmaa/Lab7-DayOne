@@ -30,6 +30,9 @@ public class StockItem {
     @Column(name = "quantity",nullable = false)
     private int quantity;
 
+    @Transient
+    private Double sum;
+
     public StockItem(){}
     public StockItem(Long id, String name, String description,Double price, int quantity) {
         this.name = name;
@@ -77,6 +80,14 @@ public class StockItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
     }
 
     @Override

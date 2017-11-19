@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving history.
  */
@@ -91,7 +90,13 @@ public class SoldItem {
         this.quantity = quantity;
     }
 
-    public double getSum() {return sum;}
+    public void setDate(Date date){
+        this.date = date;
+    }
+
+    public double getSum() {
+        return sum;
+    }
     public void setSum(double sum){
         this.sum = sum;
     }
