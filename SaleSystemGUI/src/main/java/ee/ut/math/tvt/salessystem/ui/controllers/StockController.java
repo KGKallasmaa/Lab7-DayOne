@@ -119,12 +119,14 @@ public class StockController implements Initializable {
             }
             if(all_ids.contains(id)){
                 for(StockItem el : all_items){
+                    dao.beginTransaction();
                     if (el.getId() == id){
                         StockItem warehouse_item = dao.findStockItem(id);
                         StockItem remove_item = new StockItem(warehouse_item.getId(),warehouse_item.getName(),warehouse_item.getDescription(),warehouse_item.getPrice(),Integer.parseInt(amountField.getText()));
-                        dao.removeStockItem(remove_item);
+                        dao.removeStockItem(remove_item,true);
                         log.info("Item was removed to the warehouse");
             }
+            dao.commitTransaction();
                 }
             } else{
                 throw new NullPointerException();

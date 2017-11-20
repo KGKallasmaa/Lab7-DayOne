@@ -1,0 +1,5 @@
+<root>
+    <item name='java.util.logging.LogManager java.util.logging.Logger getLogger(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

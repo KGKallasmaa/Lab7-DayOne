@@ -117,7 +117,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         return null;
     }
     @Override
-    public void saveSoldItem(SoldItem item) {
+    public void saveSoldItem(SoldItem item, boolean started) {
         if (soldItemMap.containsKey(item.getTime())) {
             List<SoldItem> orders = soldItemMap.get(item.getTime());
             orders.add(item);
@@ -155,7 +155,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
             }
             stockItemList.add(stockItem);
         }
-    @Override public void removeStockItem(StockItem stockItem) {
+    @Override public void removeStockItem(StockItem stockItem,boolean started) {
 
         StockItem removable_obj = findStockItem(stockItem.getId());
         if (removable_obj.getQuantity() < stockItem.getQuantity()) {

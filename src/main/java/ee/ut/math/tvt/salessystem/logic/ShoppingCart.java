@@ -3,15 +3,13 @@ package ee.ut.math.tvt.salessystem.logic;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-import javafx.scene.control.DatePicker;
-
 import java.util.*;
-import javax.persistence.*;
 
 public class ShoppingCart {
 
     private final SalesSystemDAO dao;
-    private final HashMap<StockItem, Integer> items = new HashMap<>();
+
+    private  HashMap<StockItem, Integer> items = new HashMap<>();
     private  HashMap<StockItem,Integer> item_max = new HashMap<>();
     public ShoppingCart(SalesSystemDAO dao) {
         this.dao = dao;
@@ -64,23 +62,21 @@ public class ShoppingCart {
         dao.beginTransaction();
         final Long time = System.currentTimeMillis();
         final Date date = new Date(time);
-        List<SoldItem> current_solditems = dao.findSoldItems(); //TODO: fix this
-
+        List<SoldItem> current_solditems = dao.findSoldItems();
         try {
             int i = 0;
-            for (StockItem item : items.keySet()) {
+            for (StockItem item : items.keySet()) { //TODO: fix this
                 Long id = Long.valueOf(current_solditems.size()+1);
                 SoldItem new_solditem = new SoldItem(id,time, item.getId(), items.get(item));
                 i++;
-               // public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
-                dao.saveSoldItem(new_solditem);
-                dao.removeStockItem(item);
+                dao.saveSoldItem(new_solditem,true);
+                dao.removeStockItem(item,true);
             }
             dao.commitTransaction();
             items.clear();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Something went wrong with subbmiting the purcahse "+e.getMessage());
             dao.rollbackTransaction();
         }
     }

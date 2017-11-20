@@ -60,23 +60,32 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         commitTransaction();
     }
     @Override
-    public void saveSoldItem(SoldItem item){
-//        beginTransaction();
+    public void saveSoldItem(SoldItem item,boolean started){
+        if(started == true){ //TODO: maybe needs fixing
+            beginTransaction();
+        }
         em.merge(item);
-        commitTransaction();
+        if(started == true){ //TODO: maybe needs fixing
+            commitTransaction();
+        }
     }
     @Override
-    public void removeStockItem(StockItem stockItem){
-        beginTransaction();
+    public void removeStockItem(StockItem stockItem, boolean started){
+        if(started != true){
+            beginTransaction();
+        }
         StockItem tempSI = this.findStockItem(stockItem.getId());
         int newQuantity = tempSI.getQuantity() - stockItem.getQuantity();
         em.merge(tempSI);
         if (newQuantity>0){
             tempSI.setQuantity(newQuantity);
         } else{
-            em.remove(tempSI);
+            tempSI.setQuantity(0);
+        //    em.remove(tempSI);
         }
-        commitTransaction();
+        if(started != true){
+            commitTransaction();
+        }
     }
 
     @Override

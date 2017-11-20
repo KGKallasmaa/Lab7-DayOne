@@ -74,7 +74,7 @@ public class PurchaseController implements Initializable {
         log.debug("New sale process started");
         try {
             enableInputs();
-            shoppingCart.clear();
+            purchaseTableView.refresh();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
@@ -188,6 +188,8 @@ public class PurchaseController implements Initializable {
         barCodeField.setText("");
         quantityField.setText("");
         priceField.setText("");
+        shoppingCart.clear();
+        purchaseTableView.refresh();
         dropdown();
     }
 
@@ -195,7 +197,9 @@ public class PurchaseController implements Initializable {
         List<StockItem> items = dao.findStockItems();
         List<String> items2 = new ArrayList<>();
         for (StockItem thing : items) {
-            items2.add(thing.getName());
+            if(thing.getQuantity() > 0){
+                items2.add(thing.getName());
+            }
         }
         nameSelect.setItems(new ObservableListWrapper(items2));
     }

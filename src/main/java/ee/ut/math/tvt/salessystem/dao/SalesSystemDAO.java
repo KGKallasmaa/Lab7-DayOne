@@ -42,7 +42,7 @@ public interface SalesSystemDAO {
 
     void saveStockItem(StockItem stockItem);
 
-    void saveSoldItem(SoldItem item);
+    void saveSoldItem(SoldItem item, boolean started);
 
     void beginTransaction();
     HashMap<StockItem,Integer> stockitem_maxquantity();
@@ -51,7 +51,7 @@ public interface SalesSystemDAO {
     void rollbackTransaction();
 
     void commitTransaction();
-    void removeStockItem(StockItem stockItem);
+    void removeStockItem(StockItem stockItem, boolean started);
 
 
 }
