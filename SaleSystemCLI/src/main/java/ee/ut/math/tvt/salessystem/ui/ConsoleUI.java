@@ -124,7 +124,7 @@ public class ConsoleUI {
                 int amount = Integer.parseInt(c[2]);
                 StockItem item = dao.findStockItem(idx);
                 if (item != null) {
-                    cart.addItem(new SoldItem(item, Math.min(amount, item.getQuantity())));
+             //       cart.addItem(new SoldItem(item, Math.min(amount, item.getQuantity())));
                 } else {
                     System.out.println("no stock item with id " + idx);
                 }
@@ -183,8 +183,8 @@ public class ConsoleUI {
                     for(SoldItem el : all_orders.get(e)){
                         sum += el.getSum();
                     }
-                    SoldItem element = new SoldItem(date,time,sum);
-                    orders.add(element);
+         //           SoldItem element = new SoldItem(date,time,sum);
+           //         orders.add(element);
                 }
                 for(List<SoldItem> el : dao.findAllOrders().values()){
                     System.out.println(el);
@@ -241,7 +241,7 @@ public class ConsoleUI {
         }
 
         StockItem newCopy = new StockItem(item.getId(), item.getName(), item.getDescription(),item.getPrice(), quantity);
-        dao.removeStockItem(newCopy);
+      //  dao.removeStockItem(newCopy);
         log.info(newCopy.getName() + " with quantity " + newCopy.getQuantity() + " was removed from warehouse");
 
     }

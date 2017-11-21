@@ -20,8 +20,9 @@ public class SoldItem {
     @Column(name="solditem_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(targetEntity = StockItem.class)
-    @JoinColumn(name="stockitem_id")
+  //  @OneToOne(targetEntity = StockItem.class)
+  // @JoinColumn(name="stockitem_id")
+    @Column(name="stockitem_id")
     private Long stockItem_id;
     @Column(name="quantity")
     private Integer quantity;

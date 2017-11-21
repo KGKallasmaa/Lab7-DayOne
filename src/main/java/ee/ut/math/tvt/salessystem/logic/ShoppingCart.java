@@ -52,6 +52,13 @@ public class ShoppingCart {
             items.put(newstockitem, quantity);
         }
     }
+    public double currentTotal(){
+        int sum = 0;
+        for(StockItem el : items.keySet()){
+            sum += items.get(el)*el.getPrice();
+        }
+        return sum;
+    }
 
     public List<StockItem> getAll() {
         ArrayList new_list = new ArrayList();

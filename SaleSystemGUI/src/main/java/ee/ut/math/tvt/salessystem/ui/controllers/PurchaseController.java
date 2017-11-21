@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,6 +32,7 @@ public class PurchaseController implements Initializable {
     private ShoppingCart shoppingCart;
 
     @FXML private Button newPurchase;
+    @FXML private Text total_price;
     @FXML private Button submitPurchase;
     @FXML private Button cancelPurchase;
     @FXML private TextField barCodeField;
@@ -77,6 +79,7 @@ public class PurchaseController implements Initializable {
             shoppingCart.clear();
             purchaseTableView.getItems().clear();
             purchaseTableView.refresh();
+            setTotal_price();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
@@ -171,6 +174,7 @@ public class PurchaseController implements Initializable {
             }
             shoppingCart.addItem(stockItem, quantity);
             purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
+            setTotal_price();
         }
     }
 
@@ -206,6 +210,9 @@ public class PurchaseController implements Initializable {
             }
         }
         nameSelect.setItems(new ObservableListWrapper(items2));
+    }
+    private void setTotal_price(){
+        this.total_price = new Text(Double.toString(shoppingCart.currentTotal()));
     }
 
 }

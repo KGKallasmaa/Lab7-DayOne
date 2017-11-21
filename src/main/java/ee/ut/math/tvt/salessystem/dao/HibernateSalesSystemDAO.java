@@ -5,6 +5,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,8 +15,8 @@ import java.util.logging.Logger;
 
 public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
-    private final EntityManagerFactory emf;
-    private final EntityManager em;
+     private final EntityManagerFactory emf;
+     private final EntityManager em;
   //  private static final Logger log = LogManager.getLogger(HibernateSalesSystemDAO.class);
 
     public HibernateSalesSystemDAO() {
@@ -44,10 +45,14 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     public void saveStockItem(StockItem stockItem) {
         try{
             StockItem existingItem = findStockItem(stockItem.getId());
+            double p1 = existingItem.getQuantity()*existingItem.getPrice();
+            double p2 = stockItem.getQuantity()*stockItem.getPrice();
             beginTransaction();
             existingItem.setQuantity(existingItem.getQuantity()+stockItem.getQuantity());
+            double new_price = Math.round((p1+p2)/existingItem.getQuantity());
+            existingItem.setPrice(new_price);
             if (existingItem.getQuantity() <= 0){
-                em.remove(existingItem);
+                existingItem.setQuantity(0);
             }
             commitTransaction();
             return;

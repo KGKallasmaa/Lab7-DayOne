@@ -81,13 +81,12 @@ public class StockController implements Initializable {
         //filtering unsuitable valus
         try {
             if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
-                if (Integer.parseInt(priceField.getText()) <= 0){
-                    throw new IllegalArgumentException();
-                }
-                StockItem new_stockitem = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
+                StockItem item_tobe_added = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                         Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
-                dao.saveStockItem(new_stockitem);
-                log.info("Item was added to the warehouse");
+
+                    dao.saveStockItem(item_tobe_added);
+                    log.info("Item was added to the warehouse");
+
 
             } else {
                 log.debug("Found a field that was equal to null.");
