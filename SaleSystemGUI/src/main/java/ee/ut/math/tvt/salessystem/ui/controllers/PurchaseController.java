@@ -106,8 +106,9 @@ public class PurchaseController implements Initializable {
         log.debug("Submission process started");
         try {
             log.debug("Contents of the current basket:\n" + shoppingCart.getAll());
+            ShoppingCart tempCart = new ShoppingCart(shoppingCart);
+            tempCart.submitCurrentPurchase();
             disableInputs();
-            shoppingCart.submitCurrentPurchase();
             purchaseTableView.refresh();
             log.info("Sale complete");
         } catch (SalesSystemException e) {

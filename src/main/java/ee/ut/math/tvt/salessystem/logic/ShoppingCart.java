@@ -8,12 +8,17 @@ import java.util.*;
 public class ShoppingCart {
 
     private final SalesSystemDAO dao;
-
-    private HashMap<StockItem, Integer> items = new HashMap<>();
+    private  HashMap<StockItem, Integer> items = new HashMap<>();
     private  HashMap<StockItem,Integer> item_max = new HashMap<>();
+
     public ShoppingCart(SalesSystemDAO dao) {
         this.dao = dao;
         this.item_max = dao.stockitem_maxquantity();
+    }
+    public ShoppingCart(ShoppingCart oldCart){
+        this.items = oldCart.items;
+        this.dao = oldCart.dao;
+        this.item_max = oldCart.item_max;
     }
     public void clear(){
         items.clear();
@@ -23,22 +28,23 @@ public class ShoppingCart {
      * Add new SoldItem to table.
      */
     public void addItem(StockItem newItem, Integer quantity) {
-        if (items.containsKey(newItem)) {
-            int current_quantity = items.get(newItem);
+        StockItem newstockitem = new StockItem(newItem); // copy constructor
+        if (items.containsKey(newstockitem)) {
+            int current_quantity = items.get(newstockitem);
             if(quantity > 0){
-                int max_q = item_max.get(newItem);
+                int max_q = item_max.get(newstockitem);
                 int new_quantity = current_quantity + quantity;
                 if(new_quantity > max_q){
                     new_quantity = max_q;
                 }
-                newItem.setQuantity(new_quantity);
-                newItem.setSum((double)new_quantity*newItem.getPrice());
-                items.put(newItem, new_quantity);
+                newstockitem.setQuantity(new_quantity);
+                newstockitem.setSum((double)new_quantity*newstockitem.getPrice());
+                items.put(newstockitem, new_quantity);
             }
         } else {
-            newItem.setQuantity(quantity);
-            newItem.setSum((double)newItem.getQuantity()*newItem.getPrice());
-            items.put(newItem, quantity);
+            newstockitem.setQuantity(quantity);
+            newstockitem.setSum((double)newItem.getQuantity()*newstockitem.getPrice());
+            items.put(newstockitem, quantity);
         }
 
     }
@@ -59,7 +65,7 @@ public class ShoppingCart {
         // note the use of transactions. InMemorySalesSystemDAO ignores transactions
         // but when you start using hibernate in lab5, then it will become relevant.
         // what is a transaction? https://stackoverflow.com/q/974596
-        dao.beginTransaction();
+        //dao.beginTransaction();
         final Long time = System.currentTimeMillis();
         final Date date = new Date(time);
         List<SoldItem> current_solditems = dao.findSoldItems();
@@ -69,16 +75,17 @@ public class ShoppingCart {
                 Long id = Long.valueOf(current_solditems.size()+1);
                 SoldItem new_solditem = new SoldItem(id,time, item.getId(), items.get(item));
                 i++;
-                dao.saveSoldItem(new_solditem,true);
-                dao.removeStockItem(item,true);
+                dao.saveSoldItem(new_solditem,false);
+                dao.removeStockItem(item,false);
             }
-            dao.commitTransaction();
+            //dao.commitTransaction();
             clear();
             //this.items = new HashMap<>();
 
         } catch (Exception e) {
             System.out.println("Something went wrong with subbmiting the purcahse "+e.getMessage());
-            dao.rollbackTransaction();
+            e.printStackTrace();
+            //dao.rollbackTransaction();
         }
     }
 }

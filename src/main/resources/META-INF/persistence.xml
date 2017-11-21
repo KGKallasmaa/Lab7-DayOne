@@ -23,7 +23,7 @@
             <!-- the tables are created at application startup. all existing tables and data are deleted -->
             <!-- feel free to set it to 'none' to keep existing tables and data or keep it as 'drop-and-create'-->
             <!-- https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
-            <property name="javax.persistence.schema-generation.database.action" value="none"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
     </persistence-unit>
 </persistence>

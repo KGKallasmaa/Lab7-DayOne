@@ -15,27 +15,25 @@ import java.util.List;
 @Entity
 @Table(name = "SoldItem")
 public class SoldItem {
+
     @Id
     @Column(name="solditem_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Transient
-    private Date date;
-
     @OneToOne(targetEntity = StockItem.class)
     @JoinColumn(name="stockitem_id")
     private Long stockItem_id;
-
     @Column(name="quantity")
     private Integer quantity;
+    @Column(name="time")
+    private Long time;
 
+    @Transient
+    private Date date;
     @Transient
     private String name;
     @Transient
     private double price;
-    @Column(name="time")
-    private Long time;
     @Transient
     private double sum;
 
