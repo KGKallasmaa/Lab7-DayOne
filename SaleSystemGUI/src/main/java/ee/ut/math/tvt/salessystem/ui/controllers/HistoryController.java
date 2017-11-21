@@ -208,19 +208,17 @@ public class HistoryController implements Initializable {
         HashMap<Long, List<SoldItem>> orders = dao.findAllOrders();
 
         List<SoldItem> all_solditems = dao.findSoldItems();
-        
+        HashMap<SoldItem,Long> solditem_stockitemid = new HashMap<>();
+        for(SoldItem el : all_solditems){
+            solditem_stockitemid.put(el,el.getStockItem_id());
+        }
 
    //    public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
         List<StockItem> thisOrderList = new ArrayList<>();
         for(SoldItem el : orders.get(thisOrderTime)){
-            List<SoldItem> soldItems_with_the_right_id = dao.findOrderByDate(new Date(thisOrderTime));
-
-            for(SoldItem el_withid : soldItems_with_the_right_id){
-                Long stockitem_id = el_withid.getStockItem_id();
-                StockItem exploited_item = dao.findStockItem(stockitem_id);
-                StockItem table_item = new StockItem(exploited_item.getId(),exploited_item.getName(),exploited_item.getDescription(),exploited_item.getPrice(),el.getQuantity());
-                thisOrderList.add(table_item);
-            }
+            StockItem exploited_item = dao.findStockItem(solditem_stockitemid.get(el));
+            StockItem item = new StockItem(exploited_item.getId(),exploited_item.getName(),exploited_item.getDescription(),exploited_item.getPrice(),el.getQuantity());
+            thisOrderList.add(item);
         }
 
      //   StockItem(Long id, String name, String description,Double price, int quantity) {
