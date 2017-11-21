@@ -108,13 +108,13 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
    @Override
     public StockItem findStockItem(long id){
-        List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.id = :id")
+        List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.stockitem_id = :id")
                 .setParameter("id", id)
                 .getResultList();
         return stockItemsWithId.get(0);
     }
     public SoldItem findSoldItem(long id){
-        List<SoldItem> soldItemsWithId = em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.id = :id")
+        List<SoldItem> soldItemsWithId = em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.solditem_id = :id")
                 .setParameter("id", id)
                 .getResultList();
         return soldItemsWithId.get(0);
@@ -134,7 +134,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
      //  return null;
     }
     public List<SoldItem> findOrderByDate(Date date){
-        return em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.time = :time")
+        return em.createQuery("SELECT * FROM SoldItem solditem WHERE solditem.time = :time")
                 .setParameter("time", date.getTime())
                 .getResultList();
     }
