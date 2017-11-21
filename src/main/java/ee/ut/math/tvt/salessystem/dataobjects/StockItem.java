@@ -41,6 +41,13 @@ public class StockItem {
         this.description = description;
         this.quantity = quantity;
     }
+    public StockItem(StockItem item){
+        this.name = item.getName();
+        this.id = item.getId();
+        this.price = item.getPrice();
+        this.description = item.getDescription();
+        this.quantity = item.getQuantity();
+    }
 
     public String getDescription() {
         return description;

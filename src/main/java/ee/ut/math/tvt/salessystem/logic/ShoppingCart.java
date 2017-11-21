@@ -23,22 +23,23 @@ public class ShoppingCart {
      * Add new SoldItem to table.
      */
     public void addItem(StockItem newItem, Integer quantity) {
-        if (items.containsKey(newItem)) {
-            int current_quantity = items.get(newItem);
+        StockItem newstockitem = new StockItem(newItem); // copy constructor
+        if (items.containsKey(newstockitem)) { // tekib probleem et summa on ühel 0 ja teisel miskit muud ning tekitatakse duplikaat
+            int current_quantity = items.get(newstockitem);
             if(quantity > 0){
-                int max_q = item_max.get(newItem);
+                int max_q = item_max.get(newstockitem);
                 int new_quantity = current_quantity + quantity;
                 if(new_quantity > max_q){
                     new_quantity = max_q;
                 }
-                newItem.setQuantity(new_quantity);
-                newItem.setSum((double)new_quantity*newItem.getPrice());
-                items.put(newItem, new_quantity);
+                newstockitem.setQuantity(new_quantity);
+                newstockitem.setSum((double)new_quantity*newstockitem.getPrice());
+                items.put(newstockitem, new_quantity);
             }
         } else {
-            newItem.setQuantity(quantity);
-            newItem.setSum((double)newItem.getQuantity()*newItem.getPrice());
-            items.put(newItem, quantity);
+            newstockitem.setQuantity(quantity);
+            newstockitem.setSum((double)newItem.getQuantity()*newstockitem.getPrice());
+            items.put(newstockitem, quantity);
         }
 
     }
@@ -73,7 +74,8 @@ public class ShoppingCart {
                 dao.removeStockItem(item,true);
             }
             dao.commitTransaction();
-            items.clear();
+            clear();
+            //this.items = new HashMap<>();
 
         } catch (Exception e) {
             System.out.println("Something went wrong with subbmiting the purcahse "+e.getMessage());

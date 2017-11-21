@@ -74,6 +74,8 @@ public class PurchaseController implements Initializable {
         log.debug("New sale process started");
         try {
             enableInputs();
+            shoppingCart.clear();
+            purchaseTableView.getItems().clear();
             purchaseTableView.refresh();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
@@ -89,6 +91,7 @@ public class PurchaseController implements Initializable {
         try {
             shoppingCart.cancelCurrentPurchase();
             disableInputs();
+            purchaseTableView.getItems().clear();
             purchaseTableView.refresh();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
