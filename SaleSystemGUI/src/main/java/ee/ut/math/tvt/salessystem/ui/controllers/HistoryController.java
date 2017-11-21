@@ -207,6 +207,7 @@ public class HistoryController implements Initializable {
         HashMap<Long, List<SoldItem>> orders = dao.findAllOrders();
 
 
+
    //    public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
         List<SoldItem> thisOrderList = orders.get(thisOrderTime);
 
