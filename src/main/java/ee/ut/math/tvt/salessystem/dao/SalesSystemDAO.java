@@ -50,6 +50,8 @@ public interface SalesSystemDAO {
 
     void rollbackTransaction();
 
+    List<SoldItem> findOrderByDate(Date date);
+
     void commitTransaction();
     void removeStockItem(StockItem stockItem, boolean started);
 

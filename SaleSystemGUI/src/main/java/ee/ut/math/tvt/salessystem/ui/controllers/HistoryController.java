@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.controllers;
 import com.sun.javafx.collections.ObservableListWrapper;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
+import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,12 +44,12 @@ public class HistoryController implements Initializable {
     @FXML private javafx.scene.control.TableColumn<SoldItem, Date> dateColumn = new TableColumn<>("Date");
     @FXML private javafx.scene.control.TableColumn<SoldItem, Long> timeColumn = new TableColumn<>("Time");
     @FXML private javafx.scene.control.TableColumn<SoldItem, Double> sumColumn = new TableColumn<>("Sum");
-    @FXML private javafx.scene.control.TableView<SoldItem> orderTableView;
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Long> idColumn = new TableColumn<>("Id");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, String> nameColumn = new TableColumn<>("Name");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> priceColumn = new TableColumn<>("Price");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Integer> quantityColumn = new TableColumn<>("Quantity");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> order_sumColumn = new TableColumn<>("Sum");
+    @FXML private javafx.scene.control.TableView<StockItem> orderTableView;
+    @FXML private javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
+    @FXML private javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
+    @FXML private javafx.scene.control.TableColumn<StockItem, Double> order_sumColumn = new TableColumn<>("Sum");
 
     public HistoryController(SalesSystemDAO dao) {
         this.dao = dao;
@@ -206,11 +207,23 @@ public class HistoryController implements Initializable {
         Long thisOrderTime = purchaseOrder.getTime();
         HashMap<Long, List<SoldItem>> orders = dao.findAllOrders();
 
-
+        List<SoldItem> all_solditems = dao.findSoldItems();
+        
 
    //    public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
-        List<SoldItem> thisOrderList = orders.get(thisOrderTime);
+        List<StockItem> thisOrderList = new ArrayList<>();
+        for(SoldItem el : orders.get(thisOrderTime)){
+            List<SoldItem> soldItems_with_the_right_id = dao.findOrderByDate(new Date(thisOrderTime));
 
+            for(SoldItem el_withid : soldItems_with_the_right_id){
+                Long stockitem_id = el_withid.getStockItem_id();
+                StockItem exploited_item = dao.findStockItem(stockitem_id);
+                StockItem table_item = new StockItem(exploited_item.getId(),exploited_item.getName(),exploited_item.getDescription(),exploited_item.getPrice(),el.getQuantity());
+                thisOrderList.add(table_item);
+            }
+        }
+
+     //   StockItem(Long id, String name, String description,Double price, int quantity) {
 
 
         orderTableView.setItems(new ObservableListWrapper<>(thisOrderList));

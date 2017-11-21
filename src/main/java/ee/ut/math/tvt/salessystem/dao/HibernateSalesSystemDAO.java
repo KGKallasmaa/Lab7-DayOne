@@ -133,6 +133,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
        return  em.createQuery("from StockItem",StockItem.class).getResultList();
      //  return null;
     }
+    @Override
     public List<SoldItem> findOrderByDate(Date date){
         return em.createQuery("SELECT * FROM SoldItem solditem WHERE solditem.time = :time")
                 .setParameter("time", date.getTime())

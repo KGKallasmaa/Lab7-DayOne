@@ -170,6 +170,10 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     public void beginTransaction() {
     }
     @Override
+    public List<SoldItem> findOrderByDate(Date date){
+        return null;
+    }
+    @Override
     public void rollbackTransaction() {
     }
     @Override

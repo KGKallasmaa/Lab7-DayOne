@@ -106,7 +106,11 @@ public class SoldItem {
     public void setSum(double sum){
         this.sum = sum;
     }
-/*
+
+    public Long getStockItem_id() {
+        return stockItem_id;
+    }
+    /*
     public StockItem getStockItem() {
         return dao.findStockItem(stockItem_id);
     }
