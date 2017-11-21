@@ -28,10 +28,10 @@ public class ShoppingCart {
      * Add new SoldItem to table.
      */
     public void addItem(StockItem newItem, Integer quantity) {
-        StockItem newstockitem = new StockItem(newItem); // copy constructor
+        StockItem newstockitem = new StockItem(newItem);
         boolean shoppincartHasItem = false;
         for(StockItem stockitem : items.keySet()) {
-            if (stockitem.getId() == newstockitem.getId()) {// items.containsKey(newstockitem)
+            if (stockitem.getId() == newstockitem.getId()) {
                 shoppincartHasItem = true;
                 int current_quantity = items.get(stockitem);
                 if (quantity > 0) {
@@ -48,7 +48,7 @@ public class ShoppingCart {
         }
         if (!shoppincartHasItem){
             newstockitem.setQuantity(quantity);
-            newstockitem.setSum((double) newItem.getQuantity() * newstockitem.getPrice());
+            newstockitem.setSum(quantity * newstockitem.getPrice());
             items.put(newstockitem, quantity);
         }
     }
