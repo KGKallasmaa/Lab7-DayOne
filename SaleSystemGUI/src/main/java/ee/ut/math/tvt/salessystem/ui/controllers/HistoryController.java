@@ -66,7 +66,6 @@ public class HistoryController implements Initializable {
         historyTableView.refresh();
         //order tab
         //sets order table when an order table row is clicked to that order
-        /*
         historyTableView.setRowFactory( tv -> {
             TableRow<SoldItem> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -78,7 +77,6 @@ public class HistoryController implements Initializable {
             });
             return row ;
         });
-        */
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         idColumn.setMinWidth(120);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -207,7 +205,13 @@ public class HistoryController implements Initializable {
     @FXML protected void displayOrder(SoldItem purchaseOrder) {
         Long thisOrderTime = purchaseOrder.getTime();
         HashMap<Long, List<SoldItem>> orders = dao.findAllOrders();
+
+
+   //    public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
         List<SoldItem> thisOrderList = orders.get(thisOrderTime);
+
+
+
         orderTableView.setItems(new ObservableListWrapper<>(thisOrderList));
         orderTableView.refresh();
     }
