@@ -119,8 +119,8 @@ public class HistoryController implements Initializable {
                         sum += el.getSum();
                     }
                     if (e >= date_start.getTime() && e <= date_end.getTime()) {
-              //          SoldItem element = new SoldItem(date, time, sum);
-               //         orders.add(element);
+                       SoldItem element = new SoldItem(date, time, sum);
+                        orders.add(element);
                     }
                 }
                 if (orders.size() < 1) {
@@ -161,8 +161,8 @@ public class HistoryController implements Initializable {
                 sum += el.getSum();
             }
             if (orders.size() <= 10){
-            //    SoldItem element = new SoldItem(date, time, sum);
-            //    orders.add(element);
+                SoldItem element = new SoldItem(date, time, sum);
+                orders.add(element);
             }
         }
         if(orders.size() < 10){
@@ -188,10 +188,10 @@ public class HistoryController implements Initializable {
             Long time = e.longValue();
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
-                sum += el.getQuantity()*el.getPrice();
+                sum += el.getSum();
             }
-         //   SoldItem element = new SoldItem(date,time,sum);
-         //   orders.add(element);
+            SoldItem element = new SoldItem(date, time, sum);
+            orders.add(element);
         }
         if(orders.size() < 1){
             log.warn("NO orders found from database");

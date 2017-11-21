@@ -5,6 +5,7 @@ import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -29,13 +30,13 @@ public class SoldItem {
     @Column(name="time")
     private Long time;
 
-  //  @Transient
+    @Transient
     private Date date;
-  //  @Transient
+    @Transient
     private String name;
-  //  @Transient
+    @Transient
     private double price;
-  //  @Transient
+    @Transient
     private double sum;
 
     public SoldItem(){}
@@ -44,12 +45,18 @@ public class SoldItem {
         StockItem stockItem = dao.findStockItem(stockItem_id);
         this.id = id;
         this.stockItem_id = stockItem_id;
-      //  this.date = new Date(time);
+        this.date = new Date(time);
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
-        this.sum = stockItem.getPrice() * quantity;
+        this.sum = stockItem.getPrice() * this.quantity;
         this.time =time;
+    }
+
+    public SoldItem(Date date,Long time, Double sum){
+        this.date = date;
+        this.time = time;
+        this.sum = sum;
     }
 
     public Long getId() {
@@ -59,7 +66,7 @@ public class SoldItem {
     public void setId(Long id) {
         this.id = id;
     }
-   // public Date getDate (){ return date;}
+    public Date getDate (){ return date;}
 
     public String getName() {
         return name;
@@ -89,9 +96,9 @@ public class SoldItem {
         this.quantity = quantity;
     }
 
-  //  public void setDate(Date date){
-    //     this.date = date;
-  //  }
+    public void setDate(Date date){
+        this.date = date;
+    }
 
     public double getSum() {
         return sum;
