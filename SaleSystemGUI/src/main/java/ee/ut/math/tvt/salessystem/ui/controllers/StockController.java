@@ -145,7 +145,6 @@ public class StockController implements Initializable {
         warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
         warehouseTableView.refresh();
     }
-
     @FXML protected void addAmount(){
         log.debug("Amount selected");
         this.amountField = amountField;

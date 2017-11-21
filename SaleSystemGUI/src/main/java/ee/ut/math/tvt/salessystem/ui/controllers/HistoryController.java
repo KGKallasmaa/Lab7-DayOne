@@ -65,6 +65,7 @@ public class HistoryController implements Initializable {
         sumColumn.setMinWidth(200);
         historyTableView.getColumns().addAll(dateColumn,timeColumn,sumColumn);
         historyTableView.refresh();
+
         //order tab
         //sets order table when an order table row is clicked to that order
         historyTableView.setRowFactory( tv -> {
@@ -187,7 +188,7 @@ public class HistoryController implements Initializable {
             Long time = e.longValue();
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
-                sum += el.getSum();
+                sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
             }
             SoldItem element = new SoldItem(date, time, sum);
             orders.add(element);
@@ -217,7 +218,7 @@ public class HistoryController implements Initializable {
         List<StockItem> thisOrderList = new ArrayList<>();
         for(SoldItem el : orders.get(thisOrderTime)){
             StockItem exploited_item = dao.findStockItem(solditem_stockitemid.get(el));
-            StockItem item = new StockItem(exploited_item.getId(),exploited_item.getName(),exploited_item.getDescription(),exploited_item.getPrice(),el.getQuantity());
+            StockItem item = new StockItem(exploited_item.getId(),exploited_item.getName(),exploited_item.getDescription(),exploited_item.getPrice(),el.getQuantity(),exploited_item.getPrice()*el.getQuantity());
             thisOrderList.add(item);
         }
 

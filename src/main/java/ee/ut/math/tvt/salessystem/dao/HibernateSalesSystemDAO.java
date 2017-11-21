@@ -57,8 +57,9 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             commitTransaction();
             return;
         }catch (Exception e){
+            beginTransaction();
             rollbackTransaction();
-            e.printStackTrace();
+          //  e.printStackTrace();
         }
         beginTransaction();
         em.merge(stockItem);

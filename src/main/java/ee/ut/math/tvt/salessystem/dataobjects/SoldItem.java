@@ -19,7 +19,7 @@ public class SoldItem {
 
     @Id
     @Column(name="solditem_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
   //  @OneToOne(targetEntity = StockItem.class)
   // @JoinColumn(name="stockitem_id")

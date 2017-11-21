@@ -14,7 +14,7 @@ public class StockItem {
 
     @Id
     @Column(name="stockitem_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stockitem_id;
 
     @Column(name = "name", nullable = false)
@@ -47,6 +47,14 @@ public class StockItem {
         this.price = item.getPrice();
         this.description = item.getDescription();
         this.quantity = item.getQuantity();
+    }
+    public StockItem(Long id, String name, String description,Double price, int quantity,double sum) {
+        this.name = name;
+        this.stockitem_id = id;
+        this.price =price;
+        this.description = description;
+        this.quantity = quantity;
+        this.sum = sum;
     }
 
     public String getDescription() {
