@@ -9,7 +9,7 @@ public class ShoppingCart {
 
     private final SalesSystemDAO dao;
 
-    private  HashMap<StockItem, Integer> items = new HashMap<>();
+    private HashMap<StockItem, Integer> items = new HashMap<>();
     private  HashMap<StockItem,Integer> item_max = new HashMap<>();
     public ShoppingCart(SalesSystemDAO dao) {
         this.dao = dao;
@@ -23,23 +23,22 @@ public class ShoppingCart {
      * Add new SoldItem to table.
      */
     public void addItem(StockItem newItem, Integer quantity) {
-        StockItem newstockitem = new StockItem(newItem); // copy constructor
-        if (items.containsKey(newstockitem)) { // tekib probleem et summa on ühel 0 ja teisel miskit muud ning tekitatakse duplikaat
-            int current_quantity = items.get(newstockitem);
+        if (items.containsKey(newItem)) {
+            int current_quantity = items.get(newItem);
             if(quantity > 0){
-                int max_q = item_max.get(newstockitem);
+                int max_q = item_max.get(newItem);
                 int new_quantity = current_quantity + quantity;
                 if(new_quantity > max_q){
                     new_quantity = max_q;
                 }
-                newstockitem.setQuantity(new_quantity);
-                newstockitem.setSum((double)new_quantity*newstockitem.getPrice());
-                items.put(newstockitem, new_quantity);
+                newItem.setQuantity(new_quantity);
+                newItem.setSum((double)new_quantity*newItem.getPrice());
+                items.put(newItem, new_quantity);
             }
         } else {
-            newstockitem.setQuantity(quantity);
-            newstockitem.setSum((double)newItem.getQuantity()*newstockitem.getPrice());
-            items.put(newstockitem, quantity);
+            newItem.setQuantity(quantity);
+            newItem.setSum((double)newItem.getQuantity()*newItem.getPrice());
+            items.put(newItem, quantity);
         }
 
     }
