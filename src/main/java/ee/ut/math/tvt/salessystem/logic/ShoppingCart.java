@@ -29,24 +29,28 @@ public class ShoppingCart {
      */
     public void addItem(StockItem newItem, Integer quantity) {
         StockItem newstockitem = new StockItem(newItem); // copy constructor
-        if (items.containsKey(newstockitem)) {
-            int current_quantity = items.get(newstockitem);
-            if(quantity > 0){
-                int max_q = item_max.get(newstockitem);
-                int new_quantity = current_quantity + quantity;
-                if(new_quantity > max_q){
-                    new_quantity = max_q;
+        boolean shoppincartHasItem = false;
+        for(StockItem stockitem : items.keySet()) {
+            if (stockitem.getId() == newstockitem.getId()) {// items.containsKey(newstockitem)
+                shoppincartHasItem = true;
+                int current_quantity = items.get(stockitem);
+                if (quantity > 0) {
+                    int max_q = item_max.get(newItem);
+                    int new_quantity = current_quantity + quantity;
+                    if (new_quantity > max_q) {
+                        new_quantity = max_q;
+                    }
+                    stockitem.setQuantity(new_quantity);
+                    stockitem.setSum((double) new_quantity * newstockitem.getPrice());
+                    items.put(stockitem, new_quantity);
                 }
-                newstockitem.setQuantity(new_quantity);
-                newstockitem.setSum((double)new_quantity*newstockitem.getPrice());
-                items.put(newstockitem, new_quantity);
             }
-        } else {
+        }
+        if (!shoppincartHasItem){
             newstockitem.setQuantity(quantity);
-            newstockitem.setSum((double)newItem.getQuantity()*newstockitem.getPrice());
+            newstockitem.setSum((double) newItem.getQuantity() * newstockitem.getPrice());
             items.put(newstockitem, quantity);
         }
-
     }
 
     public List<StockItem> getAll() {
@@ -71,7 +75,7 @@ public class ShoppingCart {
         List<SoldItem> current_solditems = dao.findSoldItems();
         try {
             int i = 0;
-            for (StockItem item : items.keySet()) { //TODO: fix this
+            for (StockItem item : items.keySet()) { //TODO: broken ?
                 Long id = Long.valueOf(current_solditems.size()+1);
                 SoldItem new_solditem = new SoldItem(id,time, item.getId(), items.get(item));
                 i++;

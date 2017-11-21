@@ -61,13 +61,9 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveSoldItem(SoldItem item, boolean started){
-        //if(started != true){ //TODO: maybe needs fixing
         beginTransaction();
-        //}
         em.merge(item);
-        //if(started != true){ //TODO: maybe needs fixing
         commitTransaction();
-        //}
     }
     @Override
     public void removeStockItem(StockItem stockItem, boolean started){
