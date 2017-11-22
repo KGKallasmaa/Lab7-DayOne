@@ -139,7 +139,6 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     @Override
     public List<StockItem> findStockItems(){
        return  em.createQuery("from StockItem",StockItem.class).getResultList();
-     //  return null;
     }
     @Override
     public List<SoldItem> findOrderByDate(Date date){

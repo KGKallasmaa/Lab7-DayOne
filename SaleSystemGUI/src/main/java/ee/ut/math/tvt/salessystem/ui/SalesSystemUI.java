@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 /**
  * Graphical user interface of the sales system.
