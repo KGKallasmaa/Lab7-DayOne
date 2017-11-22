@@ -74,14 +74,13 @@ public class ConsoleUI {
         }
         System.out.println("-------------------------");
     }
-
     private void printUsage() {
         System.out.println("-------------------------");
         System.out.println("Usage:");
         System.out.println("h\t\tShow this help"); //WORKS
         //POS
         System.out.println("c\t\tShow cart contents");//WORKS
-        System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");// WORKS
+        System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");//WORKS
         System.out.println("p\t\tPurchase the shopping cart");//WORKS
         System.out.println("r\t\tReset the shopping cart");//WORKS
         //Warehouse
@@ -94,7 +93,6 @@ public class ConsoleUI {
         System.out.println("t\t\tShow team information");//WORKS
         System.out.println("-------------------------");
     }
-
     private void processCommand(String command) {
         String[] c = command.split(" ");
 
@@ -194,7 +192,6 @@ public class ConsoleUI {
                 break;
         }
     }
-
     private void addProductToStock() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter the id of the item");
@@ -269,7 +266,6 @@ public class ConsoleUI {
         log.info(newCopy.getName() + " with quantity " + newCopy.getQuantity() + " was removed from warehouse");
 
     }
-
     private void showTeam() {
 
         Properties properties = null;
@@ -290,7 +286,6 @@ public class ConsoleUI {
 
 
     }
-
     private void showOrderDetails(List<SoldItem> order) {
 
         for (SoldItem item : order){
