@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.swing.*;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,13 +59,10 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             commitTransaction();
             return;
         }catch (Exception e){
-            beginTransaction();
-            rollbackTransaction();
+            JOptionPane.showMessageDialog(null, "Can't add an item with the same name", "Error",
+                    JOptionPane.ERROR_MESSAGE);
           //  e.printStackTrace();
         }
-        beginTransaction();
-        em.merge(stockItem);
-        commitTransaction();
     }
     @Override
     public void saveSoldItem(SoldItem item, boolean started){
