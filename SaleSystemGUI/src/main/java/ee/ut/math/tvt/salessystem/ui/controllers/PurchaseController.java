@@ -68,8 +68,6 @@ public class PurchaseController implements Initializable {
         purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
         purchaseTableView.getColumns().addAll(IdColumn, NameColumn, PriceColumn, QuantityColumn, SumColumn);
         disableProductField(true);
-
-
     }
 
     /** Event handler for the <code>new purchase</code> event. */
@@ -140,7 +138,6 @@ public class PurchaseController implements Initializable {
     // switch UI to the state that allows to initiate new purchase
     private void disableInputs() {
         nameSelect.setOnAction(event -> {
-
         });
         resetProductField();
         cancelPurchase.setDisable(true);

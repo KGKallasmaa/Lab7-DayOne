@@ -110,10 +110,8 @@ public class HistoryController implements Initializable {
                     sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
                 }
                 SoldItem element = new SoldItem(date, time, sum);
-
                 LocalDate start = startDateField.getValue();
                 LocalDate end = endDateField.getValue();
-
                 if (start == null && end == null){
                     String msg = "Start date and end date were not found";
                     throw new IllegalArgumentException(msg);
@@ -121,10 +119,8 @@ public class HistoryController implements Initializable {
                 if (startDateField.getValue() != null && endDateField.getValue() != null){
                     Instant instant_1 = Instant.from(start.atStartOfDay(ZoneId.systemDefault()));
                     Instant instant_2 = Instant.from(end.atStartOfDay(ZoneId.systemDefault()));
-
                     Date start_date = Date.from(instant_1);
                     Date end_date  = Date.from(instant_2);
-
                     if(end_date.getTime() < start_date.getTime()){
                         String msg = "Start date was not before end date";
                         throw new IllegalArgumentException(msg);
@@ -138,7 +134,6 @@ public class HistoryController implements Initializable {
                     String msg = "End date was not found";
                     throw new IllegalArgumentException(msg);
                 }
-
                 Instant instant_1 = Instant.from(start.atStartOfDay(ZoneId.systemDefault()));
                 Instant instant_2 = Instant.from(end.atStartOfDay(ZoneId.systemDefault()));
                 Date start_date = Date.from(instant_1);
@@ -147,7 +142,6 @@ public class HistoryController implements Initializable {
                 if (date.getTime() > start_date.getTime() && date.getTime() <= end_date.getTime()){
                     orders.add(element);
                 }
-
             }
             if(orders.size() < 1){
                 log.warn("NO orders found from database");
@@ -156,7 +150,6 @@ public class HistoryController implements Initializable {
                 historyTableView.setItems(new ObservableListWrapper<>(orders));
                 log.info("All orders are being shown");
             }
-
             historyTableView.setItems(new ObservableListWrapper<>(orders));
         }
         catch (IllegalArgumentException e){
@@ -165,8 +158,6 @@ public class HistoryController implements Initializable {
         finally {
             historyTableView.refresh();
         }
-
-
     }
 
     @FXML protected void showLast10ButtonClicked() {
@@ -239,13 +230,11 @@ public class HistoryController implements Initializable {
     @FXML protected void displayOrder(SoldItem purchaseOrder) {
         Long thisOrderTime = purchaseOrder.getTime();
         HashMap<Long, List<SoldItem>> orders = dao.findAllOrders();
-
         List<SoldItem> all_solditems = dao.findSoldItems();
         HashMap<SoldItem,Long> solditem_stockitemid = new HashMap<>();
         for(SoldItem el : all_solditems){
             solditem_stockitemid.put(el,el.getStockItem_id());
         }
-
    //    public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
         List<StockItem> thisOrderList = new ArrayList<>();
         for(SoldItem el : orders.get(thisOrderTime)){
@@ -253,10 +242,7 @@ public class HistoryController implements Initializable {
             StockItem item = new StockItem(exploited_item.getId(),exploited_item.getName(),exploited_item.getDescription(),exploited_item.getPrice(),el.getQuantity(),exploited_item.getPrice()*el.getQuantity());
             thisOrderList.add(item);
         }
-
      //   StockItem(Long id, String name, String description,Double price, int quantity) {
-
-
         orderTableView.setItems(new ObservableListWrapper<>(thisOrderList));
         orderTableView.refresh();
     }
