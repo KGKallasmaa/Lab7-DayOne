@@ -2,10 +2,8 @@ package ee.ut.math.tvt.salessystem.dao;
 
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
+
+import javax.persistence.*;
 import javax.swing.*;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -50,18 +48,28 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             double p1 = existingItem.getQuantity()*existingItem.getPrice();
             double p2 = stockItem.getQuantity()*stockItem.getPrice();
             beginTransaction();
-            existingItem.setQuantity(existingItem.getQuantity()+stockItem.getQuantity());
-            double new_price = Math.round((p1+p2)/existingItem.getQuantity());
-            existingItem.setPrice(new_price);
+            stockItem.setQuantity(existingItem.getQuantity()+stockItem.getQuantity());
+            double new_price = Math.round((p1+p2)/stockItem.getQuantity());
+            stockItem.setPrice(new_price);
             if (existingItem.getQuantity() <= 0){
                 existingItem.setQuantity(0);
             }
+            em.merge(stockItem);
             commitTransaction();
             return;
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Can't add an item with the same name", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+        }catch (IndexOutOfBoundsException e){
+            beginTransaction();
+            em.merge(stockItem);
+            commitTransaction();
           //  e.printStackTrace();
+        }catch (IllegalArgumentException e){
+            JOptionPane.showMessageDialog(null, "Please enter a number to Barcode," +
+                            " Price and Quantity fields.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "An item with that name already exists.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     @Override
