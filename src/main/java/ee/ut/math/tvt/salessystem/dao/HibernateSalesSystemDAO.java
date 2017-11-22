@@ -44,14 +44,20 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     @Override
     public void saveStockItem(StockItem stockItem) {
         try{
+            double p1 = 0;
+            int existing_q = 0;
             StockItem existingItem = findStockItem(stockItem.getId());
-            double p1 = existingItem.getQuantity()*existingItem.getPrice();
+            if (existingItem != null){
+                p1 += existingItem.getQuantity()*existingItem.getPrice();
+                existing_q += existingItem.getQuantity();
+            }
+
             double p2 = stockItem.getQuantity()*stockItem.getPrice();
             beginTransaction();
-            stockItem.setQuantity(existingItem.getQuantity()+stockItem.getQuantity());
+            stockItem.setQuantity(existing_q+stockItem.getQuantity());
             double new_price = Math.round((p1+p2)/stockItem.getQuantity());
             stockItem.setPrice(new_price);
-            if (existingItem.getQuantity() <= 0){
+            if (existingItem.getQuantity() <= 0 && existingItem != null){
                 existingItem.setQuantity(0);
             }
             em.merge(stockItem);
@@ -68,8 +74,8 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
                     JOptionPane.ERROR_MESSAGE);
 
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "An item with that name already exists.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+      //     JOptionPane.showMessageDialog(null, "An item with that name already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+         e.printStackTrace();
         }
     }
     @Override
