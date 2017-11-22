@@ -33,7 +33,6 @@ public class ConsoleUI {
         ConsoleUI console = new ConsoleUI(dao);
         console.run();
     }
-
     /**
      * Run the sales system CLI.
      */
@@ -63,7 +62,6 @@ public class ConsoleUI {
         }
         System.out.println("-------------------------");
     }
-
     private void showCart() {
         System.out.println("-------------------------");
         for (StockItem si : cart.getAll()) {
