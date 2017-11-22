@@ -83,11 +83,24 @@ public class StockController implements Initializable {
             if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
                 StockItem item_tobe_added = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
                         Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
-
+                    if (item_tobe_added.getQuantity() > 0 && item_tobe_added.getPrice() >= 0) {
+                    // PRICE HAS TO BE NOT NEGATIVE.
                     dao.saveStockItem(item_tobe_added);
                     log.info("Item was added to the warehouse");
             } else {
                 log.debug("Found a field that was equal to null.");
+                    log.info("Item " + item_tobe_added.getName() + " was added to the warehouse");
+                }
+
+                else if (item_tobe_added.getQuantity() == 0){
+                        log.error(item_tobe_added.getName()+" quantity can not be 0");
+                    }
+                    else if (item_tobe_added.getPrice() < 0){
+                        log.error(item_tobe_added.getName()+" price can not be negative");
+                    }
+                    else{
+                        log.error(item_tobe_added.getName()+" quantity can not be 0");
+                    }
             }
         }catch (NumberFormatException e){
             log.error("Invalid inputs in some fields");
@@ -107,33 +120,46 @@ public class StockController implements Initializable {
     }
     @FXML public void removeButtonClicked() {
         log.debug("Remove button clicked");
-        try{
+        try {
             Long id = Long.parseLong(barCodeField.getText());
             List<StockItem> all_items = dao.findStockItems();
             List<Long> all_ids = new ArrayList<>();
-            for(StockItem el : all_items){
+            for (StockItem el : all_items) {
                 all_ids.add(el.getId());
             }
-            if(all_ids.contains(id)){
-                for(StockItem el : all_items){
+            if (all_ids.contains(id)) {
+                for (StockItem el : all_items) {
                     dao.beginTransaction();
-                    if (el.getId() == id){
+                    if (el.getId() == id) {
                         StockItem warehouse_item = dao.findStockItem(id);
-                        StockItem remove_item = new StockItem(warehouse_item.getId(),warehouse_item.getName(),warehouse_item.getDescription(),warehouse_item.getPrice(),Integer.parseInt(amountField.getText()));
-                        dao.removeStockItem(remove_item,true);
-                        log.info("Item was removed to the warehouse");
-            }
-            dao.commitTransaction();
+                        StockItem remove_item = new StockItem(warehouse_item.getId(), warehouse_item.getName(), warehouse_item.getDescription(), warehouse_item.getPrice(), Integer.parseInt(amountField.getText()));
+                        if (remove_item.getQuantity() > 0 && remove_item.getPrice() >= 0) {
+                            dao.removeStockItem(remove_item, true);
+                            log.info(remove_item.getName() + " was removed to the warehouse");
+                        } else if (remove_item.getQuantity() == 0) {
+                            log.error(remove_item.getName() + " quantity can not be 0");
+                        }
+                        else if (remove_item.getPrice() < 0){
+                            log.error(remove_item.getName()+" price can not be negative");
+                        }
+                        else {
+                            log.error(remove_item.getName() + " quantity can not be 0");
+                        }
+                    }
+                    dao.commitTransaction();
                 }
-            } else{
+            }else{
                 throw new NullPointerException();
             }
-        }catch(NullPointerException e){
+        }
+        catch(NullPointerException e){
             log.error("Barcode was not found");
             clearAll();
-        }catch (IllegalArgumentException e){
+        }
+        catch (IllegalArgumentException e){
             log.error("Entered id quantity exceeded");
-        }finally {
+        }
+        finally {
             clearAll();
         }
     }

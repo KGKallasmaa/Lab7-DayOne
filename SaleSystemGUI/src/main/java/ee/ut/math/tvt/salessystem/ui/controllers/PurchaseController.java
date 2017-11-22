@@ -36,6 +36,7 @@ public class PurchaseController implements Initializable {
     @FXML private Button submitPurchase;
     @FXML private Button cancelPurchase;
     @FXML private TextField barCodeField;
+    @FXML private TextField time;
     @FXML private TextField quantityField;
     @FXML private ComboBox nameSelect;
     @FXML private TextField priceField;
@@ -67,6 +68,7 @@ public class PurchaseController implements Initializable {
         purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
         purchaseTableView.getColumns().addAll(IdColumn, NameColumn, PriceColumn, QuantityColumn, SumColumn);
         disableProductField(true);
+
 
     }
 
