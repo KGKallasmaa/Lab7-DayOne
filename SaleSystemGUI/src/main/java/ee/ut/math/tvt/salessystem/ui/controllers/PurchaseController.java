@@ -114,6 +114,8 @@ public class PurchaseController implements Initializable {
             ShoppingCart tempCart = new ShoppingCart(shoppingCart);
             tempCart.submitCurrentPurchase();
             disableInputs();
+            shoppingCart.clear();
+            purchaseTableView.getItems().clear();
             purchaseTableView.refresh();
             log.info("Sale complete");
         } catch (SalesSystemException e) {

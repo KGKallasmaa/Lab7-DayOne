@@ -17,7 +17,7 @@ public class StockItem {
   //  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stockitem_id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
    // @Column(nullable = false)
     private String name;
 
