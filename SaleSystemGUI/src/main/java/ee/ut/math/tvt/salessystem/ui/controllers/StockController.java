@@ -80,27 +80,18 @@ public class StockController implements Initializable {
         log.debug("Add button clicked");
         //filtering unsuitable valus
         try {
-            if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()){
-                StockItem item_tobe_added = new StockItem(Long.parseLong(barCodeField.getText()),nameField.getText(),descriptionField.getText(),
-                        Double.parseDouble(priceField.getText()),Integer.parseInt(amountField.getText()));
-                    if (item_tobe_added.getQuantity() > 0 && item_tobe_added.getPrice() >= 0) {
+            if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !descriptionField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
+                StockItem item_tobe_added = new StockItem(Long.parseLong(barCodeField.getText()), nameField.getText(), descriptionField.getText(),
+                        Double.parseDouble(priceField.getText()), Integer.parseInt(amountField.getText()));
+                if (item_tobe_added.getQuantity() > 0 && item_tobe_added.getPrice() >= 0) {
                     // PRICE HAS TO BE NOT NEGATIVE.
                     dao.saveStockItem(item_tobe_added);
                     log.info("Item was added to the warehouse");
-            } else {
-                log.debug("Found a field that was equal to null.");
-                    log.info("Item " + item_tobe_added.getName() + " was added to the warehouse");
+                } else if (item_tobe_added.getQuantity() == 0) {
+                    log.error(item_tobe_added.getName() + " quantity can not be 0");
+                } else if (item_tobe_added.getPrice() < 0) {
+                    log.error(item_tobe_added.getName() + " price can not be negative");
                 }
-
-                else if (item_tobe_added.getQuantity() == 0){
-                        log.error(item_tobe_added.getName()+" quantity can not be 0");
-                    }
-                    else if (item_tobe_added.getPrice() < 0){
-                        log.error(item_tobe_added.getName()+" price can not be negative");
-                    }
-                    else{
-                        log.error(item_tobe_added.getName()+" quantity can not be 0");
-                    }
             }
         }catch (NumberFormatException e){
             log.error("Invalid inputs in some fields");
