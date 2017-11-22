@@ -82,6 +82,9 @@ public class StockController implements Initializable {
         //filtering unsuitable valus
         try {
             if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
+                if (descriptionField.getText().equals("")) {
+                    descriptionField.setText(nameField.getText());
+                }
                 StockItem item_tobe_added = new StockItem(Long.parseLong(barCodeField.getText()), nameField.getText(), descriptionField.getText(),
                         Double.parseDouble(priceField.getText()), Integer.parseInt(amountField.getText()));
                 if (item_tobe_added.getQuantity() > 0 && item_tobe_added.getPrice() >= 0) {
