@@ -119,7 +119,11 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.stockitem_id = :id")
                 .setParameter("id", id)
                 .getResultList();
-        return stockItemsWithId.get(0);
+        if (stockItemsWithId.size() > 0){
+            return stockItemsWithId.get(0);
+        }else{
+            return null;
+        }
     }
     public SoldItem findSoldItem(long id){
         List<SoldItem> soldItemsWithId = em.createQuery("SELECT solditem FROM SoldItem solditem WHERE solditem.solditem_id = :id")

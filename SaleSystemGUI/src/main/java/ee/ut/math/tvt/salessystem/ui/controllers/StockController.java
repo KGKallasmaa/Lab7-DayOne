@@ -73,6 +73,15 @@ public class StockController implements Initializable {
         */
     }
 
+    public List<Long> all_ids (){
+        List<StockItem> el = dao.findStockItems();
+        List<Long> ids = new ArrayList<>();
+        for(StockItem item : el){
+            ids.add(item.getId());
+        }
+        return ids;
+    }
+
     @FXML public void refreshButtonClicked() {
         log.debug("Refresh button clicked");
         refreshStockItems();
@@ -81,11 +90,28 @@ public class StockController implements Initializable {
         log.debug("Add button clicked");
         //filtering unsuitable valus
         try {
-            if(!barCodeField.getText().isEmpty() && !nameField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
+            if(!nameField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
+                Long bar = null;
+                if (barCodeField.getText().isEmpty()){
+                    log.warn("ID field is empty. Generating new value");
+                    int i = 0;
+                    Long generated_id = Long.valueOf(all_ids().size()+1+i);
+                    while (true){
+                        if (dao.findStockItem(generated_id) == null){
+                            break;
+                        }
+                        generated_id = Long.valueOf(all_ids().size()+1+i);
+                        i++;
+                    }
+                    log.warn("New id "+generated_id);
+                    bar = generated_id;
+                }else{
+                    bar = Long.parseLong(barCodeField.getText());
+                }
                 if (descriptionField.getText().equals("")) {
                     descriptionField.setText(nameField.getText());
                 }
-                StockItem item_tobe_added = new StockItem(Long.parseLong(barCodeField.getText()), nameField.getText(), descriptionField.getText(),
+                StockItem item_tobe_added = new StockItem(bar, nameField.getText(), descriptionField.getText(),
                         Double.parseDouble(priceField.getText()), Integer.parseInt(amountField.getText()));
                 if (item_tobe_added.getQuantity() > 0 && item_tobe_added.getPrice() >= 0) {
                     // PRICE HAS TO BE NOT NEGATIVE.
