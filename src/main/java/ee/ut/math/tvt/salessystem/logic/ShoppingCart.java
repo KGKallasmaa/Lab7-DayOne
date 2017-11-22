@@ -93,8 +93,8 @@ public class ShoppingCart {
         List<SoldItem> current_solditems = dao.findSoldItems();
         try {
             int i = 0;
-            for (StockItem item : items.keySet()) { //TODO: broken ?
-                Long id = Long.valueOf(current_solditems.size()+1);
+            for (StockItem item : items.keySet()) {
+                Long id = Long.valueOf(current_solditems.size() + 1 + i);
                 SoldItem new_solditem = new SoldItem(id,time, item.getId(), items.get(item));
                 i++;
                 dao.saveSoldItem(new_solditem,false);

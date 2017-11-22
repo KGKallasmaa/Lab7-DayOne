@@ -16,6 +16,6 @@
       <DatePicker fx:id="startDateField" layoutX="376.0" layoutY="26.0" onAction="#startDateFieldClicked" />
       <DatePicker fx:id="endDateField" layoutX="376.0" layoutY="60.0" onAction="#endDateFieldClicked" />
       <TableView fx:id="historyTableView" layoutY="136.0" prefHeight="145.0" prefWidth="600.0" />
-      <TableView fx:id="orderTableView" layoutY="278.0" prefHeight="122.0" prefWidth="600.0" />
+      <TableView fx:id="orderTableView" layoutY="278.0" prefHeight="200.0" prefWidth="600.0" />
    </children>
 </AnchorPane>

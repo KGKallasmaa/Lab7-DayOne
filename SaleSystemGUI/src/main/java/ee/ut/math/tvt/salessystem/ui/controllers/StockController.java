@@ -86,8 +86,6 @@ public class StockController implements Initializable {
 
                     dao.saveStockItem(item_tobe_added);
                     log.info("Item was added to the warehouse");
-
-
             } else {
                 log.debug("Found a field that was equal to null.");
             }
