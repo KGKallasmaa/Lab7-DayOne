@@ -3,6 +3,8 @@ package ee.ut.math.tvt.salessystem.logic;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
+
+import javax.swing.*;
 import java.util.*;
 
 public class ShoppingCart {
@@ -39,6 +41,8 @@ public class ShoppingCart {
                     int new_quantity = current_quantity + quantity;
                     if (new_quantity > max_q) {
                         new_quantity = max_q;
+                        JOptionPane.showMessageDialog(null, "Stock quantity exceeded!", "Error",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                     stockitem.setQuantity(new_quantity);
                     stockitem.setSum((double) new_quantity * newstockitem.getPrice());
@@ -47,9 +51,16 @@ public class ShoppingCart {
             }
         }
         if (!shoppincartHasItem){
-            newstockitem.setQuantity(quantity);
-            newstockitem.setSum(quantity * newstockitem.getPrice());
-            items.put(newstockitem, quantity);
+            int max_q = item_max.get(newItem);
+            if (quantity > max_q) {
+                JOptionPane.showMessageDialog(null, "Stock quantity exceeded!", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                newstockitem.setQuantity(quantity);
+                newstockitem.setSum(quantity * newstockitem.getPrice());
+                items.put(newstockitem, quantity);
+            }
         }
     }
     public double currentTotal(){
