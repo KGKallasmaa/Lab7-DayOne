@@ -17,7 +17,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
      private final EntityManagerFactory emf;
      private final EntityManager em;
-  //  private static final Logger log = LogManager.getLogger(HibernateSalesSystemDAO.class);
+  //  private static final Logger log = LogManager.getLogManager(HibernateSalesSystemDAO.class);
 
     public HibernateSalesSystemDAO() {
         // if you get ConnectException/JDBCConnectionException then you
@@ -57,8 +57,8 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             stockItem.setQuantity(existing_q+stockItem.getQuantity());
             double new_price = Math.round((p1+p2)/stockItem.getQuantity());
             stockItem.setPrice(new_price);
-            if (existingItem.getQuantity() <= 0 && existingItem != null){
-                existingItem.setQuantity(0);
+            if (existingItem != null){
+               // existingItem.setQuantity(0);
             }
             em.merge(stockItem);
             commitTransaction();
@@ -76,6 +76,9 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         }catch (Exception e) {
       //     JOptionPane.showMessageDialog(null, "An item with that name already exists.", "Error", JOptionPane.ERROR_MESSAGE);
          e.printStackTrace();
+            beginTransaction();
+            em.merge(stockItem);
+            commitTransaction();
         }
     }
     @Override
@@ -140,10 +143,20 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     @Override
     public StockItem findStockItemName(String name){
-        List<StockItem> stockItemsWithName = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name")
-                .setParameter("name", name)
-                .getResultList();
-        return stockItemsWithName.get(0);
+        try{
+            List<StockItem> stockItemsWithName = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name")
+                    .setParameter("name", name)
+                    .getResultList();
+            if(stockItemsWithName.size() >= 1){
+                return stockItemsWithName.get(0);
+            }
+        }catch (Exception e){
+            ;
+        }
+        finally {
+            return null;
+        }
+
     }
     @Override
     public List<StockItem> findStockItems(){
