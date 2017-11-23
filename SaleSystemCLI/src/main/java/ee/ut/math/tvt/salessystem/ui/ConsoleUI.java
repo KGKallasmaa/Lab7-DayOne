@@ -2,18 +2,15 @@ package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
-import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
-import javafx.scene.control.Tab;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
 
 
 /**
@@ -43,16 +40,44 @@ public class ConsoleUI {
         System.out.println("===========================");
         System.out.println("=       Sales System      =");
         System.out.println("===========================");
-        printUsage();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println();
+        int accountType = accountSelect();
+        //System.out.println();
         while (true){
             System.out.print("> ");
-            processCommand(in.readLine().trim().toLowerCase());
+            processCommand(in.readLine().trim().toLowerCase(), accountType);
             System.out.println("Done. ");
         }
     }
 
+    private int accountSelect() throws IOException{
+        int accountType;
+        System.out.println("-------------------------");
+        System.out.println("Please select an account type:");
+        System.out.println("\t1 - Cashier");
+        System.out.println("\t2 - Warehouse");
+        System.out.println("\t3 - Admin");
+        System.out.println("-------------------------");
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        while(true){
+            System.out.print(">");
+            String input = in.readLine().trim();
+            if (input.equals("1") | input.equals("2") | input.equals("3")){
+                accountType = Integer.parseInt(input);
+                break;
+            }
+            System.out.println("Invalid input, try again.");
+        }
+        System.out.println(String.format("Selected account type: %s", (
+                (accountType == 1) ? "Cashier" :
+                (accountType == 2) ? "Warehouse" :
+                (accountType == 3) ? "Admin" :
+                "Error, should not be reached")));
+        //System.out.println();
+        printUsage(accountType);
+        return accountType;
+    }
     private void showStock() {
         List<StockItem> stockItems = dao.findStockItems();
         System.out.println("-------------------------");
@@ -74,49 +99,60 @@ public class ConsoleUI {
         }
         System.out.println("-------------------------");
     }
-    private void printUsage() {
+    private void printUsage(int accountType) {
         System.out.println("-------------------------");
         System.out.println("Usage:");
-        System.out.println("h\t\tShow this help"); //WORKS
+        System.out.println("h\t\tShow this help");
+        System.out.println("q\t\tExit sales system");
         //POS
-        System.out.println("c\t\tShow cart contents");//WORKS
-        System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");//WORKS
-        System.out.println("p\t\tPurchase the shopping cart");//WORKS
-        System.out.println("r\t\tReset the shopping cart");//WORKS
+        if (accountType == 1 | accountType == 3) {
+            System.out.println("c\t\tShow cart contents");
+            System.out.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
+            System.out.println("p\t\tPurchase the shopping cart");
+            System.out.println("r\t\tReset the shopping cart");
+        }
         //Warehouse
-        System.out.println("w\t\tShow warehouse contents");//WORKS
-        System.out.println("atw\t\tAdd product to warehouse");//WORKS
-        System.out.println("rfw\t\tRemove product from warehouse");//WORKS
+        if (accountType == 2 | accountType == 3) {
+            System.out.println("w\t\tShow warehouse contents");
+            System.out.println("atw\t\tAdd product to warehouse");
+            System.out.println("rfw\t\tRemove product from warehouse");
+        }
         //History
-        System.out.println("ph\t\tShow purchase history");//WORKS
+        if (accountType == 3) {
+            System.out.println("ph\t\tShow purchase history");
+        }
         //Team
-        System.out.println("t\t\tShow team information");//WORKS
+        System.out.println("t\t\tShow team information");
+        System.out.println("ca\t\tChange account type");
+        System.out.println("q\t\tExit sales system");
         System.out.println("-------------------------");
     }
-    private void processCommand(String command) {
+    private void processCommand(String command, int accountType) throws IOException {
         String[] c = command.split(" ");
 
         if (c[0].equals("h"))
-            printUsage();
+            printUsage(accountType);
         else if (c[0].equals("q"))
             System.exit(0);
-        else if (c[0].equals("w"))
+        else if (c[0].equals("w") && (accountType == 2 | accountType == 3))// warehouse and admin access
             showStock();
-        else if (c[0].equals("atw"))
+        else if (c[0].equals("atw") && (accountType == 2 | accountType == 3))// warehouse and admin access
             addProductToStock();
-        else if (c[0].equals("rfw"))
+        else if (c[0].equals("rfw") && (accountType == 2 | accountType == 3))// warehouse and admin access
             removeProductfromStock();
-        else if (c[0].equals("c"))
+        else if (c[0].equals("c") && (accountType == 1 | accountType == 3))// cashier and admin access
             showCart();
-        else if (c[0].equals("t"))
+        else if (c[0].equals("t") && (accountType == 1 | accountType == 3))// cashier and admin access
             showTeam();
-        else if (c[0].equals("p"))
+        else if (c[0].equals("p") && (accountType == 1 | accountType == 3))// cashier and admin access
             cart.submitCurrentPurchase();
-        else if (c[0].equals("r"))
+        else if (c[0].equals("r") && (accountType == 1 | accountType == 3))// cashier and admin access
             cart.cancelCurrentPurchase();
-        else if (c[0].equals("ph"))
+        else if (c[0].equals("ph") && accountType == 3)// admin access
             showHistory();
-        else if (c[0].equals("a") && c.length == 3) {
+        else if (c[0].equals("ca"))
+            accountSelect();
+        else if (c[0].equals("a") && c.length == 3  && (accountType == 1 | accountType == 3)) {// cashier and admin access
             try {
                 long idx = Long.parseLong(c[1]);
                 int amount = Integer.parseInt(c[2]);
