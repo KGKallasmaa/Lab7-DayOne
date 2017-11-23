@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.swing.*;
 import java.net.URL;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -178,7 +180,9 @@ public class StockController implements Initializable {
             clearAll();
         }
         catch (IllegalArgumentException e){
-            log.error("Entered id quantity exceeded");
+            log.error("No Id entered");
+            JOptionPane.showMessageDialog(null, "Item can not be removed without barcode", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
         finally {
             clearAll();
