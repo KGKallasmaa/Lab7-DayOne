@@ -6,6 +6,7 @@ import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,23 +45,29 @@ public class StockController implements Initializable {
     @FXML private Button refreshWarehousebutton;
     @FXML private Button addProductbutton;
     @FXML private Button removeproductButton;
+    @FXML private Button fullScreenButton ;
+    private double width;
 
-    public StockController(SalesSystemDAO dao) {
+    public StockController(SalesSystemDAO dao, double width) {
+
         this.dao = dao;
+        this.width = width;
     }
 
     @Override public void initialize(URL location, ResourceBundle resources) {
+
+        double width = this.width/5;
         log.debug("Stock tab initialized");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        idColumn.setPrefWidth(120);
+        idColumn.setPrefWidth(width);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.setPrefWidth(120);
+        nameColumn.setPrefWidth(width);
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descriptionColumn.setPrefWidth(120);
+        descriptionColumn.setPrefWidth(width);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceColumn.setPrefWidth(120);
+        priceColumn.setPrefWidth(width);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        quantityColumn.setPrefWidth(120);
+        quantityColumn.setPrefWidth(width);
         warehouseTableView.getColumns().addAll(idColumn,nameColumn,descriptionColumn,priceColumn,quantityColumn);
         refreshStockItems();
 
@@ -88,9 +96,10 @@ public class StockController implements Initializable {
         log.debug("Refresh button clicked");
         refreshStockItems();
     }
+
     @FXML protected void addButtonClicked() {
         log.debug("Add button clicked");
-        //filtering unsuitable valus
+        //filtering unsuitable values
         try {
             if(!nameField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
                 Long bar = null;
@@ -191,7 +200,13 @@ public class StockController implements Initializable {
 
     private void refreshStockItems() {
         log.info("Warehouse refreshed");
-        warehouseTableView.setItems(new ObservableListWrapper<>(dao.findStockItems()));
+        List<StockItem> suitable_stockitems = new ArrayList<>();
+        for(StockItem item : dao.findStockItems()) {
+            if (item.getQuantity() != 0) {
+                suitable_stockitems.add(item);
+            }
+        }
+        warehouseTableView.setItems(new ObservableListWrapper<>(suitable_stockitems));
         warehouseTableView.refresh();
     }
     @FXML protected void addAmount(){
@@ -222,4 +237,6 @@ public class StockController implements Initializable {
     private double getPrice () { return Double.parseDouble(priceField.getText());}
     private String getDescription () { return descriptionField.getText();}
 */
+
+
 }

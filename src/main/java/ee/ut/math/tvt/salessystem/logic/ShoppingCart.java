@@ -63,13 +63,6 @@ public class ShoppingCart {
             }
         }
     }
-    public double currentTotal(){
-        int sum = 0;
-        for(StockItem el : items.keySet()){
-            sum += items.get(el)*el.getPrice();
-        }
-        return sum;
-    }
 
     public List<StockItem> getAll() {
         ArrayList new_list = new ArrayList();
@@ -87,7 +80,7 @@ public class ShoppingCart {
         // what is a transaction? https://stackoverflow.com/q/974596
         //dao.beginTransaction();
         final Long time = System.currentTimeMillis();
-        final Date date = new Date(time);
+    //    final Date date = new Date(time);
         List<SoldItem> current_solditems = dao.findSoldItems();
         try {
             int i = 0;

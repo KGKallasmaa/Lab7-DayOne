@@ -36,6 +36,7 @@ import org.apache.logging.log4j.Logger;
 public class HistoryController implements Initializable {
     private final SalesSystemDAO dao;
     private static final Logger log = LogManager.getLogger(HistoryController.class);
+    private double width;
     @FXML private DatePicker startDateField;
     @FXML private DatePicker endDateField;
     @FXML private javafx.scene.control.Button showBetweenDates;
@@ -52,18 +53,25 @@ public class HistoryController implements Initializable {
     @FXML private javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
     @FXML private javafx.scene.control.TableColumn<StockItem, Double> order_sumColumn = new TableColumn<>("Sum");
 
-    public HistoryController(SalesSystemDAO dao) {
+    //For testing
+    public int number_of_orders(){
+        return historyTableView.getItems().size();
+    }
+    public HistoryController(SalesSystemDAO dao,double width) {
         this.dao = dao;
+        this.width = width;
     }
     public void initialize(URL location, ResourceBundle resources) {
         log.debug("History tab initialized");
         //history tab
+        double order_width = this.width/3;
+        double order_sum_width = this.width/5;
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        dateColumn.setMinWidth(200);
+        dateColumn.setMinWidth(order_width);
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        timeColumn.setMinWidth(200);
+        timeColumn.setMinWidth(order_width);
         sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
-        sumColumn.setMinWidth(200);
+        sumColumn.setMinWidth(order_width);
         historyTableView.getColumns().addAll(dateColumn,timeColumn,sumColumn);
         historyTableView.refresh();
 
@@ -81,15 +89,15 @@ public class HistoryController implements Initializable {
             return row ;
         });
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        idColumn.setMinWidth(120);
+        idColumn.setMinWidth(order_sum_width);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.setMinWidth(120);
+        nameColumn.setMinWidth(order_sum_width);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceColumn.setMinWidth(120);
+        priceColumn.setMinWidth(order_sum_width);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        quantityColumn.setMinWidth(120);
+        quantityColumn.setMinWidth(order_sum_width);
         order_sumColumn.setCellValueFactory(new PropertyValueFactory<>("sum"));
-        order_sumColumn.setMinWidth(120);
+        order_sumColumn.setMinWidth(order_sum_width);
         orderTableView.getColumns().addAll(idColumn,nameColumn,priceColumn,quantityColumn,order_sumColumn);
 
         orderTableView.refresh();
@@ -253,5 +261,10 @@ public class HistoryController implements Initializable {
     @FXML protected void endDateFieldClicked(){
         log.debug("End date = "+endDateField.getValue());
     }
-
+    public void set_StartDate(LocalDate startDate){
+        this.startDateField.setValue(startDate);
+    }
+    public void set_EndDate(LocalDate endDate){
+        this.endDateField.setValue(endDate);
+    }
 }

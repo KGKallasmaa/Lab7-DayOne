@@ -32,7 +32,7 @@ public class PurchaseController implements Initializable {
 
     private SalesSystemDAO dao;
     private ShoppingCart shoppingCart;
-
+    private double width;
     @FXML private Button newPurchase;
     @FXML private Text total_price;
     @FXML private Button submitPurchase;
@@ -52,13 +52,13 @@ public class PurchaseController implements Initializable {
     @FXML private javafx.scene.control.TableColumn<StockItem, Double> SumColumn = new TableColumn<>("Sum");
 
 
-    public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart) {
+    public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart,double width) {
         this.dao = dao;
         this.shoppingCart = shoppingCart;
+        this.width = width;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @Override public void initialize(URL location, ResourceBundle resources) {
         log.debug("Purchase tab initialized");
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
@@ -73,15 +73,13 @@ public class PurchaseController implements Initializable {
     }
 
     /** Event handler for the <code>new purchase</code> event. */
-    @FXML
-    protected void newPurchaseButtonClicked() {
+    @FXML protected void newPurchaseButtonClicked() {
         log.debug("New sale process started");
         try {
             enableInputs();
             shoppingCart.clear();
             purchaseTableView.getItems().clear();
             purchaseTableView.refresh();
-            setTotal_price();
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
@@ -90,8 +88,7 @@ public class PurchaseController implements Initializable {
     /**
      * Event handler for the <code>cancel purchase</code> event.
      */
-    @FXML
-    protected void cancelPurchaseButtonClicked() {
+    @FXML protected void cancelPurchaseButtonClicked() {
         log.info("Sale cancelled");
         try {
             shoppingCart.cancelCurrentPurchase();
@@ -106,8 +103,7 @@ public class PurchaseController implements Initializable {
     /**
      * Event handler for the <code>submit purchase</code> event.
      */
-    @FXML
-    protected void submitPurchaseButtonClicked() {
+    @FXML protected void submitPurchaseButtonClicked() {
         log.debug("Submission process started");
         try {
             log.debug("Contents of the current basket:\n" + shoppingCart.getAll());
@@ -160,12 +156,10 @@ public class PurchaseController implements Initializable {
         barCodeField.setText(stockItem.getId().toString());
         priceField.setText(Double.toString(stockItem.getPrice()));
     }
-
     /**
      * Add new item to the cart.
      */
-    @FXML
-    public void addItemEventHandler() {
+    @FXML public void addItemEventHandler() {
         log.info("A product has been added to the cart.");
         StockItem stockItem = findStockItembyComboBox();
         if (stockItem != null) {
@@ -177,7 +171,7 @@ public class PurchaseController implements Initializable {
             }
             shoppingCart.addItem(stockItem, quantity);
             purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
-            setTotal_price();
+
         }
     }
 
@@ -214,8 +208,4 @@ public class PurchaseController implements Initializable {
         }
         nameSelect.setItems(new ObservableListWrapper(items2));
     }
-    private void setTotal_price(){
-        this.total_price = new Text(Double.toString(shoppingCart.currentTotal()));
-    }
-
 }

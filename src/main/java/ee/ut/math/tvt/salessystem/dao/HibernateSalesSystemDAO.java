@@ -46,8 +46,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         em.getTransaction().commit();
     }
 
-    @Override
-    public void saveStockItem(StockItem stockItem) {
+    @Override public void saveStockItem(StockItem stockItem) {
         try {
             double p1 = 0;
             int existing_q = 0;
@@ -62,9 +61,6 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             stockItem.setQuantity(existing_q + stockItem.getQuantity());
             double new_price = Math.round((p1 + p2) / stockItem.getQuantity());
             stockItem.setPrice(new_price);
-            if (existingItem != null) {
-                // existingItem.setQuantity(0);
-            }
             em.merge(stockItem);
             commitTransaction();
             return;
@@ -87,15 +83,13 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         }
     }
 
-    @Override
-    public void saveSoldItem(SoldItem item, boolean started) {
+    @Override public void saveSoldItem(SoldItem item, boolean started) {
         beginTransaction();
         em.merge(item);
         commitTransaction();
     }
 
-    @Override
-    public void removeStockItem(StockItem stockItem, boolean started) {
+    @Override public void removeStockItem(StockItem stockItem, boolean started) {
         if (started != true) {
             beginTransaction();
         }
@@ -113,8 +107,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         }
     }
 
-    @Override
-    public HashMap<Long, List<SoldItem>> findAllOrders() {
+    @Override public HashMap<Long, List<SoldItem>> findAllOrders() {
         List<SoldItem> soldItems = em.createQuery("from SoldItem", SoldItem.class).getResultList();
         HashMap<Long, List<SoldItem>> orders = new HashMap<>();
         for (SoldItem el : soldItems) {
@@ -131,8 +124,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         return orders;
     }
 
-    @Override
-    public StockItem findStockItem(long id) {
+    @Override public StockItem findStockItem(long id) {
         List<StockItem> stockItemsWithId = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.stockitem_id = :id")
                 .setParameter("id", id)
                 .getResultList();
@@ -150,8 +142,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         return soldItemsWithId.get(0);
     }
 
-    @Override
-    public StockItem findStockItemName(String name) {
+    @Override public StockItem findStockItemName(String name) {
         try {
             List<StockItem> stockItemsWithName = em.createQuery("SELECT stockitem FROM StockItem stockitem WHERE stockitem.name = :name")
                     .setParameter("name", name)
@@ -165,23 +156,22 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         return null;
     }
 
-    @Override
-    public List<StockItem> findStockItems(){
+    @Override public List<StockItem> findStockItems(){
        return  em.createQuery("from StockItem",StockItem.class).getResultList();
     }
-    @Override
-    public List<SoldItem> findOrderByDate(Date date){
+
+    @Override public List<SoldItem> findOrderByDate(Date date){
         return em.createQuery("SELECT * FROM SoldItem solditem WHERE solditem.time = :time")
                 .setParameter("time", date.getTime())
                 .getResultList();
     }
-    @Override
-    public List<SoldItem> findSoldItems(){
+
+    @Override public List<SoldItem> findSoldItems(){
         return  em.createQuery("from SoldItem",SoldItem.class).getResultList();
         //  return null;
     }
-    @Override
-    public HashMap<StockItem,Integer> stockitem_maxquantity(){
+
+    @Override public HashMap<StockItem,Integer> stockitem_maxquantity(){
         HashMap<StockItem,Integer> item_max = new HashMap<>();
         for (StockItem el : findStockItems()){
             item_max.put(el,el.getQuantity());

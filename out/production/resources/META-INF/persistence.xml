@@ -11,6 +11,8 @@
         <class>ee.ut.math.tvt.salessystem.dataobjects.StockItem</class>
 
         <properties>
+            <!-- logging level configure -->
+            <property name="hibernate.show_sql" value="ERROR"/>
             <!-- configure hibernate to use the HSQL database running on the local machine -->
             <!-- make sure the HSQL database is started before starting the application -->
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
