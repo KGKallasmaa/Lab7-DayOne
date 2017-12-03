@@ -267,4 +267,6 @@ public class HistoryController implements Initializable {
     public void set_EndDate(LocalDate endDate){
         this.endDateField.setValue(endDate);
     }
+
+
 }

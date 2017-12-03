@@ -151,7 +151,6 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
                 return stockItemsWithName.get(0);
             }
         } catch (Exception e) {
-            ;
         }
         return null;
     }
