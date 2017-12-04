@@ -238,11 +238,11 @@ public class StockController implements Initializable {
     public double getPrice () { return Double.parseDouble(priceField.getText());}
     public String getDescription () { return descriptionField.getText();}
 
-    public void setQuantity (Integer quantity){this.amountField.setText(quantity.toString());}
-    public void setId (Long id){this.barCodeField.setText(id.toString());}
-    public void setName (String name){this.nameField.setText(name);}
-    public void setPrice (Double price){this.priceField.setText(price.toString());}
-    public void setDescription (String description){this.descriptionField.setText(description.toString());}
+ //   public void setQuantity (Integer quantity){this.amountField.setText(quantity.toString());}
+ //   public void setId (Long id){this.barCodeField.setText(id.toString());}
+ //   public void setName (String name){this.nameField.setText(name);}
+ //   public void setPrice (Double price){this.priceField.setText(price.toString());}
+ //   public void setDescription (String description){this.descriptionField.setText(description.toString());}
 
 
 }

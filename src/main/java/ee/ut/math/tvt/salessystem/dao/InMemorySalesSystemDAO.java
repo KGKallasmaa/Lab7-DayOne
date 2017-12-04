@@ -26,17 +26,17 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     public InMemorySalesSystemDAO() {
         List<StockItem> stockitems = new ArrayList<>();
         //Random example stockitems
-        /*
-        StockItem stockitem_1 = new StockItem(1L,"t","a",3,4);
-        StockItem stockitem_2 = new StockItem(2L,"Test2","I'm cool",440,1220);
-        StockItem stockitem_3 = new StockItem(3L,"Test3","I'm cool",540,1230);
-        StockItem stockitem_4 = new StockItem(4L,"Test4","I'm cool",640,1240);
-        StockItem stockitem_5 = new StockItem(5L,"Test5","I'm cool",740,1250);
-        StockItem stockitem_6 = new StockItem(6L,"Test6","I'm cool",840,1260);
-        StockItem stockitem_7 = new StockItem(7L,"Test7","I'm cool",940,1270);
-        StockItem stockitem_8 = new StockItem(8L,"Test8","I'm cool",240,1280);
-        StockItem stockitem_9 = new StockItem(9L,"Test9","I'm cool",140,1290);
-        StockItem stockitem_10 = new StockItem(10L,"Test10","I'm cool",40,1300);
+
+        StockItem stockitem_1= new StockItem(1L,"Test 1","test1",34.0,120);
+        StockItem stockitem_2 = new StockItem(2L,"Test 2","test2",37.0,190);
+        StockItem stockitem_3 = new StockItem(3L,"Test 3","test3",35.0,12);
+        StockItem stockitem_4= new StockItem(1L,"Test 4","test1",34.0,120);
+        StockItem stockitem_5 = new StockItem(2L,"Test 5","test2",35.0,9);
+        StockItem stockitem_6 = new StockItem(3L,"Test 6","test3",3.0,12);
+        StockItem stockitem_7= new StockItem(1L,"Test 7","test1",340.0,120);
+        StockItem stockitem_8 = new StockItem(2L,"Test 8","test2",7.0,19);
+        StockItem stockitem_9 = new StockItem(3L,"Test 9","test3",32.0,124);
+        StockItem stockitem_10 = new StockItem(3L,"Test 10","test3",39.0,142);
         //Adding random stockitems to stocitems list
         stockitems.add(stockitem_1);
         stockitems.add(stockitem_2);
@@ -54,41 +54,20 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         HashMap<Long,List<SoldItem>> orders = new HashMap<>();
         //Random Orders
         //Order 1
-        StockItem stockitem_1_0= new StockItem(1L,"Test 1","Order 1",34,120);
-        StockItem stockitem_1_1 = new StockItem(2L,"Test 2","Order 1",37,19);
-        StockItem stockitem_1_2 = new StockItem(3L,"Test 3","Order 1",30,12);
+        StockItem stockitem_1_0= new StockItem(1L,"Test 1","Order 1",34.0,120);
+        StockItem stockitem_1_1 = new StockItem(2L,"Test 2","Order 1",37.0,19);
+        StockItem stockitem_1_2 = new StockItem(3L,"Test 3","Order 1",30.0,12);
         //Order 2
-        StockItem stockitem_2_0 = new StockItem(4L,"Test 5","Order 2",35,15);
-        StockItem stockitem_2_1 = new StockItem(5L,"Test 6","Order 2",39,18);
-        StockItem stockitem_2_2 = new StockItem(6L,"Test 7","Order 2",100,19);
+        StockItem stockitem_2_0 = new StockItem(4L,"Test 5","Order 2",35.0,15);
+        StockItem stockitem_2_1 = new StockItem(5L,"Test 6","Order 2",39.0,18);
+        StockItem stockitem_2_2 = new StockItem(6L,"Test 7","Order 2",100.5,19);
         //Order 3
-        StockItem stockitem_3_0 = new StockItem(7L,"Test 8","Order 3",16,14);
-        StockItem stockitem_3_1 = new StockItem(8L,"Test 9","Order 3",58,130);
-        StockItem stockitem_3_2 = new StockItem(9L,"Test 10","Order 3",3,120);
+        StockItem stockitem_3_0 = new StockItem(7L,"Test 8","Order 3",16.3,14);
+        StockItem stockitem_3_1 = new StockItem(8L,"Test 9","Order 3",58.4,130);
+        StockItem stockitem_3_2 = new StockItem(9L,"Test 10","Order 3",3.2,120);
+
 
         //Grouping orders
-        Date date = new Date();
-        Long ms_perday = 86400000L;
-        Long date1 = Long.parseLong("1506609589600");
-        List<SoldItem> order_1 = new ArrayList<>();
-        order_1.add(new SoldItem(stockitem_1_0,stockitem_1_0.getQuantity()));
-        order_1.add(new SoldItem(stockitem_1_1,stockitem_1_1.getQuantity()));
-        order_1.add(new SoldItem(stockitem_1_2,stockitem_1_2.getQuantity()));
-        orders.put(date1,order_1);
-        Long date2 = Long.parseLong("1507224489601");
-        List<SoldItem> order_2 = new ArrayList<>();
-        order_2.add(new SoldItem(stockitem_2_0,20));
-        order_2.add(new SoldItem(stockitem_2_1,10));
-        order_2.add(new SoldItem(stockitem_2_2,33));
-        orders.put(date2,order_2);
-        Long date3 = Long.parseLong("1503224489601");
-        List<SoldItem> order_3 = new ArrayList<>();
-        order_3.add(new SoldItem(stockitem_3_0,90));
-        order_3.add(new SoldItem(stockitem_3_1,14));
-        order_3.add(new SoldItem(stockitem_3_2,23));
-        orders.put(date3,order_2);
-        this.soldItemMap = orders;
-        */
     }
 
     @Override
