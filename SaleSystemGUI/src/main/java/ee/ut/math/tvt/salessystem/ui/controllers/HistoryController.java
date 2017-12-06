@@ -197,11 +197,9 @@ public class HistoryController implements Initializable {
         }
         else if (orders.size() < 10){
             log.debug("Total number of orders was under 10");
-            historyTableView.setItems(new ObservableListWrapper<>(orders));
         }
         else{
             log.debug("Total number of orders: "+orders.size());
-            historyTableView.setItems(new ObservableListWrapper<>(orders));
             log.info("All orders are being shown");
         }
 
