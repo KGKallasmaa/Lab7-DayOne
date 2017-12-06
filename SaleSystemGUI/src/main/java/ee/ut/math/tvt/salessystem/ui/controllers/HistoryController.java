@@ -173,13 +173,13 @@ public class HistoryController implements Initializable {
         historyTableView.getItems().clear();
         orderTableView.getItems().clear();
         HashMap<Long,List<SoldItem>> all_orders = dao.findAllOrders();
-
         List<SoldItem> orders = new ArrayList<>();
+
         ArrayList<Long> all_keys = new ArrayList<>();
         all_keys.addAll(all_orders.keySet());
-
         Collections.sort(all_keys);
         Collections.reverse(all_keys);
+
         for (Long e : all_keys){
             Date date = new Date(e);
             Long time = e.longValue();
@@ -191,13 +191,13 @@ public class HistoryController implements Initializable {
             if (orders.size() < 10){
                 orders.add(element);
             }
-
         }
         if(orders.size() < 1){
             log.warn("NO orders found from database");
         }
-        else if (orders.size() <= 10){
+        else if (orders.size() < 10){
             log.debug("Total number of orders was under 10");
+            historyTableView.setItems(new ObservableListWrapper<>(orders));
         }
         else{
             log.debug("Total number of orders: "+orders.size());
