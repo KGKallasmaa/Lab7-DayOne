@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.dataobjects;
 
 
 import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
+import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 
 import javax.persistence.*;
@@ -40,8 +41,7 @@ public class SoldItem {
     private double sum;
 
     public SoldItem(){}
-    public SoldItem(Long id, Long time,Long stockItem_id, int quantity) {
-        SalesSystemDAO dao = new HibernateSalesSystemDAO();
+    public SoldItem(Long id, Long time, Long stockItem_id, int quantity, SalesSystemDAO dao) {
         StockItem stockItem = dao.findStockItem(stockItem_id);
         this.id = id;
         this.stockItem_id = stockItem_id;
@@ -51,6 +51,17 @@ public class SoldItem {
         this.quantity = quantity;
         this.sum = stockItem.getPrice() * this.quantity;
         this.time =time;
+    }
+
+    public SoldItem(StockItem stockItem, int quantity, Long time, Long id) {
+        this.id = id;
+        this.stockItem_id = stockItem.getId();
+        this.date = new Date(time);
+        this.name = stockItem.getName();
+        this.price = stockItem.getPrice();
+        this.quantity = quantity;
+        this.sum = stockItem.getPrice() * this.quantity;
+        this.time = time;
     }
 
     public SoldItem(Date date,Long time, Double sum){

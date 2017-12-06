@@ -66,8 +66,17 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         StockItem stockitem_3_1 = new StockItem(8L,"Test 9","Order 3",58.4,130);
         StockItem stockitem_3_2 = new StockItem(9L,"Test 10","Order 3",3.2,120);
 
-
         //Grouping orders
+        Date date = new Date();
+        Long ms_perday = 86400000L;
+        Long date1 = Long.parseLong("1506609589600");
+        List<SoldItem> order_1 = new ArrayList<>();
+        order_1.add(new SoldItem(stockitem_1_0, stockitem_1_0.getQuantity(), date1, 1L));
+        order_1.add(new SoldItem(stockitem_1_1, stockitem_1_1.getQuantity(), date1, 2L));
+        order_1.add(new SoldItem(stockitem_1_2, stockitem_1_2.getQuantity(), date1, 3L));
+        orders.put(date1,order_1);
+
+        this.soldItemMap = orders;
     }
 
     @Override
@@ -97,6 +106,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void saveSoldItem(SoldItem item, boolean started) {
+        beginTransaction();
         if (soldItemMap.containsKey(item.getTime())) {
             List<SoldItem> orders = soldItemMap.get(item.getTime());
             orders.add(item);
@@ -106,17 +116,26 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
             orders.add(item);
             soldItemMap.put(item.getTime(), orders);
         }
+        commitTransaction();
     }
-
     @Override
     public List<SoldItem> findSoldItems(){
-        return null;
+        List<SoldItem> soldItemList = new ArrayList<>();
+        for(Long time : soldItemMap.keySet()){
+            for (SoldItem item : soldItemMap.get(time)){
+                soldItemList.add(item);
+            }
+        }
+        return soldItemList;
     }
     @Override
     public HashMap<StockItem, Integer> stockitem_maxquantity(){
-        return null;
-    }
-
+        HashMap<StockItem, Integer> hmap = new HashMap<>();
+        for(StockItem stokitem : stockItemList){
+            hmap.put(stokitem, stokitem.getQuantity());
+        }
+        return hmap;
+    }// needs to be fixed for testing
     @Override
     public void saveStockItem(StockItem stockItem) {
         // check if exists and add quantity if nessecary
