@@ -17,6 +17,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     private final EntityManagerFactory emf;
     private final EntityManager em;
+    int a;
     //  private static final Logger log = LogManager.getLogManager(HibernateSalesSystemDAO.class);
 
     public HibernateSalesSystemDAO() {
@@ -177,4 +178,9 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
         }
         return item_max;
     }
+
+    @Override public void setA(int a) {
+        this.a = a;
+    }
+    @Override public int getA(){return a;}
 }

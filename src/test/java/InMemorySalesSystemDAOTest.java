@@ -10,7 +10,10 @@ public class InMemorySalesSystemDAOTest {
     SalesSystemDAO dao = new InMemorySalesSystemDAO();
 
     @Test public void testAddingItemBeginsAndCommitsTransaction(){
-
+        int aBefore = dao.getA();
+        StockItem item = new StockItem(100L,"Tere123","tere123",130.0,120);
+        dao.saveStockItem(item);
+        assertEquals(aBefore + 7, dao.getA());
     }
     @Test public void testAddingNewItem(){
         StockItem item = new StockItem(100L,"Tere123","tere123",130.0,120);
@@ -24,7 +27,7 @@ public class InMemorySalesSystemDAOTest {
         assertEquals(dao.findStockItem(1L).getQuantity(),q+4);
     }
     @Test public void testAddingItemWithNegativeQuantity(){
-        StockItem item = new StockItem(150L,"Tere123","tere123",130.0,-12);
+        StockItem item = new StockItem(150L,"Tere1234","tere1234",130.0,-12);
         dao.saveStockItem(item);
         assertNull(dao.findStockItem(150L));
     }

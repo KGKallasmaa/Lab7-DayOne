@@ -59,6 +59,13 @@ public class ShoppingCartTest {
         assertEquals(prevQuantity - 1, dao.findStockItem(1).getQuantity());
     }
     @Test public void SubmittingCurrentPurchaseBeginsAndCommitsTransaction(){
+        ShoppingCart cart = new ShoppingCart(dao);
+        int aBefore = dao.getA();
+        System.out.println(aBefore);
+        cart.addItem(dao.findStockItem(1), 1);
+        cart.submitCurrentPurchase();
+        assertEquals(aBefore + 7, dao.getA());
+
 
     }
     @Test public void SubmittingCurrentOrderCreatesHistoryItem(){} // we have no such thing a historyitem

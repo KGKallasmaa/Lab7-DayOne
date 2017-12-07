@@ -54,6 +54,7 @@ public interface SalesSystemDAO {
 
     void commitTransaction();
     void removeStockItem(StockItem stockItem, boolean started);
-
+    void setA(int a);
+    int getA();
 
 }

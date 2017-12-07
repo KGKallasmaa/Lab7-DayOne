@@ -47,7 +47,7 @@ public class SalesSystemUI extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        SalesSystemUI test = new SalesSystemUI();
+        //SalesSystemUI test = new SalesSystemUI();
         log.info("javafx version: " + System.getProperty("javafx.runtime.version"));
 
         //Scene

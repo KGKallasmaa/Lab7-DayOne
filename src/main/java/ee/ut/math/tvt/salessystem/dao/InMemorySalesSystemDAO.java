@@ -21,6 +21,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
     private List<StockItem> stockItemList;
     private HashMap<Long,List<SoldItem>> soldItemMap;
+    private int a = 0;
     //private static final Logger log = LogManager.getLogger(InMemorySalesSystemDAO.class);
 
     public InMemorySalesSystemDAO() {
@@ -77,6 +78,8 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         orders.put(date1,order_1);
 
         this.soldItemMap = orders;
+
+        this.a = 0; // testing purposes
     }
 
     @Override
@@ -140,6 +143,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     public void saveStockItem(StockItem stockItem) {
         // check if exists and add quantity if nessecary
         // could get slow with large databases
+        beginTransaction();
             for(StockItem oldStockItem : stockItemList){
                 if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
                     int oldQuantity = oldStockItem.getQuantity();
@@ -148,13 +152,16 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
                     double oldSum = oldQuantity*oldStockItem.getPrice();
                     double newSum = stockItem.getQuantity()*stockItem.getPrice();
                     oldStockItem.setPrice(Math.round(((oldSum + newSum) / (oldQuantity + stockItem.getQuantity()))*100 / 100));
+                    commitTransaction();
                     return;
                 }
             }
-            stockItemList.add(stockItem);
+            if (stockItem.getQuantity() > 0) {
+                stockItemList.add(stockItem);
+            }
+        commitTransaction();
         }
     @Override public void removeStockItem(StockItem stockItem,boolean started) {
-
         StockItem removable_obj = findStockItem(stockItem.getId());
         if (removable_obj.getQuantity() < stockItem.getQuantity()) {
             throw new IllegalArgumentException();
@@ -166,6 +173,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void beginTransaction() {
+        a += 2;
     }
     @Override
     public List<SoldItem> findOrderByDate(Date date){
@@ -173,8 +181,16 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     }
     @Override
     public void rollbackTransaction() {
+        a += 13;
     }
     @Override
     public void commitTransaction() {
+        a += 5;
+    }
+    @Override public int getA() {
+        return a;
+    }
+    @Override public void setA(int a) {
+        this.a = a;
     }
 }
