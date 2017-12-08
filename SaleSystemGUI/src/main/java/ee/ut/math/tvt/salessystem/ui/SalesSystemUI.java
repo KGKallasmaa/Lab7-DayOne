@@ -41,7 +41,8 @@ public class SalesSystemUI extends Application {
     private final ShoppingCart shoppingCart;
     BorderPane borderPane = new BorderPane();
     public SalesSystemUI() {
-        dao = new HibernateSalesSystemDAO();
+   //     dao = new HibernateSalesSystemDAO(); TODO: switch back to normal after this LAB!
+        dao = new InMemorySalesSystemDAO();
         System.out.println("Testing DAO"+dao.findStockItems());
         shoppingCart = new ShoppingCart(dao);
     }
@@ -80,8 +81,6 @@ public class SalesSystemUI extends Application {
         userTab.setContent(loadControls("UserTab.fxml",new UserController(dao,userTab,stockTab,purchaseTab,historyTab,teamTab)));
 
         borderPane.setCenter(new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab));
-
-
 
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());

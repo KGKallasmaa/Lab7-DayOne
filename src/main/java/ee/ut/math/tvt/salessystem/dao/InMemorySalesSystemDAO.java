@@ -28,16 +28,16 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         List<StockItem> stockitems = new ArrayList<>();
         //Random example stockitems
 
-        StockItem stockitem_1= new StockItem(1L,"Test 1","test1",34.0,120);
-        StockItem stockitem_2 = new StockItem(2L,"Test 2","test2",37.0,190);
-        StockItem stockitem_3 = new StockItem(3L,"Test 3","test3",35.0,12);
-        StockItem stockitem_4= new StockItem(1L,"Test 4","test1",34.0,120);
-        StockItem stockitem_5 = new StockItem(2L,"Test 5","test2",35.0,9);
-        StockItem stockitem_6 = new StockItem(3L,"Test 6","test3",3.0,12);
-        StockItem stockitem_7= new StockItem(1L,"Test 7","test1",340.0,120);
-        StockItem stockitem_8 = new StockItem(2L,"Test 8","test2",7.0,19);
-        StockItem stockitem_9 = new StockItem(3L,"Test 9","test3",32.0,124);
-        StockItem stockitem_10 = new StockItem(3L,"Test 10","test3",39.0,142);
+        StockItem stockitem_1= new StockItem(1L,"Test 1","test1",34.0,10);
+        StockItem stockitem_2 = new StockItem(2L,"Test 2","test2",37.0,120);
+        StockItem stockitem_3 = new StockItem(3L,"Test 3","test3",35.0,140);
+        StockItem stockitem_4= new StockItem(4L,"Test 4","test1",34.0,19);
+        StockItem stockitem_5 = new StockItem(5L,"Test 5","test2",35.0,7);
+        StockItem stockitem_6 = new StockItem(6L,"Test 6","test3",3.0,8);
+        StockItem stockitem_7= new StockItem(7L,"Test 7","test1",340.0,19);
+        StockItem stockitem_8 = new StockItem(8L,"Test 8","test2",7.0,100);
+        StockItem stockitem_9 = new StockItem(9L,"Test 9","test3",32.0,43);
+        StockItem stockitem_10 = new StockItem(10L,"Test 10","test3",39.0,12);
         //Adding random stockitems to stocitems list
         stockitems.add(stockitem_1);
         stockitems.add(stockitem_2);
