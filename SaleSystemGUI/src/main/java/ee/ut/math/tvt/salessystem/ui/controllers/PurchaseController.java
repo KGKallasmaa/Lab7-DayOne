@@ -4,11 +4,8 @@ package ee.ut.math.tvt.salessystem.ui.controllers;
 import com.sun.javafx.collections.ObservableListWrapper;
 import ee.ut.math.tvt.salessystem.SalesSystemException;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
-import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -17,7 +14,6 @@ import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.*;
 
@@ -33,16 +29,17 @@ public class PurchaseController implements Initializable {
     private SalesSystemDAO dao;
     private ShoppingCart shoppingCart;
     private double width;
-    @FXML private Button newPurchase;
     @FXML private Text total_price;
     @FXML private Button submitPurchase;
     @FXML private Button cancelPurchase;
+    @FXML private Button addItemButton;
+    @FXML private ComboBox nameSelect;
+    @FXML private Button newPurchase;
+    @FXML private TextField sumField;
     @FXML private TextField barCodeField;
     @FXML private TextField time;
     @FXML private TextField quantityField;
-    @FXML private ComboBox nameSelect;
     @FXML private TextField priceField;
-    @FXML private Button addItemButton;
     @FXML private TableView<StockItem> purchaseTableView;
     //@FXML private List<SoldItem> purchaseCartItems;
     @FXML private javafx.scene.control.TableColumn<StockItem, Long> IdColumn = new TableColumn<>("Id");
@@ -62,6 +59,8 @@ public class PurchaseController implements Initializable {
         log.debug("Purchase tab initialized");
         cancelPurchase.setDisable(true);
         submitPurchase.setDisable(true);
+        //sumField = new TextField();
+        sumField.cancelEdit();
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -163,6 +162,7 @@ public class PurchaseController implements Initializable {
     /**
      * Add new item to the cart.
      */
+
     @FXML public void addItemEventHandler() {
         log.info("A product has been added to the cart.");
         StockItem stockItem = findStockItembyComboBox();
@@ -175,7 +175,7 @@ public class PurchaseController implements Initializable {
             }
             shoppingCart.addItem(stockItem, quantity);
             purchaseTableView.setItems(new ObservableListWrapper<>(shoppingCart.getAll()));
-
+            updateTotal();
         }
     }
 
@@ -198,8 +198,18 @@ public class PurchaseController implements Initializable {
         quantityField.setText("");
         priceField.setText("");
         shoppingCart.clear();
+        sumField.setText("Total");
         purchaseTableView.refresh();
         dropdown();
+    }
+
+    private void updateTotal(){
+        int sum = 0;
+        List<StockItem> cartItems = shoppingCart.getAll();
+        for(StockItem item : cartItems){
+            sum += item.getPrice()*item.getQuantity();
+        }
+        sumField.setText(Integer.toString(sum));
     }
 
     private void dropdown() {
