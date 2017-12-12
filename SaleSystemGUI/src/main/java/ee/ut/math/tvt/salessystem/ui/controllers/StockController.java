@@ -213,7 +213,6 @@ public class StockController implements Initializable {
         if (suitable_stockitems.size() == 0){
             List<StockItem> suitable_stockitems_joke = new ArrayList<>();
             suitable_stockitems_joke.add(new StockItem(1000L,"I'm empty."," Please fill me!",0.0,0));
-
             warehouseTableView.setItems(new ObservableListWrapper<>(suitable_stockitems_joke));
         }
 

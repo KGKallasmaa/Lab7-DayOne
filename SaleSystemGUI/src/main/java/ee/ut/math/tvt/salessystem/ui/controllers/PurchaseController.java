@@ -70,6 +70,13 @@ public class PurchaseController implements Initializable {
         purchaseTableView.getColumns().addAll(IdColumn, NameColumn, PriceColumn, QuantityColumn, SumColumn);
         disableProductField(true);
     }
+    public void stockEmptyCheck() {
+        if (dao.findStockItems().size() == 0){
+            newPurchase.setDisable(true);
+        }else{
+            newPurchase.setDisable(false);
+        }
+    }
 
     /** Event handler for the <code>new purchase</code> event. */
     @FXML protected void newPurchaseButtonClicked() {
@@ -127,10 +134,10 @@ public class PurchaseController implements Initializable {
         disableProductField(false);
         cancelPurchase.setDisable(false);
         submitPurchase.setDisable(false);
-        if (dao.findStockItems().size() >= 1){ //TODO: fix this
-            newPurchase.setDisable(false);
-        }else{
+        if (dao.findStockItems().size() == 0){
             newPurchase.setDisable(true);
+        }else{
+            newPurchase.setDisable(false);
         }
         priceField.setDisable(true);
         barCodeField.setDisable(true);
