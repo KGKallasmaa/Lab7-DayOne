@@ -71,16 +71,6 @@ public class StockController implements Initializable {
         warehouseTableView.getColumns().addAll(idColumn,nameColumn,descriptionColumn,priceColumn,quantityColumn);
         refreshStockItems();
 
-        /* // lambda for remove product, not integrated
-        removeproductButton.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
-                    if (!newPropertyValue) {
-
-                    }
-                }
-        });
-        */
     }
 
     public List<Long> all_ids (){
