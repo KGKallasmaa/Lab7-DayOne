@@ -28,14 +28,16 @@ public class UserController  implements Initializable {
     @FXML private javafx.scene.control.Tab purchasetab;
     @FXML private javafx.scene.control.Tab historytab;
     @FXML private javafx.scene.control.Tab teamtab;
+    @FXML private javafx.scene.control.Tab stattab;
 
-    public UserController(SalesSystemDAO dao, Tab usertab,Tab stocktab,Tab purchasetab,Tab historytab,Tab teamtab) {
+    public UserController(SalesSystemDAO dao, Tab usertab,Tab stocktab,Tab purchasetab,Tab historytab,Tab teamtab, Tab stattab) {
         this.dao = dao;
         this.usertab = usertab;
         this.stocktab = stocktab;
         this.purchasetab = purchasetab;
         this.historytab = historytab;
         this.teamtab= teamtab;
+        this.stattab= stattab;
     }
     @Override public void initialize(URL location, ResourceBundle resources) {
         log.debug("User tab initialized");
@@ -43,6 +45,7 @@ public class UserController  implements Initializable {
         purchasetab.setDisable(true);
         stocktab.setDisable(true);
         teamtab.setDisable(true);
+        stattab.setDisable(true);
     }
     @FXML public void setCashierbox (){
         log.debug("Usertype = Cashier");
@@ -72,6 +75,7 @@ public class UserController  implements Initializable {
             purchasetab.setDisable(false);
             stocktab.setDisable(false);
             teamtab.setDisable(false);
+            stattab.setDisable(false);
         }
         if (warehousebox.isSelected()){
             log.info("Warehouse rights enabled");
@@ -79,6 +83,7 @@ public class UserController  implements Initializable {
             purchasetab.setDisable(true);
             stocktab.setDisable(false);
             teamtab.setDisable(false);
+            stattab.setDisable(true);
         }
         if (cashierbox.isSelected()){
             log.info("Cashier rights enabled");
@@ -86,6 +91,7 @@ public class UserController  implements Initializable {
             stocktab.setDisable(true);
             historytab.setDisable(true);
             teamtab.setDisable(false);
+            stattab.setDisable(true);
         }
     }
 }

@@ -94,6 +94,7 @@ public class PurchaseController implements Initializable {
             disableInputs();
             purchaseTableView.getItems().clear();
             purchaseTableView.refresh();
+
         } catch (SalesSystemException e) {
             log.error(e.getMessage(), e);
         }
@@ -127,13 +128,18 @@ public class PurchaseController implements Initializable {
         disableProductField(false);
         cancelPurchase.setDisable(false);
         submitPurchase.setDisable(false);
-        if (dao.findStockItems().size() >= 1){ //TODO: fix this
-            newPurchase.setDisable(false);
-        }else{
-            newPurchase.setDisable(true);
-        }
+        newPurchase.setDisable(true);
         priceField.setDisable(true);
         barCodeField.setDisable(true);
+        int i = 0;
+        for (StockItem el : dao.findStockItems()){
+            if (el.getQuantity() >= 1){
+                i++;
+            }
+        }
+        if (i == 0){
+            newPurchase.setDisable(false);
+        }
     }
 
     // switch UI to the state that allows to initiate new purchase
