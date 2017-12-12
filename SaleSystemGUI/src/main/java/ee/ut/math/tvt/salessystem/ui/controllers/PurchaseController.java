@@ -127,7 +127,11 @@ public class PurchaseController implements Initializable {
         disableProductField(false);
         cancelPurchase.setDisable(false);
         submitPurchase.setDisable(false);
-        newPurchase.setDisable(true);
+        if (dao.findStockItems().size() >= 1){ //TODO: fix this
+            newPurchase.setDisable(false);
+        }else{
+            newPurchase.setDisable(true);
+        }
         priceField.setDisable(true);
         barCodeField.setDisable(true);
     }

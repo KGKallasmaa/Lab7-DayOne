@@ -82,8 +82,6 @@ public class SalesSystemUI extends Application {
 
         borderPane.setCenter(new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab));
 
-
-
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
 

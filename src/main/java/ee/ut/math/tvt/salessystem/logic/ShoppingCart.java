@@ -41,7 +41,8 @@ public class ShoppingCart {
                     int new_quantity = current_quantity + quantity;
                     if (new_quantity > max_q) { // quantity not larger than in stock
                         new_quantity = max_q;
-                        JOptionPane.showMessageDialog(null, "Stock quantity exceeded!", "Error",
+                        JOptionPane.showMessageDialog(null, "Stock quantity exceeded!" +
+                                        " Max stock quantity set", "Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
                     stockitem.setQuantity(new_quantity);
@@ -55,8 +56,13 @@ public class ShoppingCart {
         }
         if (!shoppincartHasItem){
             int max_q = item_max.get(newItem);
-            if (quantity > max_q | quantity < 0) { // maximum quantity not exceeded and quantity positive,
-                JOptionPane.showMessageDialog(null, "Stock quantity exceeded!", "Error",
+            if (quantity > max_q | quantity < 0) { // maximum quantity not exceeded and quantity positive
+                quantity = max_q;
+                newstockitem.setQuantity(quantity);
+                newstockitem.setSum(quantity * newstockitem.getPrice());
+                items.put(newstockitem, quantity);
+                JOptionPane.showMessageDialog(null, "Stock quantity exceeded!" +
+                                " Max stock quantity selected", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
             else {
