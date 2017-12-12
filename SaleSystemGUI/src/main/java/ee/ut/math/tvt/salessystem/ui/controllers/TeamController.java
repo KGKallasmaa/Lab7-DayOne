@@ -33,15 +33,12 @@ public class TeamController implements Initializable {
     public Text getTeam_name() {
         return team_name;
     }
-
     public Text getTeam_leader() {
         return team_leader;
     }
-
     public Text getTeam_leader_email() {
         return team_leader_email;
     }
-
     public Text getTeam_members() {
         return team_members;
     }
