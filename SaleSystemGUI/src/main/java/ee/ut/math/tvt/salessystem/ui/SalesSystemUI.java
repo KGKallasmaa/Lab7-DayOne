@@ -75,12 +75,17 @@ public class SalesSystemUI extends Application {
         teamTab.setText("Team");
         teamTab.setClosable(false);
         teamTab.setContent(loadControls("TeamTab.fxml",  new TeamController()));
+        Tab statTab = new Tab();
+        statTab.setText("Statistics");
+        statTab.setClosable(false);
+        statTab.setContent(loadControls("StatTab.fxml",  new StatController(dao)));
         Tab userTab = new Tab();
         userTab.setText("User");
         userTab.setClosable(false);
-        userTab.setContent(loadControls("UserTab.fxml",new UserController(dao,userTab,stockTab,purchaseTab,historyTab,teamTab)));
+        userTab.setContent(loadControls("UserTab.fxml",new UserController(dao,userTab,stockTab,purchaseTab,historyTab,teamTab,statTab)));
 
-        borderPane.setCenter(new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab));
+
+        borderPane.setCenter(new TabPane(userTab,purchaseTab,stockTab,historyTab,teamTab,statTab));
 
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
