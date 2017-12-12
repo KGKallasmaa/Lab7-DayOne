@@ -29,7 +29,7 @@
       </GridPane>
       <ImageView fitHeight="234.0" fitWidth="586.0" layoutX="330.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@user_pic.png" />
+            <Image url="@tumblr_olztqo8gzk1qk7puko1_500.gif" />
          </image>
       </ImageView>
    </children>
