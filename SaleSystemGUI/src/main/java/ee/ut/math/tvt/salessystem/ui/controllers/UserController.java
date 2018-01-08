@@ -2,17 +2,13 @@ package ee.ut.math.tvt.salessystem.ui.controllers;
 
 
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
-import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import org.apache.logging.log4j.LogManager;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.control.CheckBox;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,12 +19,12 @@ public class UserController  implements Initializable {
     @FXML private javafx.scene.control.CheckBox cashierbox;
     @FXML private javafx.scene.control.CheckBox warehousebox;
     @FXML private javafx.scene.control.CheckBox adminbox;
-    @FXML private javafx.scene.control.Tab stocktab;
-    @FXML private javafx.scene.control.Tab usertab;
-    @FXML private javafx.scene.control.Tab purchasetab;
-    @FXML private javafx.scene.control.Tab historytab;
-    @FXML private javafx.scene.control.Tab teamtab;
-    @FXML private javafx.scene.control.Tab stattab;
+    @FXML private final javafx.scene.control.Tab stocktab;
+    @FXML private final javafx.scene.control.Tab usertab;
+    @FXML private final javafx.scene.control.Tab purchasetab;
+    @FXML private final javafx.scene.control.Tab historytab;
+    @FXML private final javafx.scene.control.Tab teamtab;
+    @FXML private final javafx.scene.control.Tab stattab;
 
     public UserController(SalesSystemDAO dao, Tab usertab,Tab stocktab,Tab purchasetab,Tab historytab,Tab teamtab, Tab stattab) {
         this.dao = dao;
@@ -68,7 +64,8 @@ public class UserController  implements Initializable {
         this.adminbox.setSelected(true);
         selectUser();
     }
-    @FXML public void selectUser (){
+    @FXML
+    private void selectUser(){
         if (adminbox.isSelected()){
             log.info("Admin rights enabled");
             historytab.setDisable(false);

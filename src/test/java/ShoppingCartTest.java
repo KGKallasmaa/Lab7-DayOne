@@ -5,8 +5,6 @@ import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

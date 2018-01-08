@@ -2,10 +2,6 @@ package ee.ut.math.tvt.salessystem.dao;
 
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-import javafx.collections.ObservableList;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 
 import java.util.Date;
 import java.util.HashMap;

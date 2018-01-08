@@ -4,26 +4,18 @@ import com.sun.javafx.collections.ObservableListWrapper;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.security.PrivateKey;
-import java.sql.ResultSet;
-import java.sql.Time;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,22 +28,22 @@ import org.apache.logging.log4j.Logger;
 public class HistoryController implements Initializable {
     private final SalesSystemDAO dao;
     private static final Logger log = LogManager.getLogger(HistoryController.class);
-    private double width;
+    private final double width;
     @FXML private DatePicker startDateField;
     @FXML private DatePicker endDateField;
     @FXML private javafx.scene.control.Button showBetweenDates;
     @FXML private javafx.scene.control.Button showLast10;
     @FXML private javafx.scene.control.Button showAll;
     @FXML private javafx.scene.control.TableView<SoldItem> historyTableView;
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Date> dateColumn = new TableColumn<>("Date");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Long> timeColumn = new TableColumn<>("Time");
-    @FXML private javafx.scene.control.TableColumn<SoldItem, Double> sumColumn = new TableColumn<>("Sum");
+    @FXML private final javafx.scene.control.TableColumn<SoldItem, Date> dateColumn = new TableColumn<>("Date");
+    @FXML private final javafx.scene.control.TableColumn<SoldItem, Long> timeColumn = new TableColumn<>("Time");
+    @FXML private final javafx.scene.control.TableColumn<SoldItem, Double> sumColumn = new TableColumn<>("Sum");
     @FXML private javafx.scene.control.TableView<StockItem> orderTableView;
-    @FXML private javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
-    @FXML private javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Double> order_sumColumn = new TableColumn<>("Sum");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Double> order_sumColumn = new TableColumn<>("Sum");
 
     //For testing
     public int number_of_orders(){
@@ -112,14 +104,13 @@ public class HistoryController implements Initializable {
             List<SoldItem> orders = new ArrayList<>();
             for (Long e : all_orders.keySet()){
                 Date date = new Date(e);
-                Long time = e;
                 double sum = 0;
                 for(SoldItem el : all_orders.get(e)){
                     if (dao.findStockItem(el.getStockItem_id()) != null){
                         sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
                     }
                 }
-                SoldItem element = new SoldItem(date, time, sum);
+                SoldItem element = new SoldItem(date, e, sum);
                 LocalDate start = startDateField.getValue();
                 LocalDate end = endDateField.getValue();
                 if (start == null && end == null){
@@ -184,12 +175,11 @@ public class HistoryController implements Initializable {
 
         for (Long e : all_keys){
             Date date = new Date(e);
-            Long time = e;
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
                 sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
             }
-            SoldItem element = new SoldItem(date, time, sum);
+            SoldItem element = new SoldItem(date, e, sum);
             if (orders.size() < 10){
                 orders.add(element);
             }
@@ -216,12 +206,11 @@ public class HistoryController implements Initializable {
         List<SoldItem> orders = new ArrayList<>();
         for (Long e : all_orders.keySet()){
             Date date = new Date(e);
-            Long time = e;
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
                 sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
             }
-            SoldItem element = new SoldItem(date, time, sum);
+            SoldItem element = new SoldItem(date, e, sum);
             orders.add(element);
         }
         if(orders.size() < 1){
@@ -235,7 +224,8 @@ public class HistoryController implements Initializable {
         historyTableView.setItems(new ObservableListWrapper<>(orders));
         historyTableView.refresh();
     }
-    @FXML protected void displayOrder(SoldItem purchaseOrder) {
+    @FXML
+    private void displayOrder(SoldItem purchaseOrder) {
         Long thisOrderTime = purchaseOrder.getTime();
         HashMap<Long, List<SoldItem>> orders = dao.findAllOrders();
         List<SoldItem> all_solditems = dao.findSoldItems();

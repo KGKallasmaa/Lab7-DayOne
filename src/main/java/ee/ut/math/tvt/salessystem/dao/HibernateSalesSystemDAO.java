@@ -5,19 +5,16 @@ import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 
 import javax.persistence.*;
 import javax.swing.*;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 public class HibernateSalesSystemDAO implements SalesSystemDAO {
 
     private final EntityManagerFactory emf;
     private final EntityManager em;
-    int a;
+    private int a;
     //  private static final Logger log = LogManager.getLogManager(HibernateSalesSystemDAO.class);
 
     public HibernateSalesSystemDAO() {

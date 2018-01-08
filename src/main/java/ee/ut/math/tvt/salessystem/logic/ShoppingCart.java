@@ -73,7 +73,7 @@ public class ShoppingCart {
         }
     }
 
-    public List<StockItem> getAll() {
+    public ArrayList getAll() {
         ArrayList new_list = new ArrayList();
         new_list.addAll(items.keySet());
         return new_list;

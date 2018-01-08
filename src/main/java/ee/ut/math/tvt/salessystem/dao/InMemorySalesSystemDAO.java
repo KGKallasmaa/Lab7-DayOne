@@ -2,22 +2,14 @@ package ee.ut.math.tvt.salessystem.dao;
 
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TabPane;
 
 import java.util.*;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-
 
 
 public class InMemorySalesSystemDAO implements SalesSystemDAO {
 
-    private List<StockItem> stockItemList;
-    private HashMap<Long,List<SoldItem>> soldItemMap;
+    private final List<StockItem> stockItemList;
+    private final HashMap<Long,List<SoldItem>> soldItemMap;
     private int a = 0;
     //private static final Logger log = LogManager.getLogger(InMemorySalesSystemDAO.class);
 

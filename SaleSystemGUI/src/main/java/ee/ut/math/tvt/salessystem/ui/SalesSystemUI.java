@@ -9,12 +9,9 @@ package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
-import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.ui.controllers.*;
 import ee.ut.math.tvt.salessystem.logic.ShoppingCart;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -24,19 +21,12 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.SessionFactory;
-import javax.persistence.*;
 
-import javax.security.auth.login.Configuration;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Scanner;
-import java.util.logging.Level;
 
 /**
  * Graphical user interface of the sales system.
@@ -46,7 +36,7 @@ public class SalesSystemUI extends Application {
     private static final Logger log = LogManager.getLogger(SalesSystemUI.class);
     private final SalesSystemDAO dao;
     private final ShoppingCart shoppingCart;
-    BorderPane borderPane = new BorderPane();
+    private final BorderPane borderPane = new BorderPane();
     public SalesSystemUI() {
       //  dao = new InMemorySalesSystemDAO();
         dao = new HibernateSalesSystemDAO();

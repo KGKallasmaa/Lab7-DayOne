@@ -26,9 +26,9 @@ public class PurchaseController implements Initializable {
 
     private static final Logger log = LogManager.getLogger(PurchaseController.class);
 
-    private SalesSystemDAO dao;
-    private ShoppingCart shoppingCart;
-    private double width;
+    private final SalesSystemDAO dao;
+    private final ShoppingCart shoppingCart;
+    private final double width;
     @FXML private Text total_price;
     @FXML private Button submitPurchase;
     @FXML private Button cancelPurchase;
@@ -42,11 +42,11 @@ public class PurchaseController implements Initializable {
     @FXML private TextField priceField;
     @FXML private TableView<StockItem> purchaseTableView;
     //@FXML private List<SoldItem> purchaseCartItems;
-    @FXML private javafx.scene.control.TableColumn<StockItem, Long> IdColumn = new TableColumn<>("Id");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Integer> QuantityColumn = new TableColumn<>("Quantity");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Double> PriceColumn = new TableColumn<>("Price");
-    @FXML private javafx.scene.control.TableColumn<StockItem, String> NameColumn = new TableColumn<>("Name");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Double> SumColumn = new TableColumn<>("Sum");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Long> IdColumn = new TableColumn<>("Id");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Integer> QuantityColumn = new TableColumn<>("Quantity");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Double> PriceColumn = new TableColumn<>("Price");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, String> NameColumn = new TableColumn<>("Name");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Double> SumColumn = new TableColumn<>("Sum");
 
 
     public PurchaseController(SalesSystemDAO dao, ShoppingCart shoppingCart,double width) {

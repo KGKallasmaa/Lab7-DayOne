@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.SalesSystemException;
-import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.SoldItem;
@@ -17,13 +16,13 @@ import java.util.*;
 /**
  * A simple CLI (limited functionality).
  */
-public class ConsoleUI {
+class ConsoleUI {
     private static final Logger log = LogManager.getLogger(ConsoleUI.class);
 
     private final SalesSystemDAO dao;
     private final ShoppingCart cart;
 
-    public ConsoleUI(SalesSystemDAO dao) {
+    private ConsoleUI(SalesSystemDAO dao) {
         this.dao = dao;
         cart = new ShoppingCart(dao);
     }
@@ -37,7 +36,7 @@ public class ConsoleUI {
     /**
      * Run the sales system CLI.
      */
-    public void run() throws IOException {
+    private void run() throws IOException {
 
         System.out.println("===========================");
         System.out.println("=       Sales System      =");

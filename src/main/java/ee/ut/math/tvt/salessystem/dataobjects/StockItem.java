@@ -2,7 +2,6 @@ package ee.ut.math.tvt.salessystem.dataobjects;
 
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Stock item.

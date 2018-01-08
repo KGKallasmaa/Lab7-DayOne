@@ -3,21 +3,16 @@ package ee.ut.math.tvt.salessystem.ui.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.text.html.ImageView;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 
 public class TeamController implements Initializable {
@@ -45,20 +40,16 @@ public class TeamController implements Initializable {
     }
 
     protected void setTeam_name(String text) {
-        Text new_text = new Text(text);
-        this.team_name = new_text;
+        this.team_name = new Text(text);
     }
     protected void setTeam_leader(String text) {
-        Text new_text = new Text(text);
-        this.team_leader = new_text;
+        this.team_leader = new Text(text);
     }
     protected void setTeam_leader_email(String text) {
-        Text new_text = new Text(text);
-        this.team_leader_email = new_text;
+        this.team_leader_email = new Text(text);
     }
     protected void setTeam_members(String text) {
-        Text new_text = new Text(text);
-        this.team_members = new_text;
+        this.team_members = new Text(text);
     }
 
     @Override

@@ -1,26 +1,19 @@
 package ee.ut.math.tvt.salessystem.ui.controllers;
 
 import com.sun.javafx.collections.ObservableListWrapper;
-import ee.ut.math.tvt.salessystem.dao.InMemorySalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dao.SalesSystemDAO;
 import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.net.URL;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,11 +26,11 @@ public class StockController implements Initializable {
     @FXML private Button addItem;
     @FXML private Button removeproduct;
     @FXML private TableView<StockItem> warehouseTableView;
-    @FXML private javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
-    @FXML private javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
-    @FXML private javafx.scene.control.TableColumn<StockItem, String> descriptionColumn = new TableColumn<>("Description");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
-    @FXML private javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Long> idColumn = new TableColumn<>("Id");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, String> nameColumn = new TableColumn<>("Name");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, String> descriptionColumn = new TableColumn<>("Description");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Double> priceColumn = new TableColumn<>("Price");
+    @FXML private final javafx.scene.control.TableColumn<StockItem, Integer> quantityColumn = new TableColumn<>("Quantity");
     @FXML private javafx.scene.control.TextField barCodeField;
     @FXML private javafx.scene.control.TextField nameField;
     @FXML private javafx.scene.control.TextField descriptionField;
@@ -47,7 +40,7 @@ public class StockController implements Initializable {
     @FXML private Button addProductbutton;
     @FXML private Button removeproductButton;
     @FXML private Button fullScreenButton ;
-    private double width;
+    private final double width;
 
     public StockController(SalesSystemDAO dao, double width) {
 

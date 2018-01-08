@@ -7,7 +7,7 @@ import static org.junit.Assert.assertNull;
 
 public class InMemorySalesSystemDAOTest {
 
-    SalesSystemDAO dao = new InMemorySalesSystemDAO();
+    private final SalesSystemDAO dao = new InMemorySalesSystemDAO();
 
     @Test public void testAddingItemBeginsAndCommitsTransaction(){
         int aBefore = dao.getA();
