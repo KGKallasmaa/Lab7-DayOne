@@ -1,3 +1,10 @@
+/*
+This project was made turing the Software Engineering course at Tartu University
+Authors: Fred Kasemaa, Villem Laimre and Karl-Gustav Kallasmaa
+
+ */
+
+
 package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.dao.HibernateSalesSystemDAO;
@@ -41,8 +48,8 @@ public class SalesSystemUI extends Application {
     private final ShoppingCart shoppingCart;
     BorderPane borderPane = new BorderPane();
     public SalesSystemUI() {
-        dao = new InMemorySalesSystemDAO();
-        //dao = new HibernateSalesSystemDAO();
+      //  dao = new InMemorySalesSystemDAO();
+        dao = new HibernateSalesSystemDAO();
         System.out.println("Testing DAO"+dao.findStockItems());
         shoppingCart = new ShoppingCart(dao);
     }

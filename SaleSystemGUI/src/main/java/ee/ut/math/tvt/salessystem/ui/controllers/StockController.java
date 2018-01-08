@@ -23,6 +23,7 @@ import java.net.URL;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StockController implements Initializable {
@@ -92,16 +93,16 @@ public class StockController implements Initializable {
         //filtering unsuitable values
         try {
             if(!nameField.getText().isEmpty() && !priceField.getText().isEmpty() && !amountField.getText().isEmpty()) {
-                Long bar = null;
+                Long bar;
                 if (barCodeField.getText().isEmpty()){
                     log.warn("ID field is empty. Generating new value");
                     int i = 0;
-                    Long generated_id = Long.valueOf(all_ids().size()+1+i);
+                    Long generated_id = (long) (all_ids().size() + 1 + i);
                     while (true){
                         if (dao.findStockItem(generated_id) == null){
                             break;
                         }
-                        generated_id = Long.valueOf(all_ids().size()+1+i);
+                        generated_id = (long) (all_ids().size() + 1 + i);
                         i++;
                     }
                     log.warn("New id "+generated_id);
@@ -154,7 +155,7 @@ public class StockController implements Initializable {
             if (all_ids.contains(id)) {
                 for (StockItem el : all_items) {
                     dao.beginTransaction();
-                    if (el.getId() == id) {
+                    if (Objects.equals(el.getId(), id)) {
                         StockItem warehouse_item = dao.findStockItem(id);
                         StockItem remove_item = new StockItem(warehouse_item.getId(), warehouse_item.getName(), warehouse_item.getDescription(), warehouse_item.getPrice(), Integer.parseInt(amountField.getText()));
                         if (remove_item.getQuantity() > 0 && remove_item.getPrice() >= 0) {

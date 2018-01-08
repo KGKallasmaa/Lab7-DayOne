@@ -33,7 +33,7 @@ public class ShoppingCart {
         StockItem newstockitem = new StockItem(newItem);
         boolean shoppincartHasItem = false;
         for(StockItem stockitem : items.keySet()) {
-            if (stockitem.getId() == newstockitem.getId()) {
+            if (Objects.equals(stockitem.getId(), newstockitem.getId())) {
                 shoppincartHasItem = true;
                 int current_quantity = items.get(stockitem);
                 if (quantity > 0) { // quantity < 0 tested
@@ -94,7 +94,7 @@ public class ShoppingCart {
         try {
             int i = 0;
             for (StockItem item : items.keySet()) {
-                Long id = Long.valueOf(current_solditems.size() + 1 + i);
+                Long id = (long) (current_solditems.size() + 1 + i);
                 SoldItem new_solditem = new SoldItem(id,time, item.getId(), items.get(item), dao);
                 i++;
                 dao.saveSoldItem(new_solditem,false);

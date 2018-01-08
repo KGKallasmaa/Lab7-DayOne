@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_lab7-dayone" default="compile.module.lab7-dayone">
+  <dirname property="module.lab7-dayone.basedir" file="${ant.file.module_lab7-dayone}"/>
+  
+  <property name="module.jdk.home.lab7-dayone" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.lab7-dayone" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.lab7-dayone" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.lab7-dayone" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="lab7-dayone.output.dir" value="${module.lab7-dayone.basedir}/out/production/lab7-dayone"/>
+  <property name="lab7-dayone.testoutput.dir" value="${module.lab7-dayone.basedir}/out/test/lab7-dayone"/>
+  
+  <path id="lab7-dayone.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="lab7-dayone.module.production.classpath">
+    <path refid="${module.jdk.classpath.lab7-dayone}"/>
+  </path>
+  
+  <path id="lab7-dayone.runtime.production.module.classpath">
+    <pathelement location="${lab7-dayone.output.dir}"/>
+  </path>
+  
+  <path id="lab7-dayone.module.classpath">
+    <path refid="${module.jdk.classpath.lab7-dayone}"/>
+    <pathelement location="${lab7-dayone.output.dir}"/>
+  </path>
+  
+  <path id="lab7-dayone.runtime.module.classpath">
+    <pathelement location="${lab7-dayone.testoutput.dir}"/>
+    <pathelement location="${lab7-dayone.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.lab7-dayone">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.lab7-dayone">
+    <patternset refid="excluded.from.module.lab7-dayone"/>
+  </patternset>
+  
+  
+  <target name="compile.module.lab7-dayone" depends="compile.module.lab7-dayone.production,compile.module.lab7-dayone.tests" description="Compile module lab7-dayone"/>
+  
+  <target name="compile.module.lab7-dayone.production" depends="register.custom.compilers" description="Compile module lab7-dayone; production classes"/>
+  
+  <target name="compile.module.lab7-dayone.tests" depends="register.custom.compilers,compile.module.lab7-dayone.production" description="compile module lab7-dayone; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.lab7-dayone" description="cleanup module">
+    <delete dir="${lab7-dayone.output.dir}"/>
+    <delete dir="${lab7-dayone.testoutput.dir}"/>
+  </target>
+</project>

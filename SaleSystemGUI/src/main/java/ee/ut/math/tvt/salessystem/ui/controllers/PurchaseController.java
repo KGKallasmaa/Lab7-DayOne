@@ -129,9 +129,7 @@ public class PurchaseController implements Initializable {
     // switch UI to the state that allows to proceed with the purchase
     private void enableInputs() {
         resetProductField();
-        nameSelect.setOnAction(event -> {
-            fillInputsbyStockItem();
-        });
+        nameSelect.setOnAction(event -> fillInputsbyStockItem());
         disableProductField(false);
         cancelPurchase.setDisable(false);
         submitPurchase.setDisable(false);

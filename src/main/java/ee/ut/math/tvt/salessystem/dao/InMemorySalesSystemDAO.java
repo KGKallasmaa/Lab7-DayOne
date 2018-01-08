@@ -5,10 +5,7 @@ import ee.ut.math.tvt.salessystem.dataobjects.StockItem;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -101,7 +98,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     @Override
     public StockItem findStockItemName(String name){
         for (StockItem item : stockItemList) {
-            if (item.getName() == name){
+            if (Objects.equals(item.getName(), name)){
                 return item;
             }
         }
@@ -125,9 +122,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
     public List<SoldItem> findSoldItems(){
         List<SoldItem> soldItemList = new ArrayList<>();
         for(Long time : soldItemMap.keySet()){
-            for (SoldItem item : soldItemMap.get(time)){
-                soldItemList.add(item);
-            }
+            soldItemList.addAll(soldItemMap.get(time));
         }
         return soldItemList;
     }
@@ -145,7 +140,7 @@ public class InMemorySalesSystemDAO implements SalesSystemDAO {
         // could get slow with large databases
         beginTransaction();
             for(StockItem oldStockItem : stockItemList){
-                if (oldStockItem.getId() == stockItem.getId() && oldStockItem.getName().equals(stockItem.getName())){
+                if (Objects.equals(oldStockItem.getId(), stockItem.getId()) && oldStockItem.getName().equals(stockItem.getName())){
                     int oldQuantity = oldStockItem.getQuantity();
                     oldStockItem.setQuantity(oldQuantity + stockItem.getQuantity());
                     //new price

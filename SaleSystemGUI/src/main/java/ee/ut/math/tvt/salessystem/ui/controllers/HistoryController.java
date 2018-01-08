@@ -112,10 +112,12 @@ public class HistoryController implements Initializable {
             List<SoldItem> orders = new ArrayList<>();
             for (Long e : all_orders.keySet()){
                 Date date = new Date(e);
-                Long time = e.longValue();
+                Long time = e;
                 double sum = 0;
                 for(SoldItem el : all_orders.get(e)){
-                    sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
+                    if (dao.findStockItem(el.getStockItem_id()) != null){
+                        sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
+                    }
                 }
                 SoldItem element = new SoldItem(date, time, sum);
                 LocalDate start = startDateField.getValue();
@@ -182,7 +184,7 @@ public class HistoryController implements Initializable {
 
         for (Long e : all_keys){
             Date date = new Date(e);
-            Long time = e.longValue();
+            Long time = e;
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
                 sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();
@@ -214,7 +216,7 @@ public class HistoryController implements Initializable {
         List<SoldItem> orders = new ArrayList<>();
         for (Long e : all_orders.keySet()){
             Date date = new Date(e);
-            Long time = e.longValue();
+            Long time = e;
             double sum = 0;
             for(SoldItem el : all_orders.get(e)){
                 sum += dao.findStockItem(el.getStockItem_id()).getPrice()*el.getQuantity();

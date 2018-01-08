@@ -237,7 +237,7 @@ public class ConsoleUI {
         Long id = sc.nextLong();
         List<StockItem> allItems = dao.findStockItems();
         for (StockItem item : allItems) {
-            if (item.getId() == id) {// if exists then ask only for additional quantity
+            if (Objects.equals(item.getId(), id)) {// if exists then ask only for additional quantity
                 System.out.println("Found " + item.getName() + " with id " + item.getId() + " and existing quantity " + item.getQuantity() + ". Please enter additional quantity.");
                 System.out.print(">");
                 Integer quantity = sc.nextInt();

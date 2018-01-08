@@ -64,7 +64,6 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             stockItem.setPrice(new_price);
             em.merge(stockItem);
             commitTransaction();
-            return;
         } catch (IndexOutOfBoundsException e) {
             beginTransaction();
             em.merge(stockItem);
@@ -91,7 +90,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
     }
 
     @Override public void removeStockItem(StockItem stockItem, boolean started) {
-        if (started != true) {
+        if (!started) {
             beginTransaction();
         }
         StockItem tempSI = this.findStockItem(stockItem.getId());
@@ -103,7 +102,7 @@ public class HibernateSalesSystemDAO implements SalesSystemDAO {
             tempSI.setQuantity(0);
             //    em.remove(tempSI);
         }
-        if (started != true) {
+        if (!started) {
             commitTransaction();
         }
     }
